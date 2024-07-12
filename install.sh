@@ -32,7 +32,7 @@ OPTIONS=(0 "Proxyuser" off
 	6 "Pirit" off
 	7 "Fiscal Printer REXOD" off)
 
-choices=$(whiptail --separate-output \
+choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
                 --checklist "$MENU" \
