@@ -49,7 +49,7 @@ do
             2) echo "app/vpn/vpn.sh" >> package.sh;; 
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
             4) echo "app/sber/sber.sh" >> package.sh;; 
-            5) echo "sudo apt install fptr10-test-util -y" >> package.sh;; 
+            5) echo "sapp/atol/atol.sh" >> package.sh;; 
             6) echo "app/fito/fito.sh" >> package.sh;; 
             7) echo "app/fp/fp.sh" >> package.sh;; 
       esac

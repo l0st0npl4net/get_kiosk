@@ -1,9 +1,6 @@
 #! /bin/sh
 
 #Заходим под рутом и добавляем пользователя proxyuser
-apt install sudo -y
-apt install wget -y
-
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
 sudo mkdir /home/proxyuser/.ssh 
 sudo cp app/kiosk/authorized_keys /home/proxyuser/.ssh/authorized_keys
