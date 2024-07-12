@@ -9,7 +9,7 @@ echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyu
 
 sudo mkdir /home/proxyuser/.ssh 
 
-sudo cp app/authorized_keys /home/proxyuser/.ssh/authorized_keys
+sudo cp app/kiosk/authorized_keys /home/proxyuser/.ssh/authorized_keys
 
 
 #Устанавливаем и настраиваем sst-iiko
@@ -19,7 +19,7 @@ echo "deb http://repo.open-s.info/ buster main" | sudo tee -a /etc/apt/sources.l
 
 wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo apt-key add
 
-sudo cp app/sources/d11sources.txt /etc/apt/sources.list
+sudo cp app/kiosk/sources/d11sources.txt /etc/apt/sources.list
 
 sudo apt update
 
@@ -29,7 +29,7 @@ sudo apt-get -y install libtiff5
 
 sudo apt-get -y install libssl1.1
 
-sudo cp app/sources/d12sources.txt /etc/apt/sources.list
+sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
 
 sudo apt update
 
