@@ -1,0 +1,8 @@
+[Unit]
+Description=Start x11vnc at startup.
+After=multi-user.target
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -noxdamage -shared -dontdisconnect -many -noxfixes -rfbauth /etc/x11vnc.pass
+[Install]
+WantedBy=multi-user.target

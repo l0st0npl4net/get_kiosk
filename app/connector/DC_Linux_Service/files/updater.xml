@@ -1,0 +1,29 @@
+
+<Root>
+    <Version>2.0.4.0</Version>
+    <Param></Param>
+    <Log>
+        <Type>DEBUG</Type>
+        <Cleartime>2</Cleartime>
+        <Address>10.129.106.160</Address>
+        <Port>22222</Port>
+        <DeleteLogAfterUpload>true</DeleteLogAfterUpload>
+        <UserName>dcdc</UserName>
+        <Password>zSGx1fIT9moOEGtg</Password>
+    </Log>
+    <InfoUrl>ftp://ftp.in-line.ru/</InfoUrl>
+    <UserName>freesoft</UserName>
+    <Password>freesoft</Password>
+    <SoftwareName>Notepad++</SoftwareName>
+    <ClassName2Close>Notepad++</ClassName2Close>
+    <MessageBoxTitle>Notepad++ update 7.7</MessageBoxTitle>
+    <SilentMode>yes</SilentMode>
+    <OrgName>412412341dddff</OrgName>
+    <OrgGUID>9fcf7dd1-7528-40e3-8042-b029b6a53241</OrgGUID>
+    <PeriodicityProperty>2</PeriodicityProperty>
+    <FrequencyProperty>1</FrequencyProperty>
+    <DayProperty>5</DayProperty>
+    <TimeProperty>23</TimeProperty>
+    <UploadPeriodicityProperty>1</UploadPeriodicityProperty>
+    <CheckUpdateAuto>true</CheckUpdateAuto>
+</Root>

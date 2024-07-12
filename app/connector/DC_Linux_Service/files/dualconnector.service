@@ -1,0 +1,22 @@
+[Unit]
+Description=Dual Connector Service for Linux
+
+[Service]
+Type=forking
+PIDFile=/run/dcservice.pid
+#WorkingDirectory=/tmp/dcservice
+RuntimeDirectory=/run
+Environment="PID_PATH_NAME=/run/dcservice.pid" "LOG_PATH_NAME=/tmp/service" "RUNTIME_DIRECTORY=/run"
+
+ExecStart=/usr/local/bin/dcservice.sh start
+ExecStop=/usr/local/bin/dcservice.sh stop
+
+TimeoutSec=30
+
+OOMScoreAdjust=-100
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=Start xorg server at startup.
+After=multi-user.target
+[Service]
+Type=simple
+ExecStart=/usr/lib/xorg/Xorg
+[Install]
+WantedBy=multi-user.target
