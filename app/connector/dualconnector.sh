@@ -13,3 +13,5 @@ sudo /tmp/DC_Linux_Service/service.sh install
 sudo cp app/connector/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
 
 sudo service dualconnector start
+
+echo "Proccess complete!"

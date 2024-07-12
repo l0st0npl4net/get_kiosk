@@ -16,3 +16,5 @@ sudo chmod +x install_comproxy.sh
 sudo /tmp/install_comproxy.sh
 
 sudo service comproxy start
+
+echo "Proccess complete!"

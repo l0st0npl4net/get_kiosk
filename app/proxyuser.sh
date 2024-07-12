@@ -15,3 +15,5 @@ cp -rT /etc/skel /home/proxyuser
 chown -R proxyuser:proxyuser /home/proxyuser
 
 chsh -s /bin/bash proxyuser
+
+echo "Proccess complete!"

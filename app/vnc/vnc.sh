@@ -22,3 +22,5 @@ sudo systemctl disable sst-iiko
 
 sudo systemctl start xorg.service
 sudo systemctl start x11vnc
+
+echo "Proccess complete!"

@@ -39,8 +39,10 @@ sudo systemctl enable sst-iiko
 
 sudo service sst-iiko start
 
-sudo cp -r app/sst-iiko /etc
+sudo cp -r app/kiosk/sst-iiko /etc
 
 sudo mkdir /opt/sst-iiko/img
 
 sudo systemctl enable systemd-networkd-wait-online.service
+
+echo "Proccess complete!"

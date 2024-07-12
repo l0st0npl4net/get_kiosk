@@ -20,3 +20,5 @@ sudo usermod -a -G lpadmin proxyuser
 
 sudo systemctl restart cups.service
 
+echo "Proccess complete!"
+

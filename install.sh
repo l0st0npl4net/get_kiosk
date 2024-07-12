@@ -29,13 +29,13 @@ clear
 for choice in $choices
 do
       case $choice in
-            0) sh app/proxyuser.sh;;
-            1) sh app/kiosk/kiosk.sh;;
-            2) sh app//vpn/vpn.sh ;;
-            3) sh app/connector/dualconnector.sh;;
-            4) sh app/sber/sber.sh;;
-            5) sudo apt install fptr10-test-util;;
-            6) sh app/fito/fito.sh;;
-            7) sh app/fp/fp.sh;;
+            0) sh app/proxyuser.sh > logs/proxyuser.log 2>&1 | dialog --tailbox logs/proxyuser.log 100 200;;
+            1) sh app/kiosk/kiosk.sh > logs/kiosk.log 2>&1 | dialog --tailbox logs/kiosk.log 100 200;;
+            2) sh app//vpn/vpn.sh > logs/vpn.log 2>&1 | dialog --tailbox logs/vpn.log 100 200;;
+            3) sh app/connector/dualconnector.sh > logs/dualconnector.log 2>&1 | dialog --tailbox logs/dialconnector.log 100 200;;
+            4) sh app/sber/sber.sh > logs/sber.log 2>&1 | dialog --tailbox logs/sber.log 100 200;;
+            5) sudo apt install fptr10-test-util > logs/atol.log 2>&1 | dialog --tailbox logs/atol.log 100 200;;
+            6) sh app/fito/fito.sh > logs/pirit.log 2>&1 | dialog --tailbox logs/pirit.log 100 200;;
+            7) sh app/fp/fp.sh > logs/printer.log 2>&1 | dialog --tailbox logs/printer.log 100 200;;
       esac
 done
