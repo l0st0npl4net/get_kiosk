@@ -5,10 +5,10 @@ sudo apt-get -y install openvpn
 sudo cp app/vpn/openvpn /etc/default/openvpn
 sudo systemctl enable openvpn.service
 
-read -p "VPN file download link: " vpnvar 
-wget $vpnvar -P app/vpn
+VPN_URL=$(dialog --stdout --inputbox "OpenVPN configue URL: " 20 40)
+wget $VPN_URL -P app/vpn
 
-if [ -e vpn/*.ovnp ]
+if [ -e vpn/*.ovpn ]
 then
     sudo cp app/vpn/*.ovpn /etc/openvpn/client.conf
     echo "OpenVPN setup complete (reboot required)"
