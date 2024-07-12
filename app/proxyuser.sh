@@ -16,4 +16,4 @@ chown -R proxyuser:proxyuser /home/proxyuser
 
 chsh -s /bin/bash proxyuser
 
-echo "Proccess complete!"
+echo "PROXYUSER setup complete!"

@@ -20,5 +20,11 @@ sudo usermod -a -G lpadmin proxyuser
 
 sudo systemctl restart cups.service
 
-echo "Proccess complete!"
+PR_URI=$(sudo lpinfo -v | grep direct)
+PR_DRV=$(sudo lpinfo -m | grep POS-80)
+PR_NAME=$(dialog --stdout --inputbox "Printer Name: " 20 40)
+
+sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m $PR_DRV
+
+echo "REXOD almost setup complete!"
 

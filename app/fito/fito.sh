@@ -17,4 +17,4 @@ sudo /tmp/install_comproxy.sh
 
 sudo service comproxy start
 
-echo "Proccess complete!"
+echo "PIRIT setup complete!"

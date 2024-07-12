@@ -1,13 +1,26 @@
 #! /bin/bash
 
-sudo apt install dialog
-sudo apt install whiptail
 HEIGHT=30
 WIDTH=45
 CHOICE_HEIGHT=20
 BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
+LOG=logs/install.log
+DIR=/tmp/get_kiosk
+LOG_DIR=/tmp/get_kiosk/logs
+
+
+cd $DIR
+sudo rm ./package.sh
+
+if [ -d "$LOG_DIR" ];
+then
+      echo "Get Kios Installation Logs" > $LOG
+else
+      mkdir $LOG_DIR && echo "Get Kios Installation Logs" > $LOG
+fi
+
 
 OPTIONS=(0 "Proxyuser" off
       1 "Get-Kiosk" off
@@ -16,7 +29,7 @@ OPTIONS=(0 "Proxyuser" off
 	4 "Terminal: Sberbank" off
 	5 "ATOL - fptr10_t" off
 	6 "Pirit" off
-	7 "Fiscal Printer" off)
+	7 "Fiscal Printer REXOD" off)
 
 choices=$(whiptail --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -24,18 +37,26 @@ choices=$(whiptail --separate-output \
                 --checklist "$MENU" \
                 $HEIGHT $WIDTH $CHOICE_HEIGHT \
                   "${OPTIONS[@]}" 2>&1 >/dev/tty)
-
 clear
+
+
 for choice in $choices
 do
       case $choice in
-            0) sh app/proxyuser.sh > logs/proxyuser.log 2>&1 | dialog --tailbox logs/proxyuser.log 100 200;;
-            1) sh app/kiosk/kiosk.sh > logs/kiosk.log 2>&1 | dialog --tailbox logs/kiosk.log 100 200;;
-            2) sh app/vpn/vpn.sh > logs/vpn.log 2>&1 | dialog --tailbox logs/vpn.log 100 200;;
-            3) sh app/connector/dualconnector.sh > logs/dualconnector.log 2>&1 | dialog --tailbox logs/dialconnector.log 100 200;;
-            4) sh app/sber/sber.sh > logs/sber.log 2>&1 | dialog --tailbox logs/sber.log 100 200;;
-            5) sudo apt install fptr10-test-util > logs/atol.log 2>&1 | dialog --tailbox logs/atol.log 100 200;;
-            6) sh app/fito/fito.sh > logs/pirit.log 2>&1 | dialog --tailbox logs/pirit.log 100 200;;
-            7) sh app/fp/fp.sh > logs/printer.log 2>&1 | dialog --tailbox logs/printer.log 100 200;;
+            0) echo "app/proxyuser.sh" >> package.sh;; 
+            1) echo "app/kiosk/kiosk.sh" >> package.sh;; 
+            2) echo "app/vpn/vpn.sh" >> package.sh;; 
+            3) echo "app/connector/dualconnector.sh" >> package.sh;;
+            4) echo "app/sber/sber.sh" >> package.sh;; 
+            5) echo "sudo apt install fptr10-test-util" >> package.sh;; 
+            6) echo "app/fito/fito.sh" >> package.sh;; 
+            7) echo "app/fp/fp.sh" >> package.sh;; 
       esac
 done
+
+
+sudo chmod +x ./package.sh
+./package.sh > $LOG 2>&1 | dialog --tailbox $LOG 80 180
+
+
+clear
