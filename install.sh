@@ -49,7 +49,7 @@ do
             2) echo "app/vpn/vpn.sh" >> package.sh;; 
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
             4) echo "app/sber/sber.sh" >> package.sh;; 
-            5) echo "sapp/atol/atol.sh" >> package.sh;; 
+            5) echo "app/atol/atol.sh" >> package.sh;; 
             6) echo "app/fito/fito.sh" >> package.sh;; 
             7) echo "app/fp/fp.sh" >> package.sh;; 
       esac
@@ -57,7 +57,7 @@ done
 
 
 sudo chmod +x ./package.sh
-./package.sh > $LOG 2>&1 | dialog --tailbox $LOG 80 180
+./package.sh > $LOG 2>&1 | dialog --tailbox $LOG 70 150
 
 
 clear
