@@ -1,16 +1,13 @@
 #! /bin/bash
 
 #Установка
-sudo apt install x11vnc -y
+sudo apt-get -y install x11vnc
 
 sudo cp app/vnc/x11vnc.pass /etc/x11vnc.pass
-
 sudo cp app/vnc/x11vnc.service /lib/systemd/system/x11vnc.service
-
 sudo systemctl enable x11vnc.service
 
 sudo cp app/vnc/xorg.service /lib/systemd/system/xorg.service
-
 sudo systemctl enable xorg.service
 
 
