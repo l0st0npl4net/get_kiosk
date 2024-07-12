@@ -12,4 +12,4 @@ sudo chmod 777 -R /opt/sst-iiko/platforms/
 
 sudo /opt/sst-iiko/platforms/ELF32_80386/sb_pilot 7
 
-echo "Proccess complete!"
+echo "SBERBANK TERMINAL setup complete!"
