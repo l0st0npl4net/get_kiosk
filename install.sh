@@ -21,6 +21,7 @@ else
       mkdir $LOG_DIR && echo "Get Kios Installation Logs" > $LOG
 fi
 
+dialog --textbox README.md 60 150
 
 OPTIONS=(0 "Proxyuser" off
       1 "Get-Kiosk" off
