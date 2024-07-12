@@ -1,5 +1,6 @@
 #! /bin/sh
 
+
 sudo apt install openjdk-17-jre -y
 
 sudo cp -r app/connector/DC_Linux_Service /tmp
