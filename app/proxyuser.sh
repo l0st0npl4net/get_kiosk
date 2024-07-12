@@ -1,9 +1,5 @@
 #! /bin/sh
 
-apt install sudo -y
-
-apt install wget -y
-
 sudo useradd -p proxyuser -s /bin/bash -m proxyuser
 
 sudo echo 'proxyuser:proxyuser' | sudo chpasswd
