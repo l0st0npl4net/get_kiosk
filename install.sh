@@ -24,8 +24,8 @@ fi
 dialog --textbox README.md 40 100
 
 OPTIONS=(0 "Proxyuser" off
-      1 "Get-Kiosk" off
-      2 "VPN" off
+      1 "OpenVPN" off
+      2 "Get-Kiosk" off
       3 "Terminal: INPASS DualConnector" off
 	4 "Terminal: Sberbank" off
 	5 "ATOL - fptr10_t" off
@@ -45,8 +45,8 @@ for choice in $choices
 do
       case $choice in
             0) echo "app/proxyuser.sh" >> package.sh;; 
-            1) echo "app/kiosk/kiosk.sh" >> package.sh;; 
-            2) echo "app/vpn/vpn.sh" >> package.sh;; 
+            1) echo "app/vpn/vpn.sh" >> package.sh;; 
+            2) echo "app/kiosk/kiosk.sh" >> package.sh;;
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
             4) echo "app/sber/sber.sh" >> package.sh;; 
             5) echo "app/atol/atol.sh" >> package.sh;; 
