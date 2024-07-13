@@ -17,7 +17,7 @@ sudo apt-get -y install libicu67
 sudo apt-get -y install libtiff5
 sudo apt-get -y install libssl1.1
 sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
-sudo apt update
+sudo apt-get update
 sudo apt-get -y install sst-iiko 
 
 sudo systemctl enable sst-iiko
