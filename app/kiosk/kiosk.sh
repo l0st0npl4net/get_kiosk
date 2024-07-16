@@ -9,7 +9,7 @@ sudo cp app/kiosk/authorized_keys /home/proxyuser/.ssh/authorized_keys
 #Устанавливаем и настраиваем sst-iiko
 sudo apt-get -y install gnupg 
 echo "deb http://repo.open-s.info/ buster main" | sudo tee -a /etc/apt/sources.list.d/bos.list
-wget -qO http://repo.open-s.info/aptly.gpg.key | sudo apt-key add
+wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo apt-key add
 
 sudo cp app/kiosk/sources/d11sources.txt /etc/apt/sources.list
 sudo apt-get update
