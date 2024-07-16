@@ -4,7 +4,7 @@ sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo chmod 755 -R /etc/cups/
 sudo dpkg -i app/fp/driver/*.deb
-sudo apt -y --fix-broken install 
+sudo apt-get -y --fix-broken install 
 sudo dpkg -i app/fp/driver/*.deb
 
 sudo systemctl restart cups.service
