@@ -5,7 +5,6 @@ sudo apt-get -y install openvpn
 sudo cp app/vpn/openvpn /etc/default/openvpn
 sudo systemctl enable openvpn.service
 
-clear
 read -p "OpenVPN configue URL: " VPN_URL
 wget $VPN_URL -P app/vpn
 

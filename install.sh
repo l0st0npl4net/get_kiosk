@@ -57,7 +57,4 @@ done
 
 
 sudo chmod +x ./package.sh
-./package.sh > $LOG 2>&1 | dialog --tailbox $LOG 70 150
-
-
-clear
+./package.sh > $LOG
