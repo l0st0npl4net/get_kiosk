@@ -4,7 +4,7 @@ sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo chmod 755 -R /etc/cups/
 
-DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk/app/fp/driver 40 80)
+DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk/app/fp/driver/ 40 80)
 
 # let i=0 # define counting variable
 # W=() # define working array
