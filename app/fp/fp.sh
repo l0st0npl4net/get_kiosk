@@ -12,7 +12,7 @@ while read -r line; do # process file by file
     let i=$i+1
     W+=($i "$line")
 done < <( ls -1 /tmp/get_kiosk/app/fp/driver )
-DRV_VAR=$(dialog --title "List of printer drivers" --menu "Chose one" 24 80 17 "${W[@]}" 3>&2 2>&1 1>&3) # show dialog and store output
+DRV_VAR=$(dialog --title "List of printer drivers" --menu "Chose one" 24 80 17 "${W[@]}") # show dialog and store output
 
 clear
 
