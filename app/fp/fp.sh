@@ -4,15 +4,15 @@ sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo chmod 755 -R /etc/cups/
 
-#DRV_VAR=$(dialog --stdout --fselet /tmp/get_kiosk/app/fp/driver 40 80)
+DRV_VAR=$(dialog --stdout --fselet /tmp/get_kiosk/app/fp/driver 40 80)
 
-let i=0 # define counting variable
-W=() # define working array
-while read -r line; do # process file by file
-    let i=$i+1
-    W+=($i "$line")
-done < <( ls -1 /tmp/get_kiosk/app/fp/driver )
-DRV_VAR=$(dialog --title "List of printer drivers" --menu "Chose one" 24 80 17 "${W[@]}" 2>&1 >/dev/tty) # show dialog and store output
+# let i=0 # define counting variable
+# W=() # define working array
+# while read -r line; do # process file by file
+#     let i=$i+1
+#     W+=($i "$line")
+# done < <( ls -1 /tmp/get_kiosk/app/fp/driver )
+# DRV_VAR=$(dialog --title "List of printer drivers" --menu "Chose one" 24 80 17 "${W[@]}" 2>&1 >/dev/tty) # show dialog and store output
 
 clear
 
