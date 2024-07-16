@@ -12,12 +12,9 @@ while read -r line; do # process file by file
     let i=$i+1
     W+=($i "$line")
 done < <( ls -1 /tmp/get_kiosk/app/fp/driver )
-FILE=$(dialog --title "List file of directory /home" --menu "Chose one" 24 80 17 "${W[@]}" 3>&2 2>&1 1>&3) # show dialog and store output
-RESULT=$?
+DRV_VAR=$(dialog --title "List of printer drivers" --menu "Chose one" 24 80 17 "${W[@]}" 3>&2 2>&1 1>&3) # show dialog and store output
+
 clear
-if [ $RESULT -eq 0 ]; then # Exit with OK
-     echo "${W[$((FILE * 2 -1))]}"
-fi
 
 sudo dpkg -i $DRV_VAR
 sudo apt-get -y --fix-broken install 
