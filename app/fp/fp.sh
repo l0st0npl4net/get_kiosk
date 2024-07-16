@@ -3,9 +3,12 @@
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo chmod 755 -R /etc/cups/
-sudo dpkg -i app/fp/driver/*.deb
+
+DRV_VAR=$(dialog --stdout --fselet /tmp/get_kiosk/app/fp/driver 40 80)
+
+sudo dpkg -i $DRV_VAR
 sudo apt-get -y --fix-broken install 
-sudo dpkg -i app/fp/driver/*.deb
+sudo dpkg -i $DRV_VAR
 
 sudo systemctl restart cups.service
 sudo chmod 755 -R /etc/cups/
@@ -17,6 +20,12 @@ PR_DRV=$(sudo lpinfo -m | grep POS-80)
 read -p "Printer Name: " PR_NAME
 
 sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m ${PR_DRV%% *}
+sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
+
+echo "Printer dealing with his first job..."
+sleep 20s
+sudo lpstat -W completed
+
 
 echo "REXOD almost setup complete!"
 
