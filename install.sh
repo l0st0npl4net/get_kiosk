@@ -31,7 +31,8 @@ OPTIONS=(0 "Proxyuser" off
 	5 "ATOL - fptr10_t" off
 	6 "Pirit" off
 	7 "Fiscal Printer REXOD" off
-      8 "X11VNC" off)
+      8 "X11VNC" off
+      9 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -54,6 +55,7 @@ do
             6) echo "app/fito/fito.sh" >> package.sh;; 
             7) echo "app/fp/fp.sh" >> package.sh;; 
             8) echo "app/vnc/vnc.sh" >> package.sh;; 
+            9) echo "app/zabbix/zabbix.sh" >> package.sh;; 
       esac
 done
 
