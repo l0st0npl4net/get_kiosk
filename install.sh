@@ -29,9 +29,8 @@ OPTIONS=(0 "Proxyuser" off
       3 "Terminal: INPASS DualConnector" off
 	4 "Terminal: Sberbank" off
 	5 "ATOL - fptr10_t" off
-	6 "Pirit" off
-	7 "Fiscal Printer REXOD" off
-      8 "X11VNC" off)
+	6 "Fiscal Printer REXOD" off
+      7 "X11VNC" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -51,9 +50,8 @@ do
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
             4) echo "app/sber/sber.sh" >> package.sh;; 
             5) echo "app/atol/atol.sh" >> package.sh;; 
-            6) echo "app/fito/fito.sh" >> package.sh;; 
-            7) echo "app/fp/fp.sh" >> package.sh;; 
-            8) echo "app/vnc/vnc.sh" >> package.sh;; 
+            6) echo "app/fp/fp.sh" >> package.sh;; 
+            7) echo "app/vnc/vnc.sh" >> package.sh;; 
       esac
 done
 
