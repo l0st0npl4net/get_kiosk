@@ -1,5 +1,5 @@
 #! /bin/sh
 
-sudo apt-get -y fptr10-test-util
+sudo apt-get -y install fptr10-test-util
 
 echo "ATOL driver setup complete!"
