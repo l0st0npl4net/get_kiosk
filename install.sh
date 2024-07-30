@@ -28,11 +28,12 @@ OPTIONS=(0 "Proxyuser" off
       2 "Get-Kiosk" off
       3 "Terminal: INPASS DualConnector" off
 	4 "Terminal: Sberbank" off
-	5 "ATOL - fptr10_t" off
-	6 "Pirit" off
-	7 "Fiscal Printer REXOD" off
-      8 "X11VNC" off
-      9 "Zabbix" off)
+      5 "Terminal: UCS" off
+	6 "ATOL - fptr10_t" off
+	7 "Pirit" off
+	8 "Fiscal Printer REXOD" off
+      9 "X11VNC" off
+      10 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -50,12 +51,13 @@ do
             1) echo "app/vpn/vpn.sh" >> package.sh;; 
             2) echo "app/kiosk/kiosk.sh" >> package.sh;;
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
-            4) echo "app/sber/sber.sh" >> package.sh;; 
-            5) echo "app/atol/atol.sh" >> package.sh;; 
-            6) echo "app/fito/fito.sh" >> package.sh;; 
-            7) echo "app/fp/fp.sh" >> package.sh;; 
-            8) echo "app/vnc/vnc.sh" >> package.sh;; 
-            9) echo "app/zabbix/zabbix.sh" >> package.sh;; 
+            4) echo "app/sber/sber.sh" >> package.sh;;
+            5) echo "app/ucs/ucs.sh" >> package.sh;; 
+            6) echo "app/atol/atol.sh" >> package.sh;; 
+            7) echo "app/fito/fito.sh" >> package.sh;; 
+            8) echo "app/fp/fp.sh" >> package.sh;; 
+            9) echo "app/vnc/vnc.sh" >> package.sh;; 
+            10) echo "app/zabbix/zabbix.sh" >> package.sh;; 
       esac
 done
 
