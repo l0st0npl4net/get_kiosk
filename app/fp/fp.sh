@@ -2,6 +2,8 @@
 
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
+sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
+sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
 sudo chmod 755 -R /etc/cups/
 
 DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk/app/fp/driver/ 40 80)
@@ -27,9 +29,6 @@ sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
 echo "Printer dealing with his first job..."
 sleep 20
 sudo lpstat -W completed
-
-sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
 
 echo "REXOD almost setup complete!"
 
