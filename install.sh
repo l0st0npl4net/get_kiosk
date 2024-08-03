@@ -32,8 +32,9 @@ OPTIONS=(0 "Proxyuser" off
 	6 "ATOL - fptr10_t" off
 	7 "Pirit" off
 	8 "Fiscal Printer REXOD" off
-      9 "X11VNC" off
-      10 "Zabbix" off)
+      9 "X11VNC install" off
+      10 "X11VNC start" off
+      11 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -56,8 +57,9 @@ do
             6) echo "app/atol/atol.sh" >> package.sh;; 
             7) echo "app/fito/fito.sh" >> package.sh;; 
             8) echo "app/fp/fp.sh" >> package.sh;; 
-            9) echo "app/vnc/vnc.sh" >> package.sh;; 
-            10) echo "app/zabbix/zabbix.sh" >> package.sh;; 
+            9) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
+            10) echo "app/vnc/vnc_start.sh" >> package.sh;; 
+            11) echo "app/zabbix/zabbix.sh" >> package.sh;; 
       esac
 done
 

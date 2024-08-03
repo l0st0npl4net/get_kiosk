@@ -28,5 +28,8 @@ echo "Printer dealing with his first job..."
 sleep 20
 sudo lpstat -W completed
 
+sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
+sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
+
 echo "REXOD almost setup complete!"
 
