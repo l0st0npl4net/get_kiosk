@@ -24,11 +24,11 @@ PR_DRV=$(sudo lpinfo -m | grep POS-80)
 read -p "Printer Name: " PR_NAME
 
 sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m ${PR_DRV%% *}
-sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
+sudo lp -d $PR_NAME /usr/share/cups/data/default-testpage.pdf
 
 echo "Printer dealing with his first job..."
 sleep 20
 sudo lpstat -W completed
 
-echo "REXOD almost setup complete!"
+echo "Printer almost setup complete!"
 
