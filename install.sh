@@ -65,4 +65,4 @@ done
 
 
 sudo chmod +x ./package.sh
-./package.sh > $LOG
+./package.sh | tee $LOG
