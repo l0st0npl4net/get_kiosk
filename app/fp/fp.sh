@@ -6,7 +6,7 @@ sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
 sudo chmod 755 -R /etc/cups/
 
-sudo cd app/fp/Linux_driverEP-380C/KPOS_Printer/filter 
+cd app/fp/Linux_driverEP-380C/KPOS_Printer/filter 
 sudo chmod +x ./install.sh 
 sudo ./install.sh
 
