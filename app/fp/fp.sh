@@ -6,25 +6,11 @@ sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
 sudo chmod 755 -R /etc/cups/
 
-DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk/app/fp/driver/ 40 80)
-clear 
+sudo cd app/fp/Linux_driverEP-380C/KPOS_Printer/filter 
+sudo chmod +x ./install.sh 
+sudo ./install.sh
 
-sudo dpkg -i $DRV_VAR
-sudo apt-get -y --fix-broken install 
-sudo dpkg -i $DRV_VAR
-
-sudo systemctl restart cups.service
-sudo chmod 755 -R /etc/cups/
-sudo usermod -a -G lpadmin proxyuser
-sudo systemctl restart cups.service
-
-PR_URI=$(sudo lpinfo -v | grep direct)
-PR_DRV=$(sudo lpinfo -m | grep POS-80)
-
-read -p "Printer Name: " PR_NAME
-
-sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m ${PR_DRV%% *}
-sudo lp -d $PR_NAME /usr/share/cups/data/default-testpage.pdf
+sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
 
 echo "Printer dealing with his first job..."
 sleep 20
