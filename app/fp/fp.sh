@@ -3,7 +3,7 @@
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/reciept.atdf
+sudo cp app/fp/reciept.atdf /etc/sst-iiko/templates/receipt.atdf
 sudo chmod 755 -R /etc/cups/
 
 cd app/fp/Linux_driverEP-380C/KPOS_Printer/filter 
