@@ -1,5 +1,11 @@
 #! /bin/sh
 
+if ! package_exists sst-iiko ; then
+    dpkg -l sst-iiko
+    read -p "Install sst-iiko from scratch? [y/n]: " YES
+    
+    if [ "$YES" = "Y" ] || [ "$YES" = "y" ]; then
+
 #Заходим под рутом и добавляем пользователя proxyuser
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
 sudo mkdir /home/proxyuser/.ssh 
