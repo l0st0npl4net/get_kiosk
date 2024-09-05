@@ -50,7 +50,7 @@ do
       case $choice in
             0) echo "app/proxyuser.sh" >> package.sh;; 
             1) echo "app/vpn/vpn.sh" >> package.sh;; 
-            2) echo "app/kiosk/kiosk.sh" >> package.sh;;
+            2) echo "app/kiosk/check_sst.sh" >> package.sh;;
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
             4) echo "app/sber/sber.sh" >> package.sh;;
             5) echo "app/ucs/ucs.sh" >> package.sh;; 
