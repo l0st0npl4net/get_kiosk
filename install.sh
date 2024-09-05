@@ -29,9 +29,9 @@ OPTIONS=(0 "Proxyuser" off
       3 "Terminal: INPASS DualConnector" off
 	4 "ATOL - fptr10_t" off
 	5 "Fiscal Printer Install" off
-      7 "X11VNC install" off
-      8 "X11VNC ON" off
-      9 "X11VNC OFF" off)
+      6 "X11VNC install" off
+      7 "X11VNC ON" off
+      8 "X11VNC OFF" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
