@@ -1,6 +1,6 @@
 #! /bin/sh
 
-if ! package_exists sst-iiko ; then
+if package_exists sst-iiko ; then
     dpkg -l sst-iiko
     read -p "Package exists. Check for update? [y/n]: " YES
     
