@@ -18,6 +18,8 @@ sudo chmod 755 -R /etc/cups/
 sudo usermod -a -G lpadmin proxyuser
 sudo systemctl restart cups.service
 
+sudo lpadmin -x REXOD
+
 PR_URI=$(sudo lpinfo -v | grep direct)
 PR_DRV=$(sudo lpinfo -m | grep POS-80)
 
