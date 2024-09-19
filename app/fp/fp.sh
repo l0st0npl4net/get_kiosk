@@ -20,7 +20,7 @@ sudo systemctl restart cups.service
 
 sudo lpadmin -x REXOD
 
-PR_URI=$(sudo lpinfo -v | grep direct)
+PR_URI=$(sudo lpinfo -v | grep "direct usb")
 PR_DRV=$(sudo lpinfo -m | grep POS-80)
 
 read -p "Printer Name: " PR_NAME

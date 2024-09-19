@@ -13,7 +13,7 @@ if [ ! -d "get_kiosk-frank" ]; then
     unzip frank.zip
 fi
 
-sudo chmod -R 777 /tmp/get_kiosk-frank
+sudo chmod -R 777 /usr/shareget_kiosk-frank
 
 cd get_kiosk-frank && ./install.sh
 

@@ -7,8 +7,8 @@ BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
 LOG=logs/install.log
-DIR=/tmp/get_kiosk
-LOG_DIR=/tmp/get_kiosk/logs
+DIR=/usr/share/get_kiosk-main
+LOG_DIR=/usr/share/get_kiosk-main/logs
 
 
 cd $DIR
@@ -21,7 +21,7 @@ else
       mkdir $LOG_DIR && echo "Get Kios Installation Logs" > $LOG
 fi
 
-dialog --textbox README.md 40 100
+dialog --textbox README.md 50 120
 
 OPTIONS=(0 "Proxyuser" off
       1 "OpenVPN" off
