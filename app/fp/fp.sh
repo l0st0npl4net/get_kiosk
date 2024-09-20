@@ -6,21 +6,30 @@ sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates/receipt.atdf
 sudo chmod 755 -R /etc/cups/
 
-sudo dpkg -i app/fp/driver/printer-driver-pos_3.13.6_all.deb
+DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
+clear 
+
+sudo dpkg -i $DRV_VAR
 sudo apt-get -y --fix-broken install 
-sudo dpkg -i app/fp/driver/printer-driver-pos_3.13.6_all.deb
+sudo dpkg -i $DRV_VAR
 
 sudo systemctl restart cups.service
 sudo chmod 755 -R /etc/cups/
+sudo usermod -a -G lpadmin proxyuser
+sudo systemctl restart cups.service
 
-cd app/fp/Linux_driverEP-380C/KPOS_Printer/filter 
-sudo chmod +x ./install.sh 
-sudo ./install.sh
+sudo lpadmin -x REXOD
 
-sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
+PR_URI=$(sudo lpinfo -v | grep "direct usb")
+PR_DRV=$(sudo lpinfo -m | grep POS-80)
+
+read -p "Printer Name: " PR_NAME
+
+sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m ${PR_DRV%% *}
+sudo lp -d $PR_NAME /usr/share/cups/data/default-testpage.pdf
 
 echo "Printer dealing with his first job..."
 sleep 20
 sudo lpstat -W completed
 
-echo "Printer setup complete!"
+echo "Printer almost setup complete!"
