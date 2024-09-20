@@ -5,7 +5,7 @@ sudo apt-get -y install openjdk-17-jre
 
 sudo cp -r app/connector/DC_Linux_Service /usr/share
 
-sudo chmod 777 -R /tmp/DC_Linux_Service
+sudo chmod 777 -R /usr/share/DC_Linux_Service
 
 sudo chmod +x /usr/share/DC_Linux_Service/service.sh
 
