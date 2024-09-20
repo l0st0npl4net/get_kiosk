@@ -6,7 +6,7 @@ sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates/receipt.atdf
 sudo chmod 755 -R /etc/cups/
 
-DRV_VAR=$(dialog --stdout --fselect /usr/share/get_kiosk-main/app/fp/driver/ 40 80)
+DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
 clear 
 
 sudo dpkg -i $DRV_VAR
