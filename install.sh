@@ -7,8 +7,8 @@ BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
 LOG=logs/install.log
-DIR=/tmp/get_kiosk-main
-LOG_DIR=/tmp/get_kiosk-main/logs
+DIR=/tmp/get_kiosk-frank
+LOG_DIR=/tmp/get_kiosk-frank/logs
 
 
 cd $DIR
