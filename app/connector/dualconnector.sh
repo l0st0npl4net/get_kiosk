@@ -12,7 +12,7 @@ sudo chmod +x /tmp/DC_Linux_Service/service.sh
 sudo /tmp/DC_Linux_Service/service.sh install
 
 sudo cp app/connector/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
-sudo cp app/connector/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Documents
+sudo cp -r app/connector/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Documents
 
 sudo service dualconnector start
 
