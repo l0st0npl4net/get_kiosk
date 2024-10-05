@@ -13,21 +13,8 @@
 {{Payments}}
 {{Organization}}
 <br>
-<br>
-Место расчётов: Киоск самообслуживания
 <hr>
-ЗН ККТ {{FNSerial}}
-<br>
-РН ККТ {{KKTRegNum}}
-<br>
-ИНН {{INN}}
-<br>
-ФН {{FNSerial}}
-<br>
-ФД {{FDNum}}
-<br>
-ФП {{FP}}
-<br>
+
 {{ReceiptType}}
 <br>
 {{SaleDateTime}}
