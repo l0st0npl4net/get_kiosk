@@ -31,7 +31,8 @@ OPTIONS=(0 "Proxyuser" off
 	5 "Fiscal Printer Install" off
       6 "X11VNC install" off
       7 "X11VNC ON" off
-      8 "X11VNC OFF" off)
+      8 "X11VNC OFF" off
+      9 "Change Hostname" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -54,6 +55,7 @@ do
             6) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
             7) echo "app/vnc/vnc_on.sh" >> package.sh;; 
             8) echo "app/vnc/vnc_off.sh" >> package.sh;; 
+            9) echo "app/hostname.sh" >> package.sh;; 
       esac
 done
 
