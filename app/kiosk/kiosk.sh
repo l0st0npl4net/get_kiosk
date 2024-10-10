@@ -25,7 +25,7 @@ sudo apt-get -y install sst-iiko=0.28.2.5abb5695
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
 sudo cp -r app/kiosk/sst-iiko /etc
-sudo mkdir /opt/sst-iiko/img
+sudo cp app/kiosk/img /opt/sst-iiko/img
 sudo systemctl enable systemd-networkd-wait-online.service
 
 echo "GET KIOSK SOFTWARE setup complete!"
