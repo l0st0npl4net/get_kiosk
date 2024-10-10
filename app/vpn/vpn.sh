@@ -9,4 +9,4 @@ read -p "OpenVPN configue URL: " VPN_URL
 wget $VPN_URL -P app/vpn
 
 sudo cp app/vpn/*.ovpn /etc/openvpn/client.conf
-echo "OpenVPN setup complete (reboot required)"
+echo "OpenVPN setup complete! (reboot required)"
