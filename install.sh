@@ -27,12 +27,13 @@ OPTIONS=(0 "Proxyuser" off
       1 "OpenVPN" off
       2 "Get-Kiosk" off
       3 "Terminal: INPASS DualConnector" off
-	4 "ATOL - fptr10_t" off
-	5 "Fiscal Printer Install" off
-      6 "X11VNC install" off
-      7 "X11VNC ON" off
-      8 "X11VNC OFF" off
-      9 "Change Hostname" off)
+      4 "Terminal: Sberbank" off
+	5 "ATOL - fptr10_t" off
+	6 "Fiscal Printer Install" off
+      7 "X11VNC install" off
+      8 "X11VNC ON" off
+      9 "X11VNC OFF" off
+      10 "Change Hostname" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -50,12 +51,13 @@ do
             1) echo "app/vpn/vpn.sh" >> package.sh;; 
             2) echo "app/kiosk/check_sst.sh" >> package.sh;;
             3) echo "app/connector/dualconnector.sh" >> package.sh;;
-            4) echo "app/atol/atol.sh" >> package.sh;; 
-            5) echo "app/fp/fp.sh" >> package.sh;; 
-            6) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
-            7) echo "app/vnc/vnc_on.sh" >> package.sh;; 
-            8) echo "app/vnc/vnc_off.sh" >> package.sh;; 
-            9) echo "app/hostname.sh" >> package.sh;; 
+            4) echo "app/sber/sber.sh" >> package.sh;;
+            5) echo "app/atol/atol.sh" >> package.sh;; 
+            6) echo "app/fp/fp.sh" >> package.sh;; 
+            7) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
+            8) echo "app/vnc/vnc_on.sh" >> package.sh;; 
+            9) echo "app/vnc/vnc_off.sh" >> package.sh;; 
+            10) echo "app/hostname.sh" >> package.sh;; 
       esac
 done
 
