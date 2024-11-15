@@ -16,4 +16,8 @@ sudo cp -r app/connector/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Ser
 
 sudo service dualconnector start
 
+sudo crudini --set  /etc/sst-iiko/settings.ini Terminal terminalID
+sudo crudini --set  /etc/sst-iiko/settings.ini Terminal type DualConnector
+sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
+
 echo "DUALCONNECTOR setup complete!"
