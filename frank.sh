@@ -7,13 +7,13 @@ sudo apt-get -y install \
                     nano \
                     unzip
 
-cd /usr/share
+cd /tmp
 if [ ! -d "get_kiosk-frank" ]; then                      
     wget 'https://github.com/l0st0npl4net/get_kiosk/archive/refs/heads/frank.zip'
     unzip frank.zip
 fi
 
-sudo chmod -R 777 /usr/share/get_kiosk-frank
+sudo chmod -R 777 /tmo/get_kiosk-frank
 
 cd get_kiosk-frank && ./install.sh
 
