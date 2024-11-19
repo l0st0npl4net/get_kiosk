@@ -3,7 +3,8 @@
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates/receipt.atdf
+sudo mkdir /etc/sst-iiko/templates
+sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
 sudo chmod 755 -R /etc/cups/
 
 # DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
