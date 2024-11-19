@@ -1,10 +1,10 @@
 #! /bin/bash
 
-# sudo apt-get -y install cups
-# sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
-# sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-# sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates/receipt.atdf
-# sudo chmod 755 -R /etc/cups/
+sudo apt-get -y install cups
+sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
+sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
+sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates/receipt.atdf
+sudo chmod 755 -R /etc/cups/
 
 # DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
 # clear 
@@ -14,7 +14,7 @@
 # sudo dpkg -i $DRV_VAR
 
 # sudo systemctl restart cups.service
-# sudo chmod 755 -R /etc/cups/
+sudo chmod 755 -R /etc/cups/
 # sudo usermod -a -G lpadmin proxyuser
 # sudo systemctl restart cups.service
 
