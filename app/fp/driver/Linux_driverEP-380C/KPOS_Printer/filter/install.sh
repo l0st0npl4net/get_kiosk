@@ -12,5 +12,5 @@ sync
 sudo lpadmin -x REXOD
 
 PR_URI=$(sudo lpinfo -v | grep direct)
-sudo lpadmin -p REXOD -E -v ${PR_URI##* } -P app/fp/driver/Linux_driverEP-380C/KPOS_Printer/ppd/KPOS_80c.ppd
+sudo lpadmin -p REXOD -E -v ${PR_URI##* } -P /tmp/get_kiosk-main/app/fp/driver/Linux_driverEP-380C/KPOS_Printer/ppd/KPOS_80c.ppd
 
