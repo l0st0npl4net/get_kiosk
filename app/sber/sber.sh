@@ -11,6 +11,7 @@ ch=$(dialog --separate-output \
                 --checklist "Выберите нужную модель(SPACE - выбрать):" \
                 30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
+clear
 
 
 for choice in $ch
@@ -20,6 +21,7 @@ do
             1) PATH=app/sber/kozen/platforms;;
       esac
 done
+
 
 sudo cp -r ${PATH} /opt/sst-iiko/platforms
 
