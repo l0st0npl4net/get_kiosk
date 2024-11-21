@@ -1,24 +1,15 @@
 #! /bin/bash
 
-HEIGHT=30
-WIDTH=45
-CHOICE_HEIGHT=20
-BACKTITLE="УСТАНОВЩИК GET-KIOSK"
-TITLE="Внедрение: Установщик Киоска"
-MENU="Выберите нужную модель(SPACE - выбрать):"
-PATH="app/sber"
-
-
 sudo chmod 777 -R /opt/sst-iiko/
 
 terminals=(0 "PAX 300" off
         1 "KOZEN (TOUCH)" off)
 
 ch=$(dialog --separate-output \
-                --backtitle "$BACKTITLE" \
-                --title "$TITLE" \
-                --checklist "$MENU" \
-                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                --backtitle "УСТАНОВЩИК GET-KIOSK" \
+                --title "Внедрение: Банковский Терминал" \
+                --checklist "Выберите нужную модель(SPACE - выбрать):" \
+                30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
 
 
@@ -30,7 +21,7 @@ do
       esac
 done
 
-sudo cp -r app/sber/${PATH} /opt/sst-iiko/platforms
+sudo cp -r ${PATH} /opt/sst-iiko/platforms
 
 sudo cp app/connector/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
 

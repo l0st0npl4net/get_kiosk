@@ -13,6 +13,7 @@ LOG_DIR=/tmp/get_kiosk-main/logs
 
 cd $DIR
 sudo rm ./package.sh
+echo "#! /bin/bash" >> package.sh
 
 if [ -d "$LOG_DIR" ];
 then
@@ -67,4 +68,4 @@ done
 
 
 sudo chmod +x ./package.sh
-./package.sh | tee $LOG
+sudo ./package.sh | tee $LOG
