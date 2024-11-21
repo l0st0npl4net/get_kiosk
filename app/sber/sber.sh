@@ -6,7 +6,7 @@ CHOICE_HEIGHT=20
 BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужную модель(SPACE - выбрать):"
-PATH=app/sber
+PATH="app/sber"
 
 
 sudo chmod 777 -R /opt/sst-iiko/
