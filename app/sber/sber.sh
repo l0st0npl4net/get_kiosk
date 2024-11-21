@@ -11,18 +11,18 @@ PATH=app/sber
 
 sudo chmod 777 -R /opt/sst-iiko/
 
-OPTIONS=(0 "PAX 300" off
+terminals=(0 "PAX 300" off
         1 "KOZEN (TOUCH)" off)
 
-choices=$(dialog --separate-output \
+ch=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
                 --checklist "$MENU" \
                 $HEIGHT $WIDTH $CHOICE_HEIGHT \
-                  "${OPTIONS[@]}" 2>&1 >/dev/tty)
+                  "${terminals[@]}" 2>&1 >/dev/tty)
 
 
-for choice in $choices
+for choice in $ch
 do
       case $choice in
             0) PATH=app/sber/pax300/platforms;;
