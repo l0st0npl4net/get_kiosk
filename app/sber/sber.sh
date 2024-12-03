@@ -12,18 +12,16 @@ ch=$(dialog --separate-output \
                 30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
 clear
-
+PATH =/
 
 for choice in $ch
 do
       case $choice in
-            0) PATH=app/sber/pax300/platforms;;
-            1) PATH=app/sber/kozen/platforms;;
+            0) sudo cp -r app/sber/pax300/platforms /opt/sst-iiko/platforms;;
+            1) sudo cp -r app/sber/kozen/platforms /opt/sst-iiko/platforms;;
       esac
 done
 
-
-sudo cp -r ${PATH} /opt/sst-iiko/platforms
 
 sudo cp app/connector/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
 

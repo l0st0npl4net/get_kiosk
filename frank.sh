@@ -5,7 +5,9 @@ sudo apt-get -y install \
                     wget \
                     dialog \
                     nano \
-                    unzip
+                    unzip \
+                    crudini \
+                    sed
 
 cd /tmp
 if [ ! -d "get_kiosk-frank" ]; then                      
@@ -13,7 +15,7 @@ if [ ! -d "get_kiosk-frank" ]; then
     unzip frank.zip
 fi
 
-sudo chmod -R 777 /tmo/get_kiosk-frank
+sudo chmod -R 777 /tmp/get_kiosk-frank
 
 cd get_kiosk-frank && ./install.sh
 
