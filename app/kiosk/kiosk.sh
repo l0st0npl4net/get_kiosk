@@ -29,9 +29,14 @@ else
     sudo apt-get -y install sst-iiko="$VERSION";
 fi
 
+read -p "Enter Main Kassa Local IP Adress: " K_IP
+
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
 sudo cp -r app/kiosk/sst-iiko /etc
+
+sudo crudini --set  /etc/sst-iiko/settings.ini iiko host ws://${K_IP}
+
 sudo mkdir /opt/sst-iiko/img
 sudo systemctl enable systemd-networkd-wait-online.service
 
