@@ -20,7 +20,14 @@ sudo apt-get -y install libssl1.1
 sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
 
 sudo apt-get update
-sudo apt-get -y install sst-iiko 
+
+read -p "SST-IIKO Version [Enter for latest release]: " VERSION
+
+if [ -z "$VERSION"]; then
+    sudo apt-get -y install sst-iiko 
+else 
+    sudo apt-get -y install sst-iiko="$VERSION";
+fi
 
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
