@@ -12,7 +12,7 @@ ch=$(dialog --separate-output \
                 30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
 clear
-PATH = ""
+PATH=""
 
 for choice in $ch
 do
