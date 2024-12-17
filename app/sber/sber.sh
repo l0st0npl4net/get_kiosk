@@ -12,21 +12,21 @@ ch=$(dialog --separate-output \
                 30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
 clear
-PATH=""
+PH=/
 
 for choice in $ch
 do
       case $choice in
-            0) PATH="pax300";;
-            1) PATH="kozen";;
+            0) PH="pax300";;
+            1) PH="kozen";;
       esac
 done
 
-sudo cp -r app/sber/"$PATH"/platforms /opt/sst-iiko/platforms
+sudo cp -r app/sber/"$PH"/platforms /opt/sst-iiko/platforms
 
 sudo chmod 777 -R /opt/sst-iiko/platforms/
 
-sudo cp app/sber/"$PATH"/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
+sudo cp app/sber/"$PH"/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
 
 sudo rm /opt/sst-iiko/platforms/ELF32_80386/ttyS99
 sudo ln -s /dev/pinpad /opt/sst-iiko/platforms/ELF32_80386/ttyS99
