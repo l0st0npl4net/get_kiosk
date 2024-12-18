@@ -16,6 +16,26 @@ sudo chmod 755 -R /etc/cups/
 
 # sudo systemctl restart cups.service
 sudo chmod 755 -R /etc/cups/
+
+printers=(0 "REXOD" off
+        1 "SAM4S 102c" off)
+
+ch=$(dialog --separate-output \
+                --backtitle "УСТАНОВЩИК GET-KIOSK" \
+                --title "Внедрение: Чековый принтер" \
+                --checklist "Выберите нужную модель(SPACE - выбрать):" \
+                30 45 20 \
+                  "${printers[@]}" 2>&1 >/dev/tty)
+clear
+PH=/
+
+for choice in $ch
+do
+      case $choice in
+            0) PH="Linux_driverEP-380C";;
+            1) PH="Sam4s_Calisto_102c";;
+      esac
+done
 # sudo usermod -a -G lpadmin proxyuser
 # sudo systemctl restart cups.service
 
@@ -33,7 +53,7 @@ sudo chmod 755 -R /etc/cups/
 # sleep 20
 # sudo lpstat -W completed
 
-cd app/fp/driver/Linux_driverEP-380C/KPOS_Printer/filter && sudo chmod +x ./install.sh && sudo ./install.sh
+cd app/fp/driver/"$PH"/KPOS_Printer/filter && sudo chmod +x ./install.sh && sudo ./install.sh
 
 echo "Printer almost setup complete!"
 
