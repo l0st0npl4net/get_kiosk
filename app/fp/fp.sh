@@ -6,6 +6,7 @@ sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 sudo mkdir /etc/sst-iiko/templates
 sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
 sudo chmod 755 -R /etc/cups/
+sudo apt-get -y install foomatic-db foomatic-db-engine
 
 # DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
 # clear 
