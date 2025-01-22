@@ -9,4 +9,4 @@ sudo crudini --set  /etc/sst-iiko/settings.ini FP type Shtrikh
 
 sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
 
-echo "SBERBANK TERMINAL setup complete!"
+echo "SHTRIH-M setup complete!"
