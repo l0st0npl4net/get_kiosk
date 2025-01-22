@@ -11,8 +11,30 @@ sudo chmod +x /tmp/DC_Linux_Service/service.sh
 
 sudo /tmp/DC_Linux_Service/service.sh install
 
-sudo cp -r app/connector/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Documents
-sudo cp app/connector/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
+sudo cp -r /tmp/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Documents
+
+terminals=(0 "PAX 300" off
+        1 "VERIFONE" off)
+
+ch=$(dialog --separate-output \
+                --backtitle "УСТАНОВЩИК GET-KIOSK" \
+                --title "Внедрение: Банковский Терминал" \
+                --checklist "Выберите нужную модель(SPACE - выбрать):" \
+                30 45 20 \
+                  "${terminals[@]}" 2>&1 >/dev/tty)
+clear
+PH=/
+
+for choice in $ch
+do
+      case $choice in
+            0) PH="pax300";;
+            1) PH="verifone";;
+      esac
+done
+
+
+sudo cp app/connector/"$PH"/10-pinpad.rules /etc/udev/rules.d/10-pinpad.rules
 
 sudo crudini --set  /etc/sst-iiko/settings.ini Terminal terminalID
 sudo crudini --set  /etc/sst-iiko/settings.ini Terminal type DualConnector
