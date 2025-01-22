@@ -31,12 +31,13 @@ OPTIONS=(0 "Proxyuser" off
 	4 "Terminal: Sberbank" off
       5 "Terminal: UCS" off
 	6 "ATOL - fptr10_t" off
-	7 "Change Hostname" off
+	7 "Shtrikh-M"
 	8 "Fiscal Printer Install" off
       9 "X11VNC install" off
       10 "X11VNC enable" off
       11 "X11VNC disable" off
-      12 "Zabbix" off)
+      12 "Zabbix" off
+      13 "Change Hostname" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -57,12 +58,13 @@ do
             4) echo "app/sber/sber.sh" >> package.sh;;
             5) echo "app/ucs/ucs.sh" >> package.sh;; 
             6) echo "app/atol/atol.sh" >> package.sh;; 
-            7) echo "app/hostname.sh" >> package.sh;; 
+            7) echo "app/shtrih-m/shtrih.sh" >> package.sh;;
             8) echo "app/fp/fp.sh" >> package.sh;; 
             9) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
             10) echo "app/vnc/vnc_start.sh" >> package.sh;;
             11) echo "app/vnc/vnc_stop.sh" >> package.sh;; 
             12) echo "app/zabbix/zabbix.sh" >> package.sh;; 
+            13)echo "app/hostname.sh" >> package.sh;; 
       esac
 done
 

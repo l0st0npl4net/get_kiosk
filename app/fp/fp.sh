@@ -56,5 +56,14 @@ done
 
 cd app/fp/driver/"$PH"/KPOS_Printer/filter && sudo chmod +x ./install.sh && sudo ./install.sh
 
+sudo crudini --set  /etc/sst-iiko/settings.ini FP fiscal\type Atol
+sudo crudini --set  /etc/sst-iiko/settings.ini FP printer\SETTINGS_PATH /etc/sst-iiko/print_settings.ini
+sudo crudini --set  /etc/sst-iiko/settings.ini FP printer\TEMPLATE_PATH /etc/sst-iiko/templates/
+sudo crudini --set  /etc/sst-iiko/settings.ini FP printer\advancedTemplates true
+sudo crudini --set  /etc/sst-iiko/settings.ini FP printer\type System
+sudo crudini --set  /etc/sst-iiko/settings.ini FP type Compound
+
+sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
+
 echo "Printer almost setup complete!"
 
