@@ -64,7 +64,7 @@ do
             10) echo "app/vnc/vnc_start.sh" >> package.sh;;
             11) echo "app/vnc/vnc_stop.sh" >> package.sh;; 
             12) echo "app/zabbix/zabbix.sh" >> package.sh;; 
-            13)echo "app/hostname.sh" >> package.sh;; 
+            13) echo "app/hostname.sh" >> package.sh;; 
       esac
 done
 
