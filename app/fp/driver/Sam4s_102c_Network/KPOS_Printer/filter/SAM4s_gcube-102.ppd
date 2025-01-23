@@ -1,0 +1,260 @@
+*PPD-Adobe: "4.3"
+
+*% Copyright (C) Shin Heung Precision Co.,Ltd 2014. All rights reserved.
+*%
+*% SAM4S GCUBE 102 receipt printer PPD for Common Unix Printing System (CUPS).
+*%
+
+
+*%-----------------------------Start of Change Log-----------------------------------*%
+*% Date			File Version	Changes
+*%-----------------------------------------------------------------------------------*%
+*% 17-DEC-2013		0.0.0.1		Initial Version.	   
+*%					Added PPD parameters.
+*%					Added Page region,Page Size,Imageable area options.
+*%
+*%
+*%
+*%
+*%-------------------End of Change Log---------------------------------------------*%
+
+*FormatVersion: "4.3"
+*FileVersion: "0.1"
+*LanguageVersion: English
+*LanguageEncoding: ISOLatin1
+*PCFileName: "SAM4s-GCUBE102.PPD"
+*Manufacturer: "SAM4S CORP"
+*Product: "(Thermal Receipt Printer)"
+*ModelName:"SAM4S GCUBE 102"
+*ShortNickName:"GCUBE102"
+*NickName: "GCUBE 102"
+*PSVersion: "(3010.000) 0"
+*LanguageLevel: "3"
+*ColorDevice: False
+*DefaultColorSpace: Black
+*FileSystem: False
+*Throughput: "1"
+*LandscapeOrientation: Plus90
+*VariablePaperSize: True
+*TTRasterizer: Type42
+*cupsVersion: 1.5.3
+*cupsManualCopies: True
+*cupsModelNumber: 1
+
+
+*1284DeviceID:  "MFG:SAM4S;CMD:ESC,STAR;MDL:GCUBE-102;CLS:PRINTER;"
+*%MFG:SAM4S;CMD:ESC,STAR;MDL:GCUBE-102;CLS:PRINTE
+
+
+*%cupsFilter: "application/vnd.cups-pdf  0 pdftoellix"
+*cupsFilter: "application/vnd.cups-raster 50 /usr/lib/cups/filter/RasterToSPrinter"
+
+
+
+*%OpenGroup: PageLayout/Page Layout
+*%Page orientation options.
+
+*%OpenUI *Orientation/Orientation:PickOne
+*%OrderDependency: 10 AnySetup *Orientation
+*%DefaultOrientation:Portrait
+*%Orientation Portrait :"<</Orientation 0>>setpagedevice"
+*%Orientation Landscape :"<</Orientation 1>>setpagedevice"
+*%CloseUI: *Orientation
+
+*%CloseGroup: PageLayout
+
+*%OpenGroup: Paper/Paper Options
+*% paper source selection.
+
+*OpenUI *PaperSource/Paper Source:PickOne
+*OrderDependency: 10 AnySetup *PaperSource
+*DefaultPaperSource: Automatic
+*PaperSource Automatic/Automatic:
+*PaperSource PartialCut/Receipt[PartialCut]:
+*PaperSource NoCut/Receipt[NoCut]:
+*PaperSource PartialCutNoFeeding/Receipt[PartialCut,NoFeeding]:
+*PaperSource NoFeedNoCut/Receipt[NoFeed,NoCut]:
+*CloseUI: *PaperSource
+*CloseGroup: Paper
+
+*OpenUI *ColorModel/Color Model: PickOne
+*OPOptionHints ColorModel: "radiobuttons"
+*OrderDependency: 10 AnySetup *ColorModel
+*DefaultColorModel: Black
+*StpDefaultColorModel: RGB
+
+*ColorModel Black/Black:"<</cupsColorSpace 3/cupsColorOrder 1/cupsBitsPerColor 1/HWResolution[203 203]>>setpagedevice"
+*CloseUI: *ColorModel
+
+
+*OpenGroup: General/General
+
+*% ========== Page size settings ======================================== 72mm 576dot
+*OpenUI *PageSize/Media Size: PickOne
+*OrderDependency: 11 AnySetup *PageSize
+*DefaultPageSize:80x120
+*%PageSize 58x297/58 x 297 mm: "<</PageSize[164 841]/ImagingBBox null>>setpagedevice"
+*%PageSize 58x3276/58 x 3276 mm: "<</PageSize[164 9286]/ImagingBBox null>>setpagedevice"
+*PageSize 80x120/80 x 120 mm: "<</PageSize[226 340]/ImagingBBox null>>setpagedevice"
+*PageSize 80x160/80 x 160 mm: "<</PageSize[226 453]/ImagingBBox null>>setpagedevice"
+*PageSize 80x200/80 x 200 mm: "<</PageSize[226 567]/ImagingBBox null>>setpagedevice"
+*PageSize 80x297/80 x 297 mm: "<</PageSize[226 841]/ImagingBBox null>>setpagedevice"
+*%PageSize 80x3279/80 x 3297 mm: "<</PageSize[226 9286]/ImagingBBox null>>setpagedevice"
+*PageSize 80x40/80 x 40 mm: "<</PageSize[226 113]/ImagingBBox null>>setpagedevice"
+*PageSize 80x80/80 x 80 mm: "<</PageSize[226 226]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageSize
+
+*OpenUI *PageRegion: PickOne
+*OrderDependency: 11 AnySetup *PageRegion
+*DefaultPageRegion:80x120
+*%PageRegion 58x297/58 x 297 mm: "<</PageSize[164 841]/ImagingBBox null>>setpagedevice"
+*%PageRegion 58x3276/58 x 3276 mm: "<</PageSize[164 9286]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x120/80 x 120 mm: "<</PageSize[226 340]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x160/80 x 160 mm: "<</PageSize[226 453]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x200/80 x 200 mm: "<</PageSize[226 567]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x297/80 x 297 mm: "<</PageSize[226 841]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x3279/80 x 3297 mm: "<</PageSize[226 9286]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x40/80 x 40 mm: "<</PageSize[226 113]/ImagingBBox null>>setpagedevice"
+*PageRegion 80x80/80 x 80 mm: "<</PageSize[226 226]/ImagingBBox null>>setpagedevice"
+*RequiresPageRegion All: true
+*CloseUI: *PageRegion
+
+*DefaultImageableArea: 80x120
+*%ImageableArea 58x297/58 x 297 mm: "1 2 164 841"
+*%ImageableArea 58x3276/58 x 3276 mm: "1 2 164 9286"
+*ImageableArea 80x120/80 x 120 mm: "1 2 206 340"
+*ImageableArea 80x160/80 x 160 mm: "1 2 206 453.5"
+*ImageableArea 80x200/80 x 200 mm: "1 2 206 567"
+*ImageableArea 80x297/80 x 297 mm: "1 2 206 841"
+*%ImageableArea 80x3279/80 x 3297 mm: "1 2 206 9286"
+*ImageableArea 80x40/80 x 40 mm: "1 2 206 113"
+*ImageableArea 80x80/80 x 80 mm: "1 2 206 226"
+
+
+
+*DefaultPaperDimension: 80x120
+*%PaperDimension 58x297/58 x 297 mm: "164 841"
+*%PaperDimension 58x3276/58 x 3276 mm: "164 9286"
+*PaperDimension 80x120/80 x 120 mm: "206 340"
+*PaperDimension 80x160/80 x 160 mm: "206 453"
+*PaperDimension 80x200/80 x 200 mm: "206 567"
+*PaperDimension 80x297/80 x 297 mm: "206 841"
+*PaperDimension 80x3279/80 x 3297 mm: "206 9286"
+*PaperDimension 80x40/80 x 40 mm: "206 113"
+*PaperDimension 80x80/80 x 80 mm: "206 226"
+
+*MaxMediaWidth:  "226"
+*MaxMediaHeight: "9286"
+*HWMargins:      0 0 0 0
+*CustomPageSize True: "pop pop pop <</PageSize[5 -2 roll]/ImagingBBox null>>setpagedevice"
+*ParamCustomPageSize Width:        1 points 72 226
+*ParamCustomPageSize Height:       2 points 72 9286
+*ParamCustomPageSize WidthOffset:  3 points 0 0
+*ParamCustomPageSize HeightOffset: 4 points 0 0
+*ParamCustomPageSize Orientation:  5 int 0 0
+
+*CloseGroup: General
+
+*% ================ CUT SETTING ========================
+*OpenUI *ExecutePaperCut/Execute Paper Cut Per Each Copy: PickOne
+*OrderDependency: 10 AnySetup *ExecutePaperCut
+*DefaultExecutePaperCut: 0
+*ExecutePaperCut 0/No: 
+*ExecutePaperCut 1/Yes: 
+*CloseUI: *ExecutePaperCut
+
+*% ================ DRAWER SETTING ========================
+*OpenUI *CashDrawer/Cash Drawer: PickOne
+*OrderDependency: 10.0 AnySetup *CashDrawer
+*DefaultCashDrawer: 0DoNotOpenDrawers
+*CashDrawer 0DoNotOpenDrawers/Do Not Open Drawers: ""
+*CashDrawer 1OpenDrawer1/Open Cash Drawer 1: ""
+*CashDrawer 2OpenDrawer2/Open Cash Drawer 2: ""
+*CashDrawer 3OpenDrawerBoth/Open both Cash Drawers: ""
+*CloseUI: *CashDrawer
+
+*OpenUI *FireCashDrawer/Fire Cash Drawer Per Each Copy: PickOne
+*OrderDependency: 10 AnySetup *FireCashDrawer
+*DefaultFireCashDrawer: 0false
+*FireCashDrawer 1true/Yes: "setpagedevice"
+*FireCashDrawer 0false/No: "setpagedevice"
+*CloseUI: *FireCashDrawer
+
+*OpenGroup: CashDrawerGroup1/Cash Drawer 1
+
+*OpenUI *CashDrawerOpen1/Cash Drawer Open: PickOne
+*OrderDependency: 10.0 AnySetup *CashDrawerOpen1
+*DefaultCashDrawerOpen1: 0Before
+*CashDrawerOpen1 0Before/Before Printing: ""
+*CashDrawerOpen1 1After/After Printing: ""
+*CashDrawerOpen1 2BeforeAfter/Before and After Printing: ""
+*CloseUI: *CashDrawerOpen1
+
+*OpenUI *CashDrawer1PulseWidth/Cash Drawer 1 Pulse Width: PickOne
+*OrderDependency: 10.0 AnySetup *CashDrawer1PulseWidth
+*DefaultCashDrawer1PulseWidth: 70Millis70
+*CashDrawer1PulseWidth 50Millis50/50 milliseconds: ""
+*CashDrawer1PulseWidth 60Millis60/60 milliseconds: ""
+*CashDrawer1PulseWidth 70Millis70/70 milliseconds: ""
+*CashDrawer1PulseWidth 80Millis80/80 milliseconds: ""
+*CashDrawer1PulseWidth 90Millis90/90 milliseconds: ""
+*CashDrawer1PulseWidth 100Millis100/100 milliseconds: ""
+*CashDrawer1PulseWidth 110Millis110/110 milliseconds: ""
+*CashDrawer1PulseWidth 120Millis120/120 milliseconds: ""
+*CashDrawer1PulseWidth 130Millis130/130 milliseconds: ""
+*CashDrawer1PulseWidth 140Millis140/140 milliseconds: ""
+*CashDrawer1PulseWidth 150Millis150/150 milliseconds: ""
+*CashDrawer1PulseWidth 160Millis160/160 milliseconds: ""
+*CashDrawer1PulseWidth 170Millis170/170 milliseconds: ""
+*CashDrawer1PulseWidth 180Millis180/180 milliseconds: ""
+*CashDrawer1PulseWidth 190Millis190/190 milliseconds: ""
+*CashDrawer1PulseWidth 200Millis200/200 milliseconds: ""
+*CashDrawer1PulseWidth 210Millis210/210 milliseconds: ""
+*CashDrawer1PulseWidth 220Millis220/220 milliseconds: ""
+*CashDrawer1PulseWidth 230Millis230/230 milliseconds: ""
+*CashDrawer1PulseWidth 240Millis240/240 milliseconds: ""
+*CashDrawer1PulseWidth 250Millis250/250 milliseconds: ""
+*CloseUI: *CashDrawer1PulseWidth
+
+*CloseGroup: CashDrawerGroup1
+
+*OpenGroup: CashDrawerGroup2/Cash Drawer 2
+
+*OpenUI *CashDrawerOpen2/Cash Drawer Open: PickOne
+*OrderDependency: 10.0 AnySetup *CashDrawerOpen2
+*DefaultCashDrawerOpen2: 0Before
+*CashDrawerOpen2 0Before/Before Printing: ""
+*CashDrawerOpen2 1After/After Printing: ""
+*CashDrawerOpen2 2BeforeAfter/Before and After Printing: ""
+*CloseUI: *CashDrawerOpen2
+
+*OpenUI *CashDrawer2PulseWidth/Cash Drawer 2 Pulse Width: PickOne
+*OrderDependency: 10.0 AnySetup *CashDrawer2PulseWidth
+*DefaultCashDrawer2PulseWidth: 70Millis70
+*CashDrawer2PulseWidth 50Millis50/50 milliseconds: ""
+*CashDrawer2PulseWidth 60Millis60/60 milliseconds: ""
+*CashDrawer2PulseWidth 70Millis70/70 milliseconds: ""
+*CashDrawer2PulseWidth 80Millis80/80 milliseconds: ""
+*CashDrawer2PulseWidth 90Millis90/90 milliseconds: ""
+*CashDrawer2PulseWidth 100Millis100/100 milliseconds: ""
+*CashDrawer2PulseWidth 110Millis110/110 milliseconds: ""
+*CashDrawer2PulseWidth 120Millis120/120 milliseconds: ""
+*CashDrawer2PulseWidth 130Millis130/130 milliseconds: ""
+*CashDrawer2PulseWidth 140Millis140/140 milliseconds: ""
+*CashDrawer2PulseWidth 150Millis150/150 milliseconds: ""
+*CashDrawer2PulseWidth 160Millis160/160 milliseconds: ""
+*CashDrawer2PulseWidth 170Millis170/170 milliseconds: ""
+*CashDrawer2PulseWidth 180Millis180/180 milliseconds: ""
+*CashDrawer2PulseWidth 190Millis190/190 milliseconds: ""
+*CashDrawer2PulseWidth 200Millis200/200 milliseconds: ""
+*CashDrawer2PulseWidth 210Millis210/210 milliseconds: ""
+*CashDrawer2PulseWidth 220Millis220/220 milliseconds: ""
+*CashDrawer2PulseWidth 230Millis230/230 milliseconds: ""
+*CashDrawer2PulseWidth 240Millis240/240 milliseconds: ""
+*CashDrawer2PulseWidth 250Millis250/250 milliseconds: ""
+*CloseUI: *CashDrawer2PulseWidth
+
+*CloseGroup: CashDrawerGroup2
+
+
+*% End

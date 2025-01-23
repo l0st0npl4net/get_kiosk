@@ -7,6 +7,7 @@ sudo mkdir /etc/sst-iiko/templates
 sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
 sudo chmod 755 -R /etc/cups/
 sudo apt-get -y install foomatic-db foomatic-db-engine
+sudo usermod -a -G lpadmin proxyuser
 
 # DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
 # clear 
@@ -19,7 +20,8 @@ sudo apt-get -y install foomatic-db foomatic-db-engine
 sudo chmod 755 -R /etc/cups/
 
 printers=(0 "REXOD" off
-        1 "SAM4S 102c" off)
+        1 "SAM4S 102c" off
+        2 "SAM4S 102c NETWORK" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -34,7 +36,8 @@ for choice in $ch
 do
       case $choice in
             0) PH="Linux_driverEP-380C";;
-            1) PH="Sam4s_Calisto_102c";;
+            1) PH="Sam4s_102c";;
+            2) PH="Sam4s_102c_Network";;
       esac
 done
 # sudo usermod -a -G lpadmin proxyuser
