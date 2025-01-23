@@ -31,7 +31,7 @@ OPTIONS=(0 "Proxyuser" off
 	4 "Terminal: Sberbank" off
       5 "Terminal: UCS" off
 	6 "ATOL - fptr10_t" off
-	7 "Shtrikh-M"
+	7 "Shtrikh-M" off
 	8 "Fiscal Printer Install" off
       9 "X11VNC install" off
       10 "X11VNC enable" off
