@@ -1,7 +1,7 @@
 #!/bin/sh
 sudo cp RasterToSPrinter /usr/lib/cups/filter/
 
-sudo chmod a+x /usr/lib/cups/filter/rasterovkp80
+sudo chmod a+x /usr/lib/cups/filter/rastertovkp80
 sync
 
 sudo lpadmin -x VKP80
