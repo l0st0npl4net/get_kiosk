@@ -1,5 +1,5 @@
 #!/bin/sh
-sudo cp RasterToSPrinter /usr/lib/cups/filter/
+sudo cp rastertovkp80 /usr/lib/cups/filter/
 
 sudo chmod a+x /usr/lib/cups/filter/rastertovkp80
 sync
