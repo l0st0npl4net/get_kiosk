@@ -20,12 +20,12 @@ sudo apt-get -y install libssl1.1
 sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
 
 sudo apt-get update
-sudo apt-get -y install sst-iiko=0.28.2.5abb5695
+sudo apt-get -y install sst-iiko=0.29.0.fcfc6ddf
 
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
 sudo cp -r app/kiosk/sst-iiko /etc
-sudo cp app/kiosk/img /opt/sst-iiko/img
+sudo cp -r app/kiosk/img/* /opt/sst-iiko/img
 sudo systemctl enable systemd-networkd-wait-online.service
 
 echo "GET KIOSK SOFTWARE setup complete!"
