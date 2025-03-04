@@ -40,8 +40,8 @@ do
             0) PH="Linux_driverEP-380C";;
             1) PH="Sam4s_102c";;
             2) PH="Sam4s_102c_Network";;
-            3) PH="Custom_VKP80II(2)";;
-            4) PH="Custom_VKP80III(3)";;
+            3) PH="Custom_VKP80II_2";;
+            4) PH="Custom_VKP80III_3";;
       esac
 done
 # sudo usermod -a -G lpadmin proxyuser
