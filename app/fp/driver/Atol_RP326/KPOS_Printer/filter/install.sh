@@ -9,7 +9,7 @@ read -p "Printer Port: " PR_PORT
 
 sudo lpadmin -x RP326
 
-sudo lpadmin -p RP326 -E -v socket://${PR_IP}:${PR_PORT} -P /tmp/get_kiosk-main/app/fp/driver/Sam4s_102c_Network/KPOS_Printer/filter/Printer80.ppd
+sudo lpadmin -p RP326 -E -v socket://${PR_IP}:${PR_PORT} -P /tmp/get_kiosk-main/app/fp/driver/Atol_RP326/KPOS_Printer/filter/Printer80.ppd
 
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer RP326
 
