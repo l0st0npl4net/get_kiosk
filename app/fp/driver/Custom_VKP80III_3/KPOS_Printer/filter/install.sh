@@ -1,7 +1,7 @@
 #!/bin/sh
 sudo cp rastertovkp80 /usr/lib/cups/filter/
 
-sudo chmod a+x /usr/lib/cups/filter/rastertovkp80
+sudo chmod a+x /usr/lib/cups/filter/rastertovkp80iii_64bit
 sync
 
 sudo lpadmin -x VKP80
