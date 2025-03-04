@@ -22,7 +22,8 @@ sudo chmod 755 -R /etc/cups/
 printers=(0 "REXOD" off
         1 "SAM4S 102c" off
         2 "SAM4S 102c NETWORK" off
-        3 "Custom VKP80" off)
+        3 "Custom VKP80II(2)" off
+        4 "Custom VKP80III(3)" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -39,7 +40,8 @@ do
             0) PH="Linux_driverEP-380C";;
             1) PH="Sam4s_102c";;
             2) PH="Sam4s_102c_Network";;
-            3) PH="Custom_VKP80";;
+            3) PH="Custom_VKP80II(2)";;
+            4) PH="Custom_VKP80III(3)";;
       esac
 done
 # sudo usermod -a -G lpadmin proxyuser
