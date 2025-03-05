@@ -24,7 +24,8 @@ printers=(0 "REXOD" off
         2 "SAM4S 102c NETWORK" off
         3 "Custom VKP80II(2)" off
         4 "Custom VKP80III(3)" off
-        5 "ATOL RP326" off)
+        5 "ATOL RP326" off
+        6 "REXOD Network" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -44,6 +45,8 @@ do
             3) PH="Custom_VKP80II_2";;
             4) PH="Custom_VKP80III_3";;
             5) PH="Atol_RP326";;
+            6) PH="Linux_driverEP-380C_Network";;
+
       esac
 done
 # sudo usermod -a -G lpadmin proxyuser
