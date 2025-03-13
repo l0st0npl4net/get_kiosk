@@ -3,14 +3,14 @@
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 
-if [ -e /etc/sst-iiko/print_settings.ini ]
+if [ -e /etc/sst-iiko/print_settings.ini ];
 then 
       echo "/etc/sst-iiko/print_settings.ini already exists!"
 else 
       sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
 fi
 
-if [ -d /etc/sst-iiko/templates ]
+if [ -d /etc/sst-iiko/templates ];
 then 
       echo "Templates already exists!"
 else
