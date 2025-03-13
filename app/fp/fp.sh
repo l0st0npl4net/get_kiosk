@@ -3,18 +3,14 @@
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
 
-if [[ -f /etc/sst-iiko/print_settings.ini ]]; then 
-      echo "/etc/sst-iiko/print_settings.ini already exists!"
+if [[ -f /etc/sst-iiko/print_settings.ini ]] || [[ -d /etc/sst-iiko/templates ]]; then 
+      echo "Already exists!"
 else 
       sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-fi
-
-if [[ -d /etc/sst-iiko/templates ]]; then 
-      echo "Templates already exists!"
-else
       sudo mkdir /etc/sst-iiko/templates
       sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
 fi
+
 
 sudo chmod 755 -R /etc/cups/
 sudo apt-get -y install foomatic-db foomatic-db-engine
