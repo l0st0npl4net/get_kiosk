@@ -15,6 +15,26 @@ sudo chmod -R 666 /dev/vcom_printer
 exit 0
 EOF
 
+cat > /etc/systemd/system/rc-local.service <<EOF
+[Unit]
+Description=/etc/rc.local
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable rc-local
+sudo systemctl restart rc-local
+
 sudo lpadmin -x SAM4S_VCOM
 sudo lpadmin -p SAM4S_VCOM -E -v serial:/dev/vcom_printe?baud=115200 -P /tmp/get_kiosk-main/app/fp/driver/Sam4s_102c_VCOM/KPOS_Printer/filter/SAM4s_gcube-102.ppd
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer SAM4S_VCOM
