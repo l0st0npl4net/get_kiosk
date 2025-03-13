@@ -31,7 +31,7 @@ sudo chmod 755 -R /etc/cups/
 printers=(0 "REXOD" off
         1 "SAM4S 102c" off
         2 "SAM4S 102c NETWORK" off
-        3 "SAM4S 102c VCOM off"
+        3 "SAM4S 102c VCOM" off
         4 "Custom VKP80II(2)" off
         5 "Custom VKP80III(3)" off
         6 "ATOL RP326" off
