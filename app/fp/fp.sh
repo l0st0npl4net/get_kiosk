@@ -2,12 +2,24 @@
 
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
-sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
-sudo mkdir /etc/sst-iiko/templates
-sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
+if [ -e /etc/sst-iiko/print_settings.ini ]
+then 
+      echo "/etc/sst-iiko/print_settings.ini already exists!"
+esle 
+      sudo cp app/fp/print_settings.ini /etc/sst-iiko/print_settings.ini
+fi
+if [ -d /etc/sst-iiko/templates ]
+then 
+      echo "Templates already exists!"
+else
+      sudo mkdir /etc/sst-iiko/templates
+      sudo cp app/fp/receipt.atdf /etc/sst-iiko/templates
+fi
 sudo chmod 755 -R /etc/cups/
 sudo apt-get -y install foomatic-db foomatic-db-engine
 sudo usermod -a -G lpadmin proxyuser
+sudo usermod -a -G dialout lp
+sudo usermod -a -G dialout proxyuser
 
 # DRV_VAR=$(dialog --stdout --fselect /tmp/get_kiosk-main/app/fp/driver/ 40 80)
 # clear 
@@ -22,10 +34,11 @@ sudo chmod 755 -R /etc/cups/
 printers=(0 "REXOD" off
         1 "SAM4S 102c" off
         2 "SAM4S 102c NETWORK" off
-        3 "Custom VKP80II(2)" off
-        4 "Custom VKP80III(3)" off
-        5 "ATOL RP326" off
-        6 "REXOD Network" off)
+        3 "SAM4S 102c VCOM"
+        4 "Custom VKP80II(2)" off
+        5 "Custom VKP80III(3)" off
+        6 "ATOL RP326" off
+        7 "REXOD Network" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -42,10 +55,11 @@ do
             0) PH="Linux_driverEP-380C";;
             1) PH="Sam4s_102c";;
             2) PH="Sam4s_102c_Network";;
-            3) PH="Custom_VKP80II_2";;
-            4) PH="Custom_VKP80III_3";;
-            5) PH="Atol_RP326";;
-            6) PH="Linux_driverEP-380C_Network";;
+            3) PH="Sam4s_102c_VCOM";;
+            4) PH="Custom_VKP80II_2";;
+            5) PH="Custom_VKP80III_3";;
+            6) PH="Atol_RP326";;
+            7) PH="Linux_driverEP-380C_Network";;
 
       esac
 done
