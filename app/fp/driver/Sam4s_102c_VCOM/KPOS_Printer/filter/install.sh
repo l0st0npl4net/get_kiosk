@@ -15,6 +15,8 @@ sudo chmod -R 666 /dev/vcom_printer
 exit 0
 EOF
 
+sudo chmod +x /etc/rc.local
+
 cat > /etc/systemd/system/rc-local.service <<EOF
 [Unit]
 Description=/etc/rc.local
