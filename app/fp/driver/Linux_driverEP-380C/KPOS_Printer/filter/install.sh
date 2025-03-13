@@ -11,7 +11,7 @@ sync
 
 sudo lpadmin -x REXOD
 
-PR_URI=$(sudo lpinfo -v | grep direct)
+PR_URI=$(sudo lpinfo -v | grep "direct usb")
 sudo lpadmin -p REXOD -E -v ${PR_URI##* } -P /tmp/get_kiosk-main/app/fp/driver/Linux_driverEP-380C/KPOS_Printer/ppd/KPOS_80c.ppd
 
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer REXOD
