@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 sudo apt-get -y install cups
 sudo cp app/fp/cupsd.conf /etc/cups/cupsd.conf
