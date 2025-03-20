@@ -38,5 +38,5 @@ sudo systemctl enable rc-local
 sudo systemctl restart rc-local
 
 sudo lpadmin -x VKPIII_VCOM
-sudo lpadmin -x VKPIII_VCOM -E -v serial:/dev/vcom_printer?baud=115200 -P /tmp/get_kiosk-main/app/fp/driver/Custom_VKP80III_3_VCOM/KPOS_Printer/filter/VKP80.ppd
+sudo lpadmin -p VKPIII_VCOM -E -v serial:/dev/vcom_printer?baud=115200 -P /tmp/get_kiosk-main/app/fp/driver/Custom_VKP80III_3_VCOM/KPOS_Printer/filter/VKP80.ppd
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer VKPIII_VCOM
