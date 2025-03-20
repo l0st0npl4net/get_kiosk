@@ -34,8 +34,9 @@ printers=(0 "REXOD" off
         3 "SAM4S 102c VCOM" off
         4 "Custom VKP80II(2)" off
         5 "Custom VKP80III(3)" off
-        6 "ATOL RP326" off
-        7 "REXOD Network" off)
+        6 "Custom VKP80II(2) VCOM" off
+        7 "ATOL RP326" off
+        8 "REXOD Network" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -55,8 +56,9 @@ do
             3) PH="Sam4s_102c_VCOM";;
             4) PH="Custom_VKP80II_2";;
             5) PH="Custom_VKP80III_3";;
-            6) PH="Atol_RP326";;
-            7) PH="Linux_driverEP-380C_Network";;
+            6) PH="Custom_VKP80II_2_VCOM";;
+            7) PH="Atol_RP326";;
+            8) PH="Linux_driverEP-380C_Network";;
 
       esac
 done
