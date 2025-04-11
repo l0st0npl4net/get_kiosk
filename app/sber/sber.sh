@@ -20,7 +20,7 @@ do
       case $choice in
             0) PH="pax300";;
             1) PH="kozen";;
-            3) PH="verifone";;
+            2) PH="verifone";;
       esac
 done
 
