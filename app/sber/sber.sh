@@ -22,7 +22,7 @@ do
             0) PH="pax300";;
             1) PH="kozen";;
             2) PH="verifone";;
-            3) PH="paxSP300";;
+            3) PH="paxSP30";;
       esac
 done
 
