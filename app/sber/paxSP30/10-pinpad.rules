@@ -1,0 +1,1 @@
+KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="9908", ATTRS{idProduct}=="9030", SYMLINK+="pinpad"
