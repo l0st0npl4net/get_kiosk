@@ -5,7 +5,8 @@ sudo chmod 777 -R /opt/sst-iiko/
 terminals=(0 "PAX 300" off
         1 "KOZEN (TOUCH)" off
         2 "VERIFONE" off
-        3 "PAX SP30" off)
+        3 "PAX SP30" off
+        4 "PAX IM20" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -23,6 +24,7 @@ do
             1) PH="kozen";;
             2) PH="verifone";;
             3) PH="paxSP30";;
+            4) PH="paxIM20";;
       esac
 done
 
