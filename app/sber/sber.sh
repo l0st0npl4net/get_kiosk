@@ -28,7 +28,7 @@ do
       esac
 done
 
-sudo cp -r app/sber/"$PH"/platforms /opt/sst-iiko/platforms
+sudo cp -r app/sber/"$PH"/platforms /opt/sst-iiko/
 
 sudo chmod 777 -R /opt/sst-iiko/platforms/
 
