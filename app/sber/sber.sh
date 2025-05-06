@@ -26,7 +26,7 @@ do
             2) PH="verifone";;
             3) PH="paxSP30";;
             4) PH="paxIM20";;
-            5) PH="ipp320(sagem))";;
+            5) PH="ipp320(sagem)";;
       esac
 done
 
