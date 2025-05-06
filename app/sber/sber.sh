@@ -6,7 +6,8 @@ terminals=(0 "PAX 300" off
         1 "KOZEN (TOUCH)" off
         2 "VERIFONE" off
         3 "PAX SP30" off
-        4 "PAX IM20" off)
+        4 "PAX IM20" off
+        5 "Ingenica IPP320 (Sagem)" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -25,6 +26,7 @@ do
             2) PH="verifone";;
             3) PH="paxSP30";;
             4) PH="paxIM20";;
+            5) PH="ipp320(sagem))";;
       esac
 done
 
