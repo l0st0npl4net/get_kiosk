@@ -16,3 +16,5 @@ sudo lpadmin -p REXOD -E -v ${PR_URI##* } -P /tmp/get_kiosk-main/app/fp/driver/L
 
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer REXOD
 
+#sudo lpadmin -p REXOD -E -v serial:/dev/ttyS0?baud=19200+bits=8+parity=none+flow=none -P /tmp/get_kiosk-main/app/fp/driver/Linux_driverEP-380C/KPOS_Printer/ppd/KPOS_80c.ppd
+
