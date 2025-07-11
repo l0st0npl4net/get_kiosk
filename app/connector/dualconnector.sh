@@ -14,7 +14,8 @@ sudo /tmp/DC_Linux_Service/service.sh install
 sudo cp -r /tmp/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Documents
 
 terminals=(0 "PAX 300" off
-        1 "VERIFONE" off)
+        1 "VERIFONE" off
+        2 "P8 Unitoid" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -30,6 +31,7 @@ do
       case $choice in
             0) PH="pax300";;
             1) PH="verifone";;
+            2) PH="p8_unitoid";;
       esac
 done
 
