@@ -1,7 +1,7 @@
 #! /bin/sh
 
-DEBIAN=$(cat /etc/debian_version)
-SOURCE=$(($DEBIAN / 1))
+DEBIAN=$(cat /etc/debian_version | tee)
+SOURCE=$(printf "%.0f" "$DEBIAN")
 
 #Заходим под рутом и добавляем пользователя proxyuser
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
