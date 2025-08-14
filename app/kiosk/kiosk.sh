@@ -1,5 +1,8 @@
 #! /bin/sh
 
+DEBIAN=$(cat /etc/debian_version)
+SOURCE=$(($DEBIAN / 1))
+
 #Заходим под рутом и добавляем пользователя proxyuser
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
 sudo mkdir /home/proxyuser/.ssh 
@@ -17,7 +20,8 @@ sudo apt-get -y install libicu67
 sudo apt-get -y install libtiff5
 sudo apt-get -y install libssl1.1
 
-sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
+
+sudo cp app/kiosk/sources/d"$SOURCE"sources.txt /etc/apt/sources.list
 
 sudo apt-get update
 

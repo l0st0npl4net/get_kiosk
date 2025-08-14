@@ -75,7 +75,10 @@ done
 # read -p "Printer Name: " PR_NAME
 
 # sudo lpadmin -p $PR_NAME -E -v ${PR_URI##* } -m ${PR_DRV%% *}
+# sudo lp -d SAM4S /usr/share/cups/data/default-testpage.pdf
+# sudo lp -d SAM4S_VCOM /usr/share/cups/data/default-testpage.pdf
 # sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
+# sudo lp -d VKP80 /usr/share/cups/data/default-testpage.pdf
 
 # echo "Printer dealing with his first job..."
 # sleep 20
