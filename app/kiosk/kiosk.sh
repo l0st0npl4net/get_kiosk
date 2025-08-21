@@ -3,10 +3,15 @@
 #Заходим под рутом и добавляем пользователя proxyuser
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
 sudo mkdir /home/proxyuser/.ssh 
-sudo cp app/kiosk/authorized_keys /home/proxyuser/.ssh/authorized_keys
+
+read -p "Please, enter Aauthorized key: " KEY
+mkdir /home/proxyuser/.ssh && echo $KEY | sudo tee -a /home/proxyuser/.ssh/authorized_keys
 
 
 #Устанавливаем и настраиваем sst-iiko
+DEBIAN=$(cat /etc/debian_version | tee)
+SOURCE=$(printf "%.0f" "$DEBIAN")
+
 sudo apt-get -y install gnupg 
 echo "deb http://repo.open-s.info/ buster main trunk" | sudo tee -a /etc/apt/sources.list.d/bos.list
 wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo apt-key add
@@ -17,10 +22,17 @@ sudo apt-get -y install libicu67
 sudo apt-get -y install libtiff5
 sudo apt-get -y install libssl1.1
 
-sudo cp app/kiosk/sources/d12sources.txt /etc/apt/sources.list
+sudo cp app/kiosk/sources/d"$SOURCE"sources.txt /etc/apt/sources.list
 
 sudo apt-get update
-sudo apt-get -y install sst-iiko=0.30.1
+
+read -p "SST-IIKO Version [Enter for latest release]: " VERSION
+
+if [ -z "$VERSION"]; then
+    sudo apt-get -y install sst-iiko 
+else 
+    sudo apt-get -y install sst-iiko="$VERSION";
+fi
 
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
