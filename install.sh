@@ -46,7 +46,6 @@ choices=$(dialog --separate-output \
                 --checklist "$MENU" \
                 $HEIGHT $WIDTH $CHOICE_HEIGHT \
                   "${OPTIONS[@]}" 2>&1 >/dev/tty)
-clear
 
 
 for choice in $choices
