@@ -8,7 +8,12 @@ echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyu
 sudo mkdir /home/proxyuser/.ssh 
 
 read -p "Please, enter Aauthorized key: " KEY
-sudo echo $KEY | sudo tee -a /home/proxyuser/.ssh/authorized_keys
+
+cat > authorized_keys <<EOF
+$KEY
+EOF
+
+sudo mv authorized_keys /home/proxyuser/..ssh/authorized_keys
 
 #Устанавливаем и настраиваем sst-iiko
 sudo apt-get -y install gnupg 
