@@ -1,12 +1,15 @@
 #! /bin/sh
 
 #Заходим под рутом и добавляем пользователя proxyuser
+read -p "Please, enter Aauthorized key: " KEY
 echo "proxyuser ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_proxyuser-nopasswd
 sudo mkdir /home/proxyuser/.ssh 
 
 read -p "Please, enter Aauthorized key: " KEY
-mkdir /home/proxyuser/.ssh && echo $KEY | sudo tee -a /home/proxyuser/.ssh/authorized_keys
 
+cat > authorized_keys <<EOF
+$KEY
+EOF
 
 #Устанавливаем и настраиваем sst-iiko
 DEBIAN=$(cat /etc/debian_version | tee)
