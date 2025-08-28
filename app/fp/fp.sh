@@ -37,7 +37,8 @@ printers=(0 "REXOD" off
         6 "Custom VKP80II(2) VCOM" off
         7 "Custom VKP80III(3) VCOM" off
         8 "ATOL RP326" off
-        9 "REXOD Network" off)
+        9 "REXOD Network" off
+        10 "POScenter RP-100 USE" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -61,6 +62,7 @@ do
             7) PH="Custom_VKP80III_3_VCOM";;
             8) PH="Atol_RP326";;
             9) PH="Linux_driverEP-380C_Network";;
+            10) PH="POScenter_RP-100_VCOM";;
 
       esac
 done
