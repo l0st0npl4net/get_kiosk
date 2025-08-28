@@ -23,7 +23,7 @@ ch=$(dialog --separate-output \
                 --checklist "Выберите нужную модель(SPACE - выбрать):" \
                 30 45 20 \
                   "${terminals[@]}" 2>&1 >/dev/tty)
-clear
+
 PH=/
 
 for choice in $ch
