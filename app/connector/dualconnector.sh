@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-sudo apt-get -y install openjdk-17-jre
+sudo apt-get -y install openjdk-21-jre
 
 sudo cp -r app/connector/DC_Linux_Service /tmp
 
