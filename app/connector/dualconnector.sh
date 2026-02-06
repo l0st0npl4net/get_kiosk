@@ -16,7 +16,8 @@ sudo cp -r /tmp/DC_Linux_Service/Documents /home/proxyuser/DC_Linux_Service/Docu
 
 terminals=(0 "PAX 300" off
         1 "VERIFONE" off
-        2 "P8 Unitoid" off)
+        2 "P8 Unitoid" off
+        3 "PAX CMF8 off")
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -33,6 +34,7 @@ do
             0) PH="pax300";;
             1) PH="verifone";;
             2) PH="p8_unitoid";;
+            3) PH="pax_cmf8";;
       esac
 done
 
