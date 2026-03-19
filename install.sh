@@ -25,20 +25,21 @@ fi
 dialog --textbox README.md 50 120
 
 OPTIONS=(
-      0 "Proxyuser" off
-      1 "OpenVPN" off 
+      0 "Set proxyuser" off
+      1 "Setup VPN" off 
       2 "Change Hostname" off
-      3 "Get-Kiosk" off
-      4 "Terminal: INPASS DualConnector" off
-	5 "Terminal: Sberbank" off
-      6 "Terminal: UCS" off
-	7 "ATOL - fptr10_t" off
-	8 "Shtrikh-M" off
-	9 "Fiscal Printer Install" off
-      10 "X11VNC install" off
-      11 "X11VNC enable" off
-      12 "X11VNC disable" off
-      13 "Zabbix" off)
+      3 "Install Get-Kiosk" off
+      4 "Screensaver disable" off
+      5 "Terminal: INPASS DualConnector" off
+	6 "Terminal: Sberbank" off
+      7 "Terminal: UCS" off
+	8 "Fiscal: ATOL - fptr10_t" off
+	9 "Fiscal: Shtrikh-M" off
+	10 "Fiscal Printer Install" off
+      11 "X11VNC install" off
+      12 "X11VNC enable" off
+      13 "X11VNC disable" off
+      14 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -52,19 +53,20 @@ for choice in $choices
 do
       case $choice in
             0) echo "app/proxyuser.sh" >> package.sh;; 
-            1) echo "app/vpn/vpn.sh" >> package.sh;; 
+            1) echo "app/vpn.sh" >> package.sh;; 
             2) echo "app/hostname.sh" >> package.sh;; 
             3) echo "app/kiosk/check_sst.sh" >> package.sh;;
-            4) echo "app/connector/dualconnector.sh" >> package.sh;;
-            5) echo "app/sber/sber.sh" >> package.sh;;
-            6) echo "app/ucs/ucs.sh" >> package.sh;; 
-            7) echo "app/atol/atol.sh" >> package.sh;; 
-            8) echo "app/shtrih-m/shtrih.sh" >> package.sh;;
-            9) echo "app/fp/fp.sh" >> package.sh;; 
-            10) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
-            11) echo "app/vnc/vnc_start.sh" >> package.sh;;
-            12) echo "app/vnc/vnc_stop.sh" >> package.sh;; 
-            13) echo "app/zabbix/zabbix.sh" >> package.sh;; 
+            4) echo "app/screensaver.sh" >> package.sh;;
+            5) echo "app/connector/dualconnector.sh" >> package.sh;;
+            6) echo "app/sber/sber.sh" >> package.sh;;
+            7) echo "app/ucs/ucs.sh" >> package.sh;; 
+            8) echo "app/atol.sh" >> package.sh;; 
+            9) echo "app/shtrih-m/shtrih.sh" >> package.sh;;
+            10) echo "app/fp/fp.sh" >> package.sh;; 
+            11) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
+            12) echo "app/vnc/vnc_start.sh" >> package.sh;;
+            13) echo "app/vnc/vnc_stop.sh" >> package.sh;; 
+            14) echo "app/zabbix/zabbix.sh" >> package.sh;; 
             
       esac
 done
