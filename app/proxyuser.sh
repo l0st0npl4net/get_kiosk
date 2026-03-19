@@ -1,5 +1,6 @@
 #! /bin/sh
 
+
 sudo useradd -p proxyuser -s /bin/bash -m proxyuser
 sudo echo 'proxyuser:proxyuser' | sudo chpasswd
 mkdir /home/proxyuser

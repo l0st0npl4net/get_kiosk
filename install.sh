@@ -1,12 +1,13 @@
 #! /bin/bash
 
+
 HEIGHT=30
 WIDTH=45
 CHOICE_HEIGHT=20
 BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
-LOG=logs/install.log
+LOG=kiosk_install.log
 DIR=/tmp/get_kiosk-main
 LOG_DIR=/tmp/get_kiosk-main/logs
 
@@ -19,27 +20,24 @@ if [ -d "$LOG_DIR" ];
 then
       echo "Get Kios Installation Logs" > $LOG
 else
-      mkdir $LOG_DIR && echo "Get Kios Installation Logs" > $LOG
+      mkdir $LOG_DIR && echo "Get Kiosk Installation Logs" > $LOG
 fi
 
-dialog --textbox README.md 50 120
+dialog --textbox README.md 100 120
 
 OPTIONS=(
       0 "Set proxyuser" off
       1 "Setup VPN" off 
       2 "Change Hostname" off
-      3 "Install Get-Kiosk" off
+      3 "Get-Kiosk setup" off
       4 "Screensaver disable" off
-      5 "Terminal: INPASS DualConnector" off
-	6 "Terminal: Sberbank" off
-      7 "Terminal: UCS" off
-	8 "Fiscal: ATOL - fptr10_t" off
-	9 "Fiscal: Shtrikh-M" off
-	10 "Fiscal Printer Install" off
-      11 "X11VNC install" off
-      12 "X11VNC enable" off
-      13 "X11VNC disable" off
-      14 "Zabbix" off)
+      5 "Terminal setup" off
+	6 "Fiscal setup" off
+	7 "Printer setup" off
+      8 "VNC: install" off
+      9 "VNC: enable" off
+      10 "VNC: disable" off
+      11 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \
@@ -55,18 +53,15 @@ do
             0) echo "app/proxyuser.sh" >> package.sh;; 
             1) echo "app/vpn.sh" >> package.sh;; 
             2) echo "app/hostname.sh" >> package.sh;; 
-            3) echo "app/kiosk/check_sst.sh" >> package.sh;;
+            3) echo "app/sst/check.sh" >> package.sh;;
             4) echo "app/screensaver.sh" >> package.sh;;
-            5) echo "app/connector/dualconnector.sh" >> package.sh;;
-            6) echo "app/sber/sber.sh" >> package.sh;;
-            7) echo "app/ucs/ucs.sh" >> package.sh;; 
-            8) echo "app/atol.sh" >> package.sh;; 
-            9) echo "app/shtrih-m/shtrih.sh" >> package.sh;;
-            10) echo "app/fp/fp.sh" >> package.sh;; 
-            11) echo "app/vnc/vnc_setup.sh" >> package.sh;; 
-            12) echo "app/vnc/vnc_start.sh" >> package.sh;;
-            13) echo "app/vnc/vnc_stop.sh" >> package.sh;; 
-            14) echo "app/zabbix/zabbix.sh" >> package.sh;; 
+            5) echo "app/terminals/setup.sh" >> package.sh;;
+            6) echo "app/fiscal/setup.sh" >> package.sh;; 
+            7) echo "app/printer/setup.sh" >> package.sh;; 
+            8) echo "app/vnc/setup.sh" >> package.sh;; 
+            9) echo "app/vnc/enable.sh" >> package.sh;;
+            10) echo "app/vnc/disable.sh" >> package.sh;; 
+            11) echo "app/zabbix/zabbix.sh" >> package.sh;; 
             
       esac
 done
