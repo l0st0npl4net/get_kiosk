@@ -225,7 +225,6 @@ do
 done
 
 
-source app/printer/vcom.env
 sudo cp raster_to_printer /usr/lib/cups/filter/
 sudo chmod a+x /usr/lib/cups/filter/raster_to_printer
 sync
@@ -259,6 +258,7 @@ if [ "$CONNECTION" = "USB"]; then
     PRINTER_URI=${DIRECT_URI##* }
 
 elif ["$CONNECTION" = "VCOM"]; then
+    source app/printer/vcom.env
     sudo echo ${!printer} >> /etc/udev/rules.d/printer.rules
     cat << EOF > /etc/rc.local
 #!/bin/sh
