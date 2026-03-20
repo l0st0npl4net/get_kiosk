@@ -1,0 +1,82 @@
+log POSMNEMO.DAT eod1
+7052_FR GZRPT
+
+if [ -f ./data/SLIPEOD.OLD ]
+	then 
+		mv ./data/SLIPEOD.OLD ./REPORT.TXT
+		7052_FR TXTPRN
+		rm ./REPORT.TXT
+fi
+
+if [ -f ./ucseod.ctl ]
+then
+	sleep $REG
+	sleep $REG
+	sleep $REG
+	7052_UCSEFTPOS FINALIZE
+	rm -f ./ucseod.ctl
+	pos_xfer ucsfinalr$REG.001 safe
+	cp -f ucsfinalr$REG.001 data/ucsfinalr$REG.OLD
+	pos_xfer ucsefttra$REG.001 safe
+	cp -f ucsefttra$REG.001 data/ucsefttra$REG.OLD
+fi
+
+if [ -f ./trposeod.ctl ]
+then
+#	sleep $REG
+#	sleep $REG
+#	sleep $REG
+	7052_TRPOS FINALIZE
+	rm -f ./trposeod.ctl
+	pos_xfer trposfinalr$REG.001 safe
+	
+	pos_xfer data/TRPOS_POS_JRN_$REG.001 safe
+	cp -f data/TRPOS_POS_JRN_$REG.001 data/TRPOS_POS_JRN_$REG.OLD
+	pos_xfer data/TRPOS_DIFFERENCE_$REG.001 safe
+	cp -f data/TRPOS_DIFFERENCE_$REG.001 data/TRPOS_DIFFERENCE_$REG.OLD
+	pos_xfer data/TRPOS_TERM_JRN_$REG.001 safe
+	cp -f data/TRPOS_TERM_JRN_$REG.001 data/TRPOS_TERM_JRN_$REG.OLD
+fi
+
+
+if [ -s data/ucs_bonus$REG.001 ]
+then
+	pos_xfer data/ucs_bonus$REG.001 safe
+	mv data/ucs_bonus$REG.001 data/ucs_bonus$REG.OLD
+fi
+
+if  [ -s data/eannf_$REG.001 ]
+then
+	pos_xfer data/eannf_$REG.001 safe
+	mv data/eannf_$REG.001 data/eannf_$REG.OLD
+fi
+
+if [ -s data/EFTPOS_$REG.001 ]
+then
+	pos_xfer data/EFTPOS_$REG.001 safe
+	mv data/EFTPOS_$REG.001 data/EFTPOS_$REG.OLD
+fi
+
+if [ -s data/TRPOS_$REG.001 ]
+then
+	pos_xfer data/TRPOS_$REG.001 safe
+	mv data/TRPOS_$REG.001 data/TRPOS_$REG.OLD
+fi
+
+if [ -f plugins/arcus/settings/cpd.sh ]
+then
+	sleep $REG
+	sleep $REG
+	sleep $REG
+	log POSMNEMO.DAT t107
+	7052_ARCUS CLOSE
+	cp -f REPORT.TXT data/arcuseod$REG.001
+	pos_xfer data/arcuseod$REG.001 safe
+	rm REPORT.TXT
+	NOW=`date "+%Y%m%d_%H%M"`
+mv /home/reg/arcus/cpd.log /home/reg/arcus/cpd_$NOW.log
+fi
+
+mv ZReport.xml ZReport_$REG.001
+pos_xfer ZReport_$REG.001 safe
+mv ZReport_$REG.001 data/ZReport_$REG.OLD

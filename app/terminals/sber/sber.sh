@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-sudo cp -r app/terminals/sber/"$PH"/platforms /opt/sst-iiko/
+sudo cp -r app/terminals/sber/platforms /opt/sst-iiko/
 
 sudo chmod 777 -R /opt/sst-iiko/
 

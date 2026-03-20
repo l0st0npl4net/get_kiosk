@@ -1,0 +1,43 @@
+#!/bin/sh
+
+SBER ()
+{
+log POSMNEMO.DAT f002
+7052_SBER DISPMENU
+}
+
+UCSEFTPOS ()
+{
+log POSMNEMO.DAT t006
+7052_UCSEFTPOS DISPMENU
+}
+
+TRPOS ()
+{
+log POSMNEMO.DAT t103
+7052_TRPOS DISPMENU
+}
+
+ARCUS ()
+{
+7052_ARCUS DISPMENU
+}
+
+
+DISPMENU ()
+{
+ while [ 1 ]; do
+    52menu -n 7052_TERM.SCR
+    case ${?} in
+      0)   break;;
+      1)   SBER;;
+      2)   UCSEFTPOS;;
+      3)   TRPOS;;
+      4)   ARCUS;;
+      *)   ;;
+    esac
+ done
+ exit $?
+}
+
+${1}

@@ -8,7 +8,8 @@ INTEGRATION=/
 
 terminal_list=(
         0 "Sberbank" off
-        1 "Inpas" off)
+        1 "Inpas" off
+        2 "Arcus" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -23,6 +24,7 @@ do
       case $choice in
             0) INTEGRATION=$SBERBANK;;
             1) INTEGRATION=$INPAS;;
+            2) INTEGRATION=$ARCUS;;
       esac
 done
 

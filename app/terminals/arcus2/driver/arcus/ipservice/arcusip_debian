@@ -1,0 +1,85 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:		arcusip
+# Description:		Arcus IP Service
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Required-Start:	networking
+# Required-Stop:
+# Short-Description:	Start or stop arcusip service
+### END INIT INFO
+
+# Load VERBOSE and rc variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions
+. /lib/lsb/init-functions
+
+NAME=arcusip
+
+SERVICE_DIR=/home/reg/arcus/ipservice
+CONF_FILE=$SERVICE_DIR/arcus_ip_service.conf
+
+DAEMON=$SERVICE_DIR/ipservice
+PIDFILE=/var/run/arcusipservice.pid
+
+#if [ -f /etc/init.d/functions ]; then
+#    /etc/init.d/functions
+#elif [ -f /etc/rc.d/init.d/functions ]; then
+#    /etc/rc.d/init.d/functions
+#else
+#    exit 0
+#fi
+
+
+start(){
+	if [ -e $PIDFILE ]; then
+		status_of_proc -p $PIDFILE $DAEMON "$NAME process" && status="0" || status="$?"
+		if [ $status = "0" ]; then
+			exit
+		fi
+	fi
+	log_daemon_msg "Starting Arcus IP Service" "$NAME"
+	if start-stop-daemon --start --quiet --oknodo --pidfile $PIDFILE --exec $DAEMON -- $CONF_FILE ; then
+		log_end_msg 0
+	else
+		log_end_msg 1
+	fi
+}
+
+stop(){
+	if [ -e $PIDFILE ]; then
+		status_of_proc -p $PIDFILE $DAEMON "Arcus IP service" && status="0" || status="$?"
+		if [ "$status" = 0 ]; then
+			log_daemon_msg "Stopping Arcus IP Service" "$NAME"
+			start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+			/bin/rm -rf $PIDFILE
+			log_end_msg 0
+		fi
+	else
+		log_daemon_msg "Arcus IP Service not running"
+		log_end_msg 0
+	fi
+
+}
+
+
+case "$1" in start)
+    start
+    exit 0
+    ;;
+stop)
+    stop
+    exit 0
+    ;;
+restart)
+    stop
+    sleep 2
+    start
+    exit 0
+    ;;
+esac
+
+echo $"Usage: $0 {start|stop|restart}"
+exit 1
+esac
