@@ -8,7 +8,7 @@ INTEGRATION=/
 
 terminal_list=(
         0 "Sberbank" off
-        7 "Inpas" off)
+        1 "Inpas" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \

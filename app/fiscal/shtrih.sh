@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-RULE="KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0083", SYMLINK+="printer""
+RULE="KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0083", SYMLINK+="shtrih""
 sudo echo $RULE >> /etc/udev/rules.d/shtrih.rules
 
 sudo crudini --set  /etc/sst-iiko/settings.ini FP password 30 \

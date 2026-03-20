@@ -1,1 +1,0 @@
-KERNEL=="ttyACM0", SUBSYSTEM=="tty", SYMLINK+="ttyS8”
