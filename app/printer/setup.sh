@@ -135,6 +135,7 @@ EOF
 if [[ -f /etc/sst-iiko/print_settings.ini ]] || [[ -d /etc/sst-iiko/templates ]]; then 
       echo "Already exists!"
 else 
+      echo > /etc/sst-iiko/print_settings.ini
       cat << EOF > /etc/sst-iiko/print_settings.ini
 [Templates]
 List/size = 1
@@ -154,6 +155,7 @@ Printer = UNSET
 Line-width = 80
 EOF
       sudo mkdir /etc/sst-iiko/templates
+      echo > /etc/sst-iiko/templates/receipt.rtdf
       cat << EOF > /etc/sst-iiko/templates/receipt.rtdf
 <center><h1>Кассовый чек</h1></center>
 <br>
@@ -207,7 +209,7 @@ ch=$(dialog --separate-output \
                 --title "Внедрение: Чековый принтер" \
                 --checklist "Выберите нужную модель(SPACE - выбрать):" \
                 30 45 20 \
-                  "${printers[@]}" 2>&1 >/dev/tty)
+                  "${printers_list[@]}" 2>&1 >/dev/tty)
 clear
 printer=/
 
