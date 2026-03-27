@@ -8,10 +8,10 @@ BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
 LOG=kiosk_install.log
-DIR=/tmp
-LOG_DIR=/tmp/logs
+DIR=/tmp/get_kiosk-lite
+LOG_DIR=/tmp/get_kiosk-lite/logs
 
-
+cd $DIR
 sudo rm ./package.sh
 echo "#! /bin/bash" >> package.sh
 
