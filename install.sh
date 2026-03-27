@@ -12,7 +12,6 @@ DIR=/tmp
 LOG_DIR=/tmp/logs
 
 
-cd $DIR
 sudo rm ./package.sh
 echo "#! /bin/bash" >> package.sh
 
