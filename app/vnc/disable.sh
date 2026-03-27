@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#Остановка
+
 sudo systemctl disable x11vnc.service
 sudo systemctl disable xorg.service
 sudo systemctl disable xsst-iiko

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#Установка
+
 sudo apt-get -y install x11vnc
 sudo x11vnc -storepasswd "passw0rd" /etc/x11vnc.pass
 

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#Запуск
+
 sudo systemctl enable x11vnc.service
 sudo systemctl enable xorg.service
 sudo systemctl enable xsst-iiko
