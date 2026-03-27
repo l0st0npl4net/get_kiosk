@@ -65,6 +65,6 @@ do
       esac
 done
 
-
+cat package.sh
 sudo chmod +x ./package.sh
 sudo ./package.sh | tee $LOG
