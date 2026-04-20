@@ -300,7 +300,7 @@ elif [ "$CONNECTION" == "NETWORK" ]; then
 fi
 
 sudo lpadmin -x $printer
-sudo lpadmin -p SAM4S -E -v $PRINTER_URI -P /tmp/get_kiosk-lite/app/printer/driver/$printer/*.ppd
+sudo lpadmin -p $printer -E -v $PRINTER_URI -P /tmp/get_kiosk-lite/app/printer/driver/$printer/*.ppd
 
 # sudo lp -d SAM4S /usr/share/cups/data/default-testpage.pdf
 # sudo lp -d SAM4S_VCOM /usr/share/cups/data/default-testpage.pdf
@@ -308,7 +308,6 @@ sudo lpadmin -p SAM4S -E -v $PRINTER_URI -P /tmp/get_kiosk-lite/app/printer/driv
 # sudo lp -d VKP80 /usr/share/cups/data/default-testpage.pdf
 
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer $printer \
-             --set  /etc/sst-iiko/settings.ini FP fiscal\type UNSET \
              --set  /etc/sst-iiko/settings.ini FP printer\SETTINGS_PATH /etc/sst-iiko/print_settings.ini \
              --set  /etc/sst-iiko/settings.ini FP printer\TEMPLATE_PATH /etc/sst-iiko/templates/ \
              --set  /etc/sst-iiko/settings.ini FP printer\advancedTemplates true \
