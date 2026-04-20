@@ -10,7 +10,7 @@
 *cupsVersion:           1.1
 *cupsManualCopies:      True
 *cupsModelNumber:       80
-*cupsFilter:            "application/vnd.cups-raster 0 rastertort58_80"
+*cupsFilter:            "application/vnd.cups-raster 0 raster_to_printer"
 *ModelName:             "Printer80"
 *ShortNickName:         "Printer80"
 *NickName:              "Printer80"

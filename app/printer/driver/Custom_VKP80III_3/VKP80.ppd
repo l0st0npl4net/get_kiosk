@@ -10,7 +10,7 @@
 *cupsVersion:           1.1
 *cupsManualCopies:      True
 *cupsModelNumber:       200
-*cupsFilter:            "application/vnd.cups-raster 0 rastertovkp80iii_64bit"
+*cupsFilter:            "application/vnd.cups-raster 0 raster_to_printer"
 *ModelName:             "VKP80III"
 *ShortNickName:         "VKP80III"
 *NickName:              "VKP80III 64bit rel 1.03 (S.Code:01DV0000000145)"

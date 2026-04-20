@@ -10,7 +10,7 @@
 *cupsVersion:           1.1
 *cupsManualCopies:      True
 *cupsModelNumber:       200
-*cupsFilter:            "application/vnd.cups-raster 0 rastertovkp80"
+*cupsFilter:            "application/vnd.cups-raster 0 raster_to_printer"
 *ModelName:             "VKP80"
 *ShortNickName:         "VKP80"
 *NickName:              "VKP80"

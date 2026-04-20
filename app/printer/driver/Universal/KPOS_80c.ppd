@@ -23,7 +23,7 @@
 *cupsVersion: 2.1
 *cupsModelNumber: 1
 *cupsManualCopies: True
-*cupsFilter: "application/vnd.cups-raster 100 rastertopos"
+*cupsFilter: "application/vnd.cups-raster 100 raster_to_printer"
 *cupsLanguages: "en"
 *OpenUI *PageSize/Media Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize

@@ -47,7 +47,7 @@
 
 
 *%cupsFilter: "application/vnd.cups-pdf  0 pdftoellix"
-*cupsFilter: "application/vnd.cups-raster 50 /usr/lib/cups/filter/RasterToSPrinter"
+*cupsFilter: "application/vnd.cups-raster 50 /usr/lib/cups/filter/raster_to_printer"
 
 
 
