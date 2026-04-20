@@ -227,7 +227,7 @@ do
 done
 
 
-sudo cp app/printer/"$printer"/raster_to_printer /usr/lib/cups/filter/
+sudo cp app/printer/"$printer"/driver/raster_to_printer /usr/lib/cups/filter/
 sudo chmod a+x /usr/lib/cups/filter/raster_to_printer
 sync
 
