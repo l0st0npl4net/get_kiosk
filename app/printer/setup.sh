@@ -255,11 +255,11 @@ do
       esac
 done
 
-if [ "$CONNECTION" = "USB"]; then
+if [ "$CONNECTION" = "USB" ]; then
     DIRECT_URI=$(sudo lpinfo -v | grep "direct usb")
     PRINTER_URI=${DIRECT_URI##* }
 
-elif ["$CONNECTION" = "VCOM"]; then
+elif [ "$CONNECTION" = "VCOM" ]; then
     source app/printer/vcom.env
     sudo echo ${!printer} >> /etc/udev/rules.d/printer.rules
     cat << EOF > /etc/rc.local
@@ -293,7 +293,7 @@ EOF
     sudo systemctl restart rc-local
     PRINTER_URI=serial:/dev/printer?baud=115200
 
-elif ["$CONNECTION" = "NETWORK"]; then
+elif [ "$CONNECTION" = "NETWORK" ]; then
     read -p "Printer IP: " IP
     read -p "Printer Port: " PORT
     PRINTER_URI=socket://${IP}:${PORT}
