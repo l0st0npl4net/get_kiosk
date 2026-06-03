@@ -1,0 +1,426 @@
+#!/bin/bash
+
+ARCUSPATH="/home/reg/arcus/"
+LOG=$ARCUSPATH""cpd.log
+RESULT_CHEQ=cheq.out
+SPOOLFILE=$ARCUSPATH""spool.txt
+ARCUSCHEQFILE=$ARCUSPATH""cpd.out
+
+CURRENCY_CODE=643
+#PAYMENT_IS_RETURN="false"
+#PAYMENT_AMOUNT=1234
+#IS_ONLINE="true"
+#RECEIPT_NUMBER="472"
+#EFT_TYPE="1"
+
+
+
+if [ -z "$ARCUS_CHEQ_CNT" ]; then
+    ARCUS_CHEQ_CNT=2
+fi
+
+if [ -z "$RECORD_FILE_NAME" ]; then
+    RECORD_FILE_NAME=record.txt
+fi
+
+if [ -z "$RESPONSE_FILE_NAME" ]; then
+    RESPONSE_FILE_NAME=response.txt
+fi
+
+
+function log {
+    if [ -n $LOG ]; then
+        NOW=`date "+%Y-%m-%d %H:%M:%S"`
+	echo "$NOW - $1" >> $LOG
+    fi
+}
+
+
+log "***************************"
+
+if [ -z "$EFT_TYPE" ]; then
+    log "EFT_TYPE not set"
+else 
+    if [ $EFT_TYPE != 0 ]; then
+	PORT_NUM=$((EFT_TYPE-1))
+	ARCUS_PORT="/dev/ttyS"$PORT_NUM
+	log "Using port $ARCUS_PORT"
+#	echo $ARCUS_PORT
+    fi
+fi
+
+
+
+function prepareINI {
+    pushd $ARCUSPATH >> /dev/null
+    if [ -z "$ARCUS_PORT" ]; then
+	log "NO PORT NAME IN ENVIROMENT -> USING INI"
+    else
+	if [ -f "cashreg.tpl" ]; then
+    	    log "FOUND PORT NAME IN ENVIROMENT -> Using cashreg.tpl to cashreg.ini"
+	    echo "PORT=$ARCUS_PORT" > cashreg.ini
+	    cat cashreg.tpl >> cashreg.ini
+	else
+	    log "cashreg.tpl not found -> USING INI"
+	fi
+    fi
+    popd >> /dev/null
+}
+
+function copyCheq {
+    log "COPY CHEQ"
+    echo $CASHIER_LINE >> $SPOOLFILE
+    cat $ARCUSCHEQFILE >> $SPOOLFILE
+    echo $TRAILER_LINE >> $SPOOLFILE
+    echo "" >> $SPOOLFILE
+    echo "$" >> $SPOOLFILE
+}
+
+
+function prepareResult {
+    if [ -z "$RESPONSE_CODE" ]; then
+	RESPONSE_CODE=999
+    fi
+    if [ $RESPONSE_CODE == "000" ]; then
+	RESPONSE_CODE=0
+    fi
+    echo "RESPONSE_CODE=$RESPONSE_CODE" > $RESPONSE_FILE_NAME
+    echo "RESPONSE_MESSAGE=$RESPONSE_MESSAGE" >> $RESPONSE_FILE_NAME
+    echo "AUTHORIZATION_CODE=$AUTHORIZATION_CODE" >> $RESPONSE_FILE_NAME
+    echo "TRANSACTION_DATE=$TRANSACTION_DATE" >> $RESPONSE_FILE_NAME
+    echo "TRANSACTION_TIME=$TRANSACTION_TIME" >> $RESPONSE_FILE_NAME
+    echo "MERCHAND_ID=$MERCHAND_ID" >> $RESPONSE_FILE_NAME
+}
+
+
+function setenvfile {
+    log "Restoring env from $1"
+    local envline=""
+    while read envline 
+	do 
+	    log "export $envline";
+	    export "$envline";
+    done < $1
+	
+	
+}
+
+
+
+
+function logenv {
+    log "ARG: $1"
+    log "IS_ONLINE: $IS_ONLINE"
+    log "PAYMENT_IS_RETURN: $PAYMENT_IS_RETURN"
+    log "RECORD_FILE_NAME: $RECORD_FILE_NAME"
+    log "RESPONSE_FILE_NAME: $RECORD_FILE_NAME"
+    log "PAYMENT_AMOUNT: $PAYMENT_AMOUNT"
+}
+
+
+function authorizeCard {
+#    echo "$PAYMENT_AMOUNT"
+#    touch prev
+    log "AUTHORIZE"
+    OPCODE=1
+    if [ $IS_ONLINE == "true" ]; then
+	if [ -n "$PAYMENT_IS_RETURN" ]; then
+    	    if [ $PAYMENT_IS_RETURN == "true" ]; then
+		OPCODE=3
+	    fi
+	fi
+	let COUNTER=ARCUS_CHEQ_CNT-1
+	log "./cashreg /o$OPCODE /c$CURRENCY_CODE /a$PAYMENT_AMOUNT"
+	pushd $ARCUSPATH >> /dev/null
+	./cashreg /o$OPCODE /c$CURRENCY_CODE /a$PAYMENT_AMOUNT
+	log "COMMAND RETURNED:$?"
+	setenvfile "var.env"
+	cp var.env prev
+	echo "ARCUS_CURRENT_N=$RECEIPT_NUMBER" > prevn
+	popd >> /dev/null
+	copyCheq
+	if [ $RESPONSE_CODE == "000" ]; then
+	    pushd $ARCUSPATH >> /dev/null
+	    echo "/o4 /c$CURRENCY_CODE /a$ARCUS_AUTH_AMT /z$ARCUS_AUTH_AMT /r$ARCUS_RRN /v$AUTHORIZATION_CODE" >> prevrrn
+	    popd >> /dev/null
+	    log "Number of additional cheq: $COUNTER (ARCUS_CHEQ_CNT=$ARCUS_CHEQ_CNT)"
+	    while [ $COUNTER -gt 0 ]; do
+		copyCheq
+		let COUNTER=COUNTER-1
+	    done
+	fi
+    fi
+}
+
+
+
+function cancelRetr {
+    local line=""
+    pushd $ARCUSPATH >> /dev/null
+    if [ -e "canretr" ]; then
+	if [ -e "canretrb" ]; then
+		rm canretrb
+	fi
+	while read line 
+	    do 
+		log "Retrying cancel $line"
+		./cashreg $line
+		setenvfile var.env
+		if [ $RESPONSE_CODE == "000" ]; then
+		    popd >> /dev/null
+		    copyCheq
+	    	    pushd $ARCUSPATH >> /dev/null
+		else
+		    log "Failed to retcancel operation $line"
+		    echo "$line" >> canretrb
+		fi
+	    done < "canretr"
+	rm canretr
+	if [ -e "canretrb" ]; then
+	    cp canretrb canretr
+	fi
+	rm canretrb
+    fi
+    popd >> /dev/null
+
+}
+
+
+function cancelOperation {
+    local line=""
+    cancelRetr
+    pushd $ARCUSPATH >> /dev/null
+    popd >> /dev/null
+    log "CANCEL"
+    pushd $ARCUSPATH >> /dev/null
+    if [ $1 == "0" ]; then
+        if [ -e "prevn" ]; then
+    	    setenvfile prevn
+    	    if [ $ARCUS_CURRENT_N == $RECEIPT_NUMBER ]; then
+		return;
+	    fi
+	fi
+    fi
+    if [ -e "prevrrn" ]; then
+	rm $SPOOLFILE
+	while read line 
+	    do 
+		log "export $line";
+		log "Previous transaction was successful -> need to cancel ($line)"
+		./cashreg $line
+		setenvfile var.env
+		if [ $RESPONSE_CODE == "000" ]; then
+		    log "Operation canceled $line"
+		else
+		    log "Failed to cancel operation $line ($RESPONSE_CODE)"
+		    echo "$line" >> canretr
+		fi
+		popd >> /dev/null
+		copyCheq
+		pushd $ARCUSPATH >> /dev/null
+	    done < "prevrrn"
+#	setenvfile prev
+#	if [ $RESPONSE_CODE == "000" ]; then
+#	    log "Previous transaction was successful -> need to cancel"
+#	    log "./cashreg /o2"
+#    	    ./cashreg /o2
+#	    log "COMMAND RETURNED:$?"
+#	    popd >> /dev/null
+#	    copyCheq
+#	    pushd $ARCUSPATH >> /dev/null
+#    	else
+#    	    log "Previous trunsaction was unsuccessfull -> just removing prev result"
+#    	fi
+    	rm prev
+    	rm prevn
+    	rm prevrrn
+    else
+	log "Prevrrn file doesn't exists"
+    fi
+    popd >> /dev/null
+}
+
+
+function commitOperation {
+    log "COMMIT"
+    pushd $ARCUSPATH >> /dev/null
+    setenvfile "prev"
+    if [ -e "prev" ]; then
+	rm prev
+    fi
+    if [ -e "prevn" ]; then
+	rm prevn
+    fi
+    if [ -e "prevrrn" ]; then
+	rm prevrrn
+    fi
+    popd >> /dev/null
+#    doslip
+}
+
+
+function shortReport {
+    log "SHORT REPORT"
+    pushd $ARCUSPATH >> /dev/null
+    ./cashreg /o10
+    popd >> /dev/null
+    copyCheq
+    doslip
+}
+
+function report {
+    log "FULL REPORT"
+    pushd $ARCUSPATH >> /dev/null
+    ./cashreg /o6
+    popd >> /dev/null
+    copyCheq
+    doslip
+}
+
+
+function endofday {
+    log "EOD"
+    pushd $ARCUSPATH >> /dev/null
+    cancelRetr
+    if [ -e "canretr" ]; then
+	RESPONSE_CODE=993
+	RESPONSE_MESSAGE=Failed
+        popd >> /dev/null
+	prepareResult
+    else
+        popd >> /dev/null
+        pushd $ARCUSPATH >> /dev/null
+	./cashreg /o7
+        popd >> /dev/null
+        copyCheq
+        doslip
+    fi
+}
+
+
+function doslip {
+    log "DO SLIP"
+    pushd $ARCUSPATH >> /dev/null
+    setenvfile "var.env"
+    popd >> /dev/null
+    echo "" > $RESULT_CHEQ
+#    copyCheq
+    cp $SPOOLFILE $RESULT_CHEQ
+#    cat $SPOOLFILE >> $RESULT_CHEQ
+    cat /dev/null > $SPOOLFILE
+#    copyCheq
+#    if [ $RESPONSE_CODE == "000" ]; then
+#        copyCheq
+#    fi
+}
+
+
+function doparse {
+    log "PARSE"
+    pushd $ARCUSPATH >> /dev/null
+    setenvfile "var.env"
+    setenvfile "prev"
+    popd >> /dev/null
+#    doslip
+}
+
+
+logenv $1
+prepareINI
+#log "ENV:"
+#export >> $LOG
+#export >> ENV.LOG
+#cat /dev/null > $RESULT_CHEQ
+
+#echo $1 >> cmds
+
+#whoami >> $LOG
+
+if [ $1 == "-authorize" ]; 
+then
+    cancelOperation "0"
+    authorizeCard
+fi
+
+
+
+if [ $1 == "-report" ]; 
+then
+ cat /dev/null > $SPOOLFILE
+ report
+fi
+
+
+
+if [ $1 == "-eod" ]; 
+then
+ cat /dev/null > $SPOOLFILE
+ cancelOperation "0"
+ endofday
+fi
+
+if [ $1 == "-parse" ];
+then
+ doparse
+fi
+
+if [ $1 == "-slip" ]; 
+then
+ doslip
+ cat /dev/null > $SPOOLFILE
+fi
+
+
+
+if [ $1 == "-reportshort" ]; 
+then
+ cat /dev/null > $SPOOLFILE
+ shortReport
+fi
+
+
+if [ $1 == "-cancel" ]; 
+then
+ cancelOperation "1"
+fi
+
+
+if [ $1 == "-commit" ]; 
+then
+ commitOperation
+fi
+
+prepareResult
+cp $RESPONSE_FILE_NAME $RECORD_FILE_NAME
+log "ARCUS_CHEQ_CNT=$ARCUS_CHEQ_CNT"
+log "RECORD FILE: $RECORD_FILE_NAME"
+cat $RECORD_FILE_NAME >> $LOG
+log "RESULT FILE: $RESPONSE_FILE_NAME"
+cat $RESPONSE_FILE_NAME >> $LOG
+log "ARCUS CHEQ: $ARCUSCHEQFILE"
+cat $ARCUSCHEQFILE >> $LOG
+log "CPD CHEQ: $RESULT_CHEQ"
+cat $RESULT_CHEQ >> $LOG
+
+
+NEED_TODEL="0"
+
+if [ -z $2 ];
+then
+    NEED_TODEL="0"
+#    echo "SECOND ARG NOT SET"
+else
+    NEED_TODEL="1"
+#    echo "SECOND ARG IS SET"
+fi
+
+
+if [ $NEED_TODEL == "1" ];
+then
+#    echo "DELETING RESPONSE FILES"
+    rm $RESPONSE_FILE_NAME
+    rm $RECORD_FILE_NAME
+#else
+#    echo "FILES DOES NOT NEED TO BE DELETED"
+fi
+
