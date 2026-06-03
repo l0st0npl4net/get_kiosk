@@ -132,9 +132,9 @@ WebInterface Yes
 </Policy>
 EOF
 
-if [[ -f /etc/sst-iiko/print_settings.ini ]] || [[ -d /etc/sst-iiko/templates ]]; then 
+if [[ -f /etc/sst-iiko/print_settings.ini ]] || [[ -d /etc/sst-iiko/templates ]]; then
       echo "Already exists!"
-else 
+else
       echo > /etc/sst-iiko/print_settings.ini
       cat << EOF > /etc/sst-iiko/print_settings.ini
 [Templates]
@@ -166,7 +166,7 @@ EOF
         <td width=80%>Итог</td>
         <td width=20%>={{Summ}}</td>
     </tr>
-</table>   
+</table>
 <hr>
 {{Vats}}
 {{Payments}}
@@ -273,7 +273,7 @@ EOF
     sudo chmod +x /etc/rc.local
 
     cat > /etc/systemd/system/rc-local.service <<EOF
-[Unit] 
+[Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
 
@@ -308,13 +308,12 @@ sudo lpadmin -p $printer -E -v $PRINTER_URI -P /tmp/get_kiosk-lite/app/printer/d
 # sudo lp -d VKP80 /usr/share/cups/data/default-testpage.pdf
 
 sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer $printer \
-             --set  /etc/sst-iiko/settings.ini FP printer\SETTINGS_PATH /etc/sst-iiko/print_settings.ini \
-             --set  /etc/sst-iiko/settings.ini FP printer\TEMPLATE_PATH /etc/sst-iiko/templates/ \
-             --set  /etc/sst-iiko/settings.ini FP printer\advancedTemplates true \
-             --set  /etc/sst-iiko/settings.ini FP printer\type System \
+             --set  /etc/sst-iiko/settings.ini FP 'printer\SETTINGS_PATH' /etc/sst-iiko/print_settings.ini \
+             --set  /etc/sst-iiko/settings.ini FP 'printer\TEMPLATE_PATH' /etc/sst-iiko/templates/ \
+             --set  /etc/sst-iiko/settings.ini FP 'printer\advancedTemplates' true \
+             --set  /etc/sst-iiko/settings.ini FP 'printer\type' System \
              --set  /etc/sst-iiko/settings.ini FP type Compound
 
 sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
 
 echo "Printer almost setup complete!"
-
