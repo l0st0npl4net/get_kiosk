@@ -1,0 +1,163 @@
+#!/bin/sh
+
+CHEQNAME=cheq.out
+
+function EOF ()
+{
+DISPMENU
+}
+function TXTPRN ()
+{
+#  echo 1111111
+#  pause
+7052_FR TXTPRN
+}
+CLOSE ()
+{
+export WORK_DIR=/home/reg/gd90/plugins/arcus/settings/
+log POSMNEMO.DAT t010
+#Check path Plugin !!!
+if [ -f "$WORK_DIR"cpd.sh ]
+then
+cd "$WORK_DIR"
+./cpd.sh -eod 1
+cd /home/reg/gd90
+
+else
+echo 
+echo Плагин Аркус не найден
+echo проверьте настройки
+pause
+EOF
+fi
+if [ ! -f "$WORK_DIR""$CHEQNAME" ]
+# POISK file otvet ot bank (p)
+then
+echo 
+echo Нет связи с банком
+echo Проверьте терминал
+pause
+else
+rm /home/reg/gd90/REPORT.TXT
+cp "$WORK_DIR""$CHEQNAME" /home/reg/gd90/REPORT.TXT
+TXTPRN
+rm "$WORK_DIR""$CHEQNAME"
+# rm /home/reg/gd90/REPORT.TXT
+fi
+}
+
+REPORT ()
+{
+#log POSMNEMO.DAT t002
+#Check path Plugin !!!
+if [ -f "$WORK_DIR"cpd.sh ]
+then
+cd "$WORK_DIR"
+./cpd.sh -report 1
+cd /home/reg/gd90
+else
+echo 
+echo Плагин Аркус не найден
+echo проверьте настройки
+pause
+EOF
+fi
+
+if [ ! -f "$WORK_DIR""$CHEQNAME" ]
+# POISK file otvet ot bank (p)
+then
+echo 
+echo Нет связи с банком
+echo Проверьте терминал
+pause
+else
+cp "$WORK_DIR""$CHEQNAME" /home/reg/gd90/REPORT.TXT
+TXTPRN
+rm "$WORK_DIR""$CHEQNAME"
+rm /home/reg/gd90/REPORT.TXT
+fi
+}
+
+
+
+SHORTREPORT ()
+{
+#log POSMNEMO.DAT t002
+#Check path Plugin !!!
+if [ -f "$WORK_DIR"cpd.sh ]
+then
+cd "$WORK_DIR"
+./cpd.sh -reportshort 1
+cd /home/reg/gd90
+else
+echo 
+echo Плагин Аркус не найден
+echo проверьте настройки
+pause
+EOF
+fi
+
+if [ ! -f "$WORK_DIR""$CHEQNAME" ]
+# POISK file otvet ot bank (p)
+then
+echo 
+echo Нет связи с банком
+echo Проверьте терминал
+pause
+else
+cp "$WORK_DIR""$CHEQNAME" /home/reg/gd90/REPORT.TXT
+TXTPRN
+rm "$WORK_DIR""$CHEQNAME"
+rm /home/reg/gd90/REPORT.TXT
+fi
+}
+
+
+CANCELOP () 
+{
+if [ -f "$WORK_DIR"cpd.sh ]
+then
+cd "$WORK_DIR"
+./cpd.sh -opcancel
+cd /home/reg/gd90
+else
+echo 
+echo Плагин Аркус не найден
+echo проверьте настройки
+pause
+EOF
+fi
+
+if [ ! -f "$WORK_DIR""$CHEQNAME" ]
+# POISK file otvet ot bank (p)
+then
+echo 
+echo Нет связи с банком
+echo Проверьте терминал
+pause
+else
+cp "$WORK_DIR""$CHEQNAME" /home/reg/gd90/REPORT.TXT
+TXTPRN
+rm "$WORK_DIR""$CHEQNAME"
+rm /home/reg/gd90/REPORT.TXT
+fi
+}
+
+DISPMENU ()
+{
+ export WORK_DIR=/home/reg/gd90/plugins/arcus/settings/
+ while [ 1 ]; do
+    52menu -n 7052_ARCUS.SCR
+    case ${?} in
+      0)   break;;
+      1)   CLOSE;;
+      2)   REPORT;;
+      3)   SHORTREPORT;;
+      4)   CANCELOP;;
+      *)   ;;
+    esac
+ done
+ exit $?
+}
+
+${1}

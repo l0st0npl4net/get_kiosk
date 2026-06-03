@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 read -p "Enter new Hostname: " NEW_HOSTNAME
 
 sudo hostnamectl set-hostname "$NEW_HOSTNAME"

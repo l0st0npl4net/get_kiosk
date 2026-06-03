@@ -27,6 +27,7 @@ wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/ap
 #Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
 sudo truncate -s 0 /etc/apt/sources.list
 sudo cat << EOL > /etc/apt/sources.list
+<<<<<<< HEAD
 deb http://deb.debian.org/debian bullseye main contrib non-free
 deb-src http://deb.debian.org/debian bullseye main contrib non-free
 
@@ -38,6 +39,11 @@ deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
 
 deb http://security.debian.org/debian-security/ bullseye-security main contrib non-free
 deb-src http://security.debian.org/debian-security/ bullseye-security main contrib non-free
+=======
+deb http://mirror.yandex.ru/debian trixie main contrib non-free
+deb http://mirror.yandex.ru/debian trixie-updates main contrib non-free
+deb http://security.debian.org/debian-security trixie-security main contrib non-free
+>>>>>>> 6bf74a3154ffa7207409e8ced29ce6767935b0e7
 EOL
 
 sudo apt-get update
@@ -48,9 +54,20 @@ sudo apt-get -y install libssl1.1
 
 #Установка пакетов SST-IIKO
 sudo cat << EOL > /etc/apt/sources.list
+<<<<<<< HEAD
 deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME" main contrib non-free
 deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME"-updates main contrib non-free
 deb http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main contrib non-free
+=======
+deb http://deb.debian.org/debian/ "$DEBIAN_CODENAME" main
+deb-src http://deb.debian.org/debian/ "$DEBIAN_CODENAME" main
+
+deb http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main
+deb-src http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main
+
+deb http://deb.debian.org/debian/ "$DEBIAN_CODENAME"-updates main
+deb-src http://deb.debian.org/debian/ "$DEBIAN_CODENAME"-updates main
+>>>>>>> 6bf74a3154ffa7207409e8ced29ce6767935b0e7
 EOL
 
 sudo apt-get update

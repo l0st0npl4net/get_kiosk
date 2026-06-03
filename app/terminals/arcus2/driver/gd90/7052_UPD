@@ -1,0 +1,28 @@
+###Ingenico install\update
+	cd /home/reg
+	cp /home/reg/arcus/cpd*.log /home/reg/tmp
+	/home/reg/troy -c "chkconfig --del arcusip"
+rm -Rf /home/reg/arcus
+	if test ! -d  /home/reg/arcus
+	then
+         mkdir -p  /home/reg/arcus
+		 ./troy -c "chmod 777 /home/reg/arcus"
+		 cp /home/reg/tmp/cpd*.log /home/reg/arcus
+     fi
+	 /home/reg/pos_copy update/arcus/* /home/reg/arcus -S
+	 ./troy -c "chmod 777 /home/reg/arcus/*"
+	 ./troy -c "chmod 777 /home/reg/arcus/ipservice/*"
+	 ./troy -c "/home/reg/arcus/ipservice/setup.sh"
+### End Ingenico
+
+### Add Gateway
+cd /home/reg
+
+#root@REG121:/etc/network# grep -e test interfaces
+#root@REG121:/etc/network# echo $?
+
+#/etc/network# echo gateway 10.61.43.254 >> interfaces
+
+#/home/reg/pos_copy update/etc/* /home/reg/tmp
+#./troy -c "cp /home/reg/tmp/routes /etc/sysconfig/network/routes"
+###End Gate

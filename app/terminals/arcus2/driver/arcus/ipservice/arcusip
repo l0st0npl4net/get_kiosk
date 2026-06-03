@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# chkconfig: - 99 01
+# description: Arcus IP Service
+# pidfile: /var/run/arcusipservice.pid
+
+
+SERVICE_DIR=/home/reg/arcus/ipservice
+CONF_FILE=$SERVICE_DIR/arcus_ip_service.conf
+SERVICE_BIN=$SERVICE_DIR/ipservice
+PID_FILE=/var/run/arcusipservice.pid
+
+. /etc/rc.status
+#if [ -f /etc/init.d/functions ]; then
+#    /etc/init.d/functions
+#elif [ -f /etc/rc.d/init.d/functions ]; then
+#    /etc/rc.d/init.d/functions
+#else
+#    exit 0
+#fi
+
+rc_reset
+
+start(){
+    echo -n "Starting Arcus IP Service:"
+    $SERVICE_BIN $CONF_FILE
+    rc_status -v
+}
+
+stop(){
+    echo -n "Stoping Arcus IP Service:"
+    $SERVICE_BIN $CONF_FILE stop
+    rc_status -v
+}
+
+
+case "$1" in start)
+    start
+    exit 0
+    ;;
+stop)
+    stop
+    exit 0
+    ;;
+restart)
+    stop
+    sleep 2
+    start
+    exit 0
+    ;;
+esac
+
+echo $"Usage: $0 {start|stop|restart}"
+exit 1
+esac
