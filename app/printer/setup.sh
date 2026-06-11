@@ -300,7 +300,7 @@ elif [ "$CONNECTION" == "NETWORK" ]; then
 fi
 
 sudo lpadmin -x $printer
-sudo lpadmin -p $printer -E -v $PRINTER_URI -P /tmp/get_kiosk-lite/app/printer/driver/$printer/*.ppd
+sudo lpadmin -p $printer -E -v $PRINTER_URI -P app/printer/driver/$printer/*.ppd
 
 # sudo lp -d SAM4S /usr/share/cups/data/default-testpage.pdf
 # sudo lp -d SAM4S_VCOM /usr/share/cups/data/default-testpage.pdf
