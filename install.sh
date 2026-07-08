@@ -26,10 +26,10 @@ dialog --textbox README.md 100 120
 
 OPTIONS=(
       0 "Set proxyuser" off
-      1 "Setup VPN" off 
+      1 "Setup VPN" off
       2 "Change Hostname" off
       3 "Get-Kiosk setup" off
-      4 "Screensaver disable" off
+      4 "Sleep off" off
       5 "Terminal setup" off
 	6 "Fiscal setup" off
 	7 "Printer setup" off
@@ -49,19 +49,19 @@ choices=$(dialog --separate-output \
 for choice in $choices
 do
       case $choice in
-            0) echo "app/proxyuser.sh" >> package.sh;; 
-            1) echo "app/vpn.sh" >> package.sh;; 
-            2) echo "app/hostname.sh" >> package.sh;; 
+            0) echo "app/proxyuser.sh" >> package.sh;;
+            1) echo "app/vpn.sh" >> package.sh;;
+            2) echo "app/hostname.sh" >> package.sh;;
             3) echo "app/sst/check.sh" >> package.sh;;
-            4) echo "app/screensaver.sh" >> package.sh;;
+            4) echo "app/sleep_off.sh" >> package.sh;;
             5) echo "app/terminals/setup.sh" >> package.sh;;
-            6) echo "app/fiscal/setup.sh" >> package.sh;; 
-            7) echo "app/printer/setup.sh" >> package.sh;; 
-            8) echo "app/vnc/setup.sh" >> package.sh;; 
+            6) echo "app/fiscal/setup.sh" >> package.sh;;
+            7) echo "app/printer/setup.sh" >> package.sh;;
+            8) echo "app/vnc/setup.sh" >> package.sh;;
             9) echo "app/vnc/enable.sh" >> package.sh;;
-            10) echo "app/vnc/disable.sh" >> package.sh;; 
-            11) echo "app/zabbix/zabbix.sh" >> package.sh;; 
-            
+            10) echo "app/vnc/disable.sh" >> package.sh;;
+            11) echo "app/zabbix/zabbix.sh" >> package.sh;;
+
       esac
 done
 
