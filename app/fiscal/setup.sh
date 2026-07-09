@@ -6,7 +6,7 @@ FISCAL=/
 
 fiscal_list=(
         0 "Atol" off
-        7 "SHTRIH-M" off)
+        1 "SHTRIH-M" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -23,5 +23,6 @@ do
             1) FISCAL=$SHTRIH;;
       esac
 done
+
 sudo chmod +x $FISCAL
 sudo $FISCAL
