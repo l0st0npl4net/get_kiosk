@@ -20,7 +20,7 @@ for choice in $ch
 do
       case $choice in
             0) FISCAL=$ATOL;;
-            1) FISCAL=$SHTRIh;;
+            1) FISCAL=$SHTRIH;;
       esac
 done
 sudo chmod +x $FISCAL
