@@ -72,8 +72,9 @@ sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
 
 sudo crudini --set  /etc/sst-iiko/settings.ini FP type Dummy \
-             --set  /etc/sst-iiko/settings.ini iiko host ws://${K_IP} \
-             --set  /etc/sst-iiko/logger.ini File minLevelRelease Debug
+             --set  /etc/sst-iiko/settings.ini iiko host ws://${K_IP}
+
+sudo crudini --set  /etc/sst-iiko/logger.ini File minLevelRelease Debug
 
 sudo mkdir /opt/sst-iiko/img
 sudo touch /etc/sst-iiko/templates/header

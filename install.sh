@@ -7,20 +7,17 @@ CHOICE_HEIGHT=20
 BACKTITLE="УСТАНОВЩИК GET-KIOSK"
 TITLE="Внедрение: Установщик Киоска"
 MENU="Выберите нужные компоненты(SPACE - выбрать):"
-LOG=kiosk_install.log
-DIR=/tmp/get_kiosk-lite
-LOG_DIR=/tmp/get_kiosk-lite/logs
+LOG=/tmp/kiosk_install.log
+DIR=/tmp/get_kiosk-main
+
 
 cd $DIR
 sudo rm ./package.sh
 echo "#! /bin/bash" >> package.sh
 
-if [ -d "$LOG_DIR" ];
-then
-      echo "Get Kios Installation Logs" > $LOG
-else
-      mkdir $LOG_DIR && echo "Get Kiosk Installation Logs" > $LOG
-fi
+
+echo "Get Kios Installation Logs" > $LOG
+
 
 dialog --textbox README.md 100 120
 
@@ -31,8 +28,8 @@ OPTIONS=(
       3 "Get-Kiosk setup" off
       4 "Sleep off" off
       5 "Terminal setup" off
-	6 "Fiscal setup" off
-	7 "Printer setup" off
+	  6 "Fiscal setup" off
+	  7 "Printer setup" off
       8 "VNC: install" off
       9 "VNC: enable" off
       10 "VNC: disable" off

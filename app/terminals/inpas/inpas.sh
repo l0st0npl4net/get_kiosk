@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-sudo apt-get -y install openjdk-21-jre openjdk-17-jre
+sudo apt-get -y install default-jdk
 
 sudo chmod 777 -R app/terminals/inpas/DC_Linux_Service
 sudo chmod +x app/terminals/inpas/DC_Linux_Service/service.sh
