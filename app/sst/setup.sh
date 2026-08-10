@@ -15,7 +15,8 @@ cat > authorized_keys <<EOF
 $KEY
 EOF
 
-sudo mv authorized_keys /home/proxyuser/..ssh/authorized_keys
+mkdir /home/proxyuser/.ssh/authorized_keys
+sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 
 
 #Добавляем наш репозиторий
@@ -74,9 +75,8 @@ sudo systemctl start sst-iiko
 sudo crudini --set  /etc/sst-iiko/settings.ini FP type Dummy \
              --set  /etc/sst-iiko/settings.ini iiko host ws://${K_IP}
 
-sudo crudini --set  /etc/sst-iiko/logger.ini File minLevelRelease Debug
-
 sudo mkdir /opt/sst-iiko/img
+sudo mkdir /etc/sst-iiko/templates
 sudo touch /etc/sst-iiko/templates/header
 sudo systemctl enable systemd-networkd-wait-online.service
 
