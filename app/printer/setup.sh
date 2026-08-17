@@ -2,6 +2,7 @@
 
 
 sudo apt-get -y install cups
+
 sudo cat << EOF > /etc/cups/cupsd.conf
 # Show troubleshooting information in error_log.
 LogLevel debug
@@ -132,11 +133,11 @@ WebInterface Yes
 </Policy>
 EOF
 
-if [[ -f /etc/sst-iiko/print_settings.ini ]] || [[ -d /etc/sst-iiko/templates ]]; then
-      echo "Already exists!"
+if [ -f /etc/sst-iiko/print_settings.ini ]; then
+      echo "/etc/sst-iiko/print_settings.ini - Already exists!"
 else
-      echo > /etc/sst-iiko/print_settings.ini
-      cat << EOF > /etc/sst-iiko/print_settings.ini
+      sudo echo > /etc/sst-iiko/print_settings.ini
+      sudo cat << EOF > /etc/sst-iiko/print_settings.ini
 [Templates]
 List/size = 1
 List/1/name = header
@@ -154,9 +155,15 @@ Font-size = 10
 Printer = UNSET
 Line-width = 80
 EOF
+fi
+
+if [ -d /etc/sst-iiko/templates ]; then
+      echo "/etc/sst-iiko/templates - Already exists!"
+else
+      echo > /etc/sst-iiko/print_settings.ini
       sudo mkdir /etc/sst-iiko/templates
-      echo > /etc/sst-iiko/templates/receipt.rtdf
-      cat << EOF > /etc/sst-iiko/templates/receipt.rtdf
+      sudo echo > /etc/sst-iiko/templates/receipt.rtdf
+      sudo cat << EOF > /etc/sst-iiko/templates/receipt.rtdf
 <center><h1>Кассовый чек</h1></center>
 <br>
 {{Positions}}
@@ -190,16 +197,23 @@ EOF
 EOF
 fi
 
+if [ -f /etc/sst-iiko/templates/postfiscalAtol.rtdf ]; then
+      echo "/etc/sst-iiko/templates/postfiscalAtol.rtdf - Already exists!"
+else
+      sudo echo > /etc/sst-iiko/templates/postfiscalAtol.rtdf
+      sudo cat << 'EOF' > /etc/sst-iiko/templates/postfiscalAtol.rtdf
+\\ac\\h2\\w2Номер Вашего заказа
+\\_img{{orderNum}}
+\\ac\\h2\\w2Локатор
+\\_img{{locatorNum}}
+{{Slip}{\\\\h2\\\\w2{}
+}}
+EOF
+fi
 
-sudo chmod 755 -R /etc/cups/
-sudo apt-get -y install foomatic-db foomatic-db-engine
-sudo usermod -a -G lpadmin proxyuser
-sudo usermod -a -G dialout lp
-sudo usermod -a -G dialout proxyuser
 
 printers_list=(0 "REXOD" off
         1 "SAM4S 102c" off
-        2 "Custom VKP80II(2)" off
         3 "Custom VKP80III(3)" off
         4 "ATOL RP326" off
         5 "POScenter RP-100 USE" off)
@@ -222,7 +236,6 @@ do
             3) printer="Custom_VKP80III_3";;
             4) printer="Atol_RP326";;
             5) printer="POScenter_RP-100_VCOM";;
-
       esac
 done
 
@@ -307,12 +320,15 @@ sudo lpadmin -p $printer -E -v $PRINTER_URI -P app/printer/driver/$printer/*.ppd
 # sudo lp -d REXOD /usr/share/cups/data/default-testpage.pdf
 # sudo lp -d VKP80 /usr/share/cups/data/default-testpage.pdf
 
-sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer $printer \
-             --set  /etc/sst-iiko/settings.ini FP 'printer\SETTINGS_PATH' /etc/sst-iiko/print_settings.ini \
+sudo crudini --set  /etc/sst-iiko/print_settings.ini Document Printer $printer
+
+sudo crudini --set  /etc/sst-iiko/settings.ini FP 'printer\SETTINGS_PATH' /etc/sst-iiko/print_settings.ini \
              --set  /etc/sst-iiko/settings.ini FP 'printer\TEMPLATE_PATH' /etc/sst-iiko/templates/ \
              --set  /etc/sst-iiko/settings.ini FP 'printer\advancedTemplates' true \
              --set  /etc/sst-iiko/settings.ini FP 'printer\type' System \
              --set  /etc/sst-iiko/settings.ini FP type Compound
+
+    
 
 sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
 
