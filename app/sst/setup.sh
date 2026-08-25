@@ -23,7 +23,7 @@ sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 sudo apt-get -y install gnupg
 
 sudo cat << 'EOF' > /etc/apt/sources.list.d/bos.list
-http://repo.open-s.info/ buster main
+deb http://repo.open-s.info/ buster main
 EOF
 
 
