@@ -15,13 +15,18 @@ cat > authorized_keys <<EOF
 $KEY
 EOF
 
-mkdir /home/proxyuser/.ssh/authorized_keys
+mkdir /home/proxyuser/.ssh
 sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 
 
 #Добавляем наш репозиторий
 sudo apt-get -y install gnupg
-echo "deb http://repo.open-s.info/ buster main" | sudo tee -a /etc/apt/sources.list.d/bos.list
+
+sudo cat << 'EOF' > /etc/apt/sources.list.d/bos.list
+http://repo.open-s.info/ buster main
+EOF
+
+
 wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/aptly.gpg
 
 
@@ -59,7 +64,7 @@ sudo apt-get update
 
 read -p "SST-IIKO Version [Enter for latest release]: " VERSION
 
-if [ -z "$VERSION"]; then
+if [ -z "$VERSION" ]; then
     sudo apt-get -y install sst-iiko
 else
     sudo apt-get -y install sst-iiko="$VERSION";
