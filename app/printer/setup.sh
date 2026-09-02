@@ -2,6 +2,7 @@
 
 
 sudo apt-get -y install cups
+sudo apt-get -y install foomatic-db foomatic-db-engine
 
 sudo cat << EOF > /etc/cups/cupsd.conf
 # Show troubleshooting information in error_log.

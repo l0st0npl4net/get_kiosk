@@ -64,7 +64,7 @@ done
 
 RULE=$BASE$TERMINAl
 sudo echo $RULE >> /etc/udev/rules.d/10-pinpad.rules
-
+sudo udevadm control --reload-rules && sudo udevadm trigger
 
 sudo chmod +x $INTEGRATION
 sudo $INTEGRATION

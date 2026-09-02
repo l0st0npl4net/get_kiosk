@@ -11,7 +11,7 @@ sudo mkdir /home/proxyuser/.ssh
 
 read -p "Please, enter Authorized key: " KEY
 
-cat > authorized_keys <<EOF
+cat > authorized_keys << EOF
 $KEY
 EOF
 
