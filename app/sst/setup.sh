@@ -33,17 +33,9 @@ wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/ap
 #Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
 sudo truncate -s 0 /etc/apt/sources.list
 sudo cat << EOL > /etc/apt/sources.list
-deb http://deb.debian.org/debian bullseye main contrib non-free
-deb-src http://deb.debian.org/debian bullseye main contrib non-free
-
-deb http://deb.debian.org/debian bullseye-updates main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
-
-deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
-
-deb http://security.debian.org/debian-security/ bullseye-security main contrib non-free
-deb-src http://security.debian.org/debian-security/ bullseye-security main contrib non-free
+deb http://archive.debian.org/debian bullseye main contrib non-free
+deb http://archive.debian.org/debian bullseye-updates main contrib non-free
+deb http://security.debian.org/debian-security bullseye-security main contrib non-free
 EOL
 
 sudo apt-get update
