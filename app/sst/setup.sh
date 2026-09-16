@@ -36,9 +36,9 @@ sudo wget -O libtiff5.deb http://ftp.ru.debian.org/debian/pool/main/t/tiff/libti
 sudo wget -O libicu67.deb http://security.debian.org/debian-security/pool/updates/main/i/icu/libicu67_67.1-7+deb11u1_amd64.deb
 sudo wget -O libssl1.1.deb https://snapshot.debian.org/archive/debian-security/20260615T025018Z/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0%2Bdeb11u8_amd64.deb
 
-sudo dpgk -i libtiff5.deb
-sudo dpgk -i libicu67.deb
-sudo dpgk -i libssl1.1.deb
+sudo dpkg -i libtiff5.deb
+sudo dpkg -i libicu67.deb
+sudo dpkg -i libssl1.1.deb
 
 
 #sudo truncate -s 0 /etc/apt/sources.list
