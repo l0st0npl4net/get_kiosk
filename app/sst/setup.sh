@@ -31,17 +31,27 @@ wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/ap
 
 
 #Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
-sudo truncate -s 0 /etc/apt/sources.list
-sudo cat << EOL > /etc/apt/sources.list
-deb http://archive.debian.org/debian bullseye main contrib non-free
-deb http://archive.debian.org/debian bullseye-updates main contrib non-free
-deb http://security.debian.org/debian-security bullseye-security main contrib non-free
-EOL
 
-sudo apt-get update
-sudo apt-get -y install libicu67
-sudo apt-get -y install libtiff5
-sudo apt-get -y install libssl1.1
+sudo wget -O libtiff5.deb http://ftp.ru.debian.org/debian/pool/main/t/tiff/libtiff5-dev_4.7.2-1_amd64.deb
+sudo wget -O libicu67.deb http://security.debian.org/debian-security/pool/updates/main/i/icu/libicu67_67.1-7+deb11u1_amd64.deb
+sudo wget -O libssl1.1.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u8_amd64.deb
+
+sudo dpgk -i libtiff5.deb
+sudo dpgk -i libicu67.deb
+sudo dpgk -i libssl1.1.deb
+
+
+#sudo truncate -s 0 /etc/apt/sources.list
+#sudo cat << EOL > /etc/apt/sources.list
+#deb http://archive.debian.org/debian bullseye main contrib non-free
+#deb http://archive.debian.org/debian bullseye-updates main contrib non-free
+#deb http://security.debian.org/debian-security bullseye-security main contrib non-free
+#EOL
+#
+#sudo apt-get update
+#sudo apt-get -y install libicu67
+#sudo apt-get -y install libtiff5
+#sudo apt-get -y install libssl1.1
 
 
 #Установка пакетов SST-IIKO
