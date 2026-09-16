@@ -32,9 +32,9 @@ wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/ap
 
 #Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
 
-sudo wget -P /tmp -O libtiff5.deb http://ftp.ru.debian.org/debian/pool/main/t/tiff/libtiff5-dev_4.7.2-1_amd64.deb
-sudo wget -P /tmp -O libicu67.deb http://security.debian.org/debian-security/pool/updates/main/i/icu/libicu67_67.1-7+deb11u1_amd64.deb
-sudo wget -P /tmp -O libssl1.1.deb https://snapshot.debian.org/archive/debian-security/20260615T025018Z/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0%2Bdeb11u8_amd64.deb
+sudo wget -O /tmp/libtiff5.deb http://ftp.ru.debian.org/debian/pool/main/t/tiff/libtiff5-dev_4.7.2-1_amd64.deb
+sudo wget -O /tmp/libicu67.deb http://security.debian.org/debian-security/pool/updates/main/i/icu/libicu67_67.1-7+deb11u1_amd64.deb
+sudo wget -O /tmp/libssl1.1.deb https://snapshot.debian.org/archive/debian-security/20260615T025018Z/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0%2Bdeb11u8_amd64.deb
 
 sudo dpkg -i /tmp/libtiff5.deb
 sudo dpkg -i /tmp/libicu67.deb
