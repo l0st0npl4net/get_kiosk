@@ -78,6 +78,7 @@ fi
 
 #Добавление ряда параметров в конфиг
 read -p "Enter Main Kassa Local IP Adress: " K_IP
+sudo ln -s /usr/lib/x86_64-linux-gnu/libwebp.so.7 /usr/lib/x86_64-linux-gnu/libwebp.so.6
 
 sudo systemctl enable sst-iiko
 sudo systemctl start sst-iiko
