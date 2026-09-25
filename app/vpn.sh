@@ -6,7 +6,7 @@ sudo sed -i -e 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 
 read -p "OpenVPN configue URL: " VPN_URL
 wget $VPN_URL -P app
-unzip app/*zip
+unzip app/*zip app/conf.ovpn
 sudo cp app/*.ovpn /etc/openvpn/client/pritunl.conf
 
 sudo systemctl start openvpn-client@pritunl
