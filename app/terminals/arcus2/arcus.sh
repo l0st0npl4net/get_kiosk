@@ -16,8 +16,10 @@ sudo wget -O /tmp/libncurses5_6.4-4_i386.deb http://ftp.ru.debian.org/debian/poo
 sudo wget -O /tmp/libstdc++5_3.3.6-34_amd64.deb http://ftp.ru.debian.org/debian/pool/main/g/gcc-3.3/libstdc++5_3.3.6-34_amd64.deb
 sudo wget -O /tmp/libstdc++5_3.3.6-34_i386.deb http://ftp.ru.debian.org/debian/pool/main/g/gcc-3.3/libstdc++5_3.3.6-34_i386.deb
 sudo wget -O /tmp/libtinfo5_6.4-4_amd64.deb http://ftp.ru.debian.org/debian/pool/main/n/ncurses/libtinfo5_6.4-4_amd64.deb
+sudo wget -O /tmp/libtinfo5_6.4-4_i386.deb http://ftp.ru.debian.org/debian/pool/main/n/ncurses/libtinfo5_6.4-4_i386.deb
 
 sudo dpkg -i /tmp/libtinfo5_6.4-4_amd64.deb
+sudo dpkg -i /tmp/libtinfo5_6.4-4_i386.deb
 sudo dpkg -i /tmp/libncurses5_6.4-4_amd64.deb 
 sudo dpkg -i /tmp/libncurses5_6.4-4_i386.deb 
 sudo dpkg -i /tmp/libstdc++5_3.3.6-34_amd64.deb
