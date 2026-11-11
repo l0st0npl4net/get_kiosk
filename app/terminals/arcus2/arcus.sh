@@ -18,10 +18,21 @@ deb http://archive.debian.org/debian bullseye-updates main contrib non-free
 deb http://security.debian.org/debian-security bullseye-security main contrib non-free
 EOL
 
+sudo dpkg --add-architecture i386
+sudo apt-get update
+
 sudo apt-get -y libncurses5 \
                 libncurses5:i386 \
                 libstdc++5 \
                 libstdc++5:i386
+
+sudo cat << EOL > /etc/apt/sources.list
+deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME" main contrib non-free
+deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME"-updates main contrib non-free
+deb http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main contrib non-free
+EOL
+
+sudo apt-get update
 
 sudo crudini --set  /etc/sst-iiko/settings.ini Terminal path /home/reg/arcus/cashreg \
              --set  /etc/sst-iiko/settings.ini Terminal receiptPath /home/reg/arcus/cpd.out \
