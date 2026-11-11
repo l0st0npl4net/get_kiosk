@@ -7,15 +7,10 @@ sudo chmod 777 -R /home/reg
 sudo dpkg --add-architecture i386
 sudo apt-get update
 
-sudo truncate -s 0 /etc/apt/sources.list
-sudo cat << EOL > /etc/apt/sources.list
-deb http://archive.debian.org/debian bookworm main contrib non-free
-deb http://archive.debian.org/debian bookworm-updates main contrib non-free
-deb http://security.debian.org/debian-security bookworm-security main contrib non-free
-EOL
-
 sudo apt-get -y install \
-                libc6:i386
+                libc6 \
+                libc6:i386 \
+                libstdc++6 \
                 libstdc++6:i386 \
 
 sudo wget -O /tmp/libncurses5_6.4-4_amd64.deb http://ftp.ru.debian.org/debian/pool/main/n/ncurses/libncurses5_6.4-4_amd64.deb
