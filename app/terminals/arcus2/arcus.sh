@@ -4,13 +4,6 @@ sudo mkdir /home/reg
 sudo cp -r app/terminals/arcus2/driver/* /home/reg/
 sudo chmod 777 -R /home/reg
 
-sudo dpkg --add-architecture i386
-sudo apt-get update
-
-sudo apt-get -y install \
-                libc6:i386 \
-                libstdc++6:i386 \
-
 sudo truncate -s 0 /etc/apt/sources.list
 sudo cat << EOL > /etc/apt/sources.list
 deb http://archive.debian.org/debian bullseye main contrib non-free
@@ -21,7 +14,9 @@ EOL
 sudo dpkg --add-architecture i386
 sudo apt-get update
 
-sudo apt-get -y libncurses5 \
+sudo apt-get -y libc6:i386 \
+                libstdc++6:i386 \
+                libncurses5 \
                 libncurses5:i386 \
                 libstdc++5 \
                 libstdc++5:i386
