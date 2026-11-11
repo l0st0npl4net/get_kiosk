@@ -6,9 +6,9 @@ sudo chmod 777 -R /home/reg
 
 sudo truncate -s 0 /etc/apt/sources.list
 sudo cat << EOL > /etc/apt/sources.list
-deb http://archive.debian.org/debian bullseye main contrib non-free
-deb http://archive.debian.org/debian bullseye-updates main contrib non-free
-deb http://security.debian.org/debian-security bullseye-security main contrib non-free
+deb http://archive.debian.org/debian bookworm main contrib non-free
+deb http://archive.debian.org/debian bookworm-updates main contrib non-free
+deb http://security.debian.org/debian-security bookworm-security main contrib non-free
 EOL
 
 sudo dpkg --add-architecture i386
