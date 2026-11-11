@@ -29,6 +29,6 @@ sudo crudini --set  /etc/sst-iiko/settings.ini Terminal path /home/reg/arcus/cas
              --set  /etc/sst-iiko/settings.ini Terminal type Arcus
 sudo sed -i -r "s/(\S*)\s*=\s*(.*)/\1=\2/g" /etc/sst-iiko/settings.ini
 
-sudo /home/reg/arcus/cahsreq /o7
+sudo /home/reg/arcus/cashreq /o7
 
 echo "ARCUS TERMINAL setup complete!"
