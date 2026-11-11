@@ -23,14 +23,14 @@ sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 sudo apt-get -y install gnupg
 
 sudo cat << 'EOF' > /etc/apt/sources.list.d/bos.list
-deb http://repo.open-s.info/ buster main
+deb http://repo.open-s.info/ "$DEBIAN_CODENAME" main
 EOF
 
 
 wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/aptly.gpg
 
 
-#Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
+Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
 sudo apt-get -y install libtiff-dev
 
 sudo wget -O /tmp/libtiff5-main.deb https://snapshot.debian.org/archive/debian/20221124T210835Z/pool/main/t/tiff/libtiff5_4.4.0-6_amd64.deb
@@ -59,7 +59,6 @@ sudo dpkg -i /tmp/libtiff5-main.deb
 
 #Установка пакетов SST-IIKO
 sudo cat << EOL > /etc/apt/sources.list
-
 deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME" main contrib non-free
 deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME"-updates main contrib non-free
 deb http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main contrib non-free
@@ -72,7 +71,7 @@ read -p "SST-IIKO Version [Enter for latest release]: " VERSION
 if [ -z "$VERSION" ]; then
     sudo apt-get -y install sst-iiko
 else
-    sudo apt-get -y install sst-iiko="$VERSION";
+    sudo apt-get -y install sst-iiko="$VERSION*";
 fi
 
 
