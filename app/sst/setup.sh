@@ -22,8 +22,8 @@ sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 #Добавляем наш репозиторий
 sudo apt-get -y install gnupg
 
-sudo cat << 'EOF' > /etc/apt/sources.list.d/bos.list
-deb http://repo.open-s.info/ "$DEBIAN_CODENAME" main
+sudo cat << EOF > /etc/apt/sources.list.d/bos.list
+deb http://repo.open-s.info/ $DEBIAN_CODENAME main
 EOF
 
 
