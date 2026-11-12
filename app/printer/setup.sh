@@ -217,7 +217,8 @@ printers_list=(0 "REXOD" off
         1 "SAM4S 102c" off
         3 "Custom VKP80III(3)" off
         4 "ATOL RP326" off
-        5 "POScenter RP-100 USE" off)
+        5 "POScenter RP-100 USE" off
+        6 "SEWOO" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -237,6 +238,7 @@ do
             3) printer="Custom_VKP80III_3";;
             4) printer="Atol_RP326";;
             5) printer="POScenter_RP-100_VCOM";;
+            6) printer="SEWOO";;
       esac
 done
 
