@@ -59,9 +59,9 @@ sudo dpkg -i /tmp/libtiff5-main.deb
 
 #Установка пакетов SST-IIKO
 sudo cat << EOL > /etc/apt/sources.list
-deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME" main contrib non-free
-deb http://mirror.yandex.ru/debian "$DEBIAN_CODENAME"-updates main contrib non-free
-deb http://security.debian.org/debian-security "$DEBIAN_CODENAME"-security main contrib non-free
+deb http://mirror.yandex.ru/debian $DEBIAN_CODENAME main contrib non-free
+deb http://mirror.yandex.ru/debian $DEBIAN_CODENAME-updates main contrib non-free
+deb http://security.debian.org/debian-security $DEBIAN_CODENAME-security main contrib non-free
 EOL
 
 sudo apt-get update
