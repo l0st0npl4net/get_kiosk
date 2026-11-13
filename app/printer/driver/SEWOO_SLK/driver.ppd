@@ -32,7 +32,7 @@
 *cupsModelNumber: "0"
 *cupsManualCopies: False
 *cupsSNMPSupplies: False
-*cupsFilter: "application/vnd.cups-raster 100 raster_to_printer"
+*cupsFilter: "application/vnd.cups-raster 100 rastertoslk"
 *OpenUI *PageSize: PickOne
 *OrderDependency: 10 AnySetup *PageSize
 *DefaultPageSize: 80x297mm
