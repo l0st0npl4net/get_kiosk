@@ -220,7 +220,8 @@ printers_list=(0 "REXOD" off
         5 "POScenter RP-100 USE" off
         6 "SEWOO Generic" off
         7 "SEWOO SLK" off
-        8 "SEWOO LKT" off)
+        8 "SEWOO LKT" off
+        9 "SEWOO Vendor" off)
 
 ch=$(dialog --separate-output \
                 --backtitle "УСТАНОВЩИК GET-KIOSK" \
@@ -243,6 +244,7 @@ do
             6) printer="SEWOO_generic";;
             7) printer="SEWOO_SLK";;
             8) printer="SEWOO_LKT";;
+            9) printer="SEWOO_vendor";;
       esac
 done
 
