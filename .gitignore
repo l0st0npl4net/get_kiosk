@@ -3,4 +3,4 @@ frank.sh
 ucs
 10-display.conf
 .agents
-/app
+app/*

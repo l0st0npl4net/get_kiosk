@@ -237,7 +237,7 @@ async fn sst_setup(sh: &mut Shell, ans: &Answers) {
     sh.run(&["sudo", "apt-get", "-y", "install", "libtiff-dev"])
         .await;
 
-    let debs: [(&str, &str); 4] = [
+    let debs: [(&str, &str); 5] = [
         (
             "/tmp/libtiff5-main.deb",
             "https://snapshot.debian.org/archive/debian/20221124T210835Z/pool/main/t/tiff/libtiff5_4.4.0-6_amd64.deb",
@@ -254,6 +254,10 @@ async fn sst_setup(sh: &mut Shell, ans: &Answers) {
             "/tmp/libtiff5-dev.deb",
             "http://ftp.ru.debian.org/debian/pool/main/t/tiff/libtiff5-dev_4.7.2-1_amd64.deb",
         ),
+        (
+            "/tmp/libicu72.deb",
+            "http://ftp.ru.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb",
+        )
     ];
     for (path, url) in debs {
         sh.run(&["sudo", "wget", "-O", path, url]).await;
@@ -263,6 +267,7 @@ async fn sst_setup(sh: &mut Shell, ans: &Answers) {
         "/tmp/libicu67.deb",
         "/tmp/libssl1.1.deb",
         "/tmp/libtiff5-main.deb",
+        "/tmp/libicu72.deb",
     ] {
         sh.run(&["sudo", "dpkg", "-i", path]).await;
     }
