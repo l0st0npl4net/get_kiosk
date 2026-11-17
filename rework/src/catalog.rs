@@ -3,10 +3,18 @@
 //! Values mirror `app/terminals/terminal.env` and `app/printer/vcom.env`
 //! from the shell implementation.
 
-/// TLS pin for `repo.getit.rest`, taken from the shell bootstrap.
 pub const REPO_HOST: &str = "repo.getit.rest";
-pub const REPO_FINGERPRINT: &str = "DA4C7079057FA9F747D216923860F4B26074FBFE";
+/// Repository signing key, fetched from the host root.
+pub const REPO_KEY: &str = "getit-repo-2026.gpg";
 pub const REPO_KEYRING: &str = "/etc/apt/keyrings/getit-repo-2026.gpg";
+
+/// Environment variable carrying the expected OpenPGP fingerprint of [`REPO_KEY`].
+///
+/// This is the fingerprint of the `.gpg` signing key, not the TLS certificate
+/// fingerprint. It is not compiled in and not committed anywhere: `start.sh`
+/// exports it, and that script is excluded from the repository. A missing or
+/// malformed value makes the repo step skip instead of trusting an unverified key.
+pub const REPO_KEY_FPR_ENV: &str = "KIOSK_REPO_KEY_FPR";
 
 /// Prefix shared by every pinpad udev rule.
 const PAD_RULE_BASE: &str = r#"KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", SYMLINK+="pinpad", "#;

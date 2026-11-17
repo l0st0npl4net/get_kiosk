@@ -124,27 +124,60 @@ async fn hostname(sh: &mut Shell, name: &str) {
 }
 
 async fn sst_repo(sh: &mut Shell, _ctx: &Ctx) {
+    // The expected OpenPGP fingerprint of the signing key is not in the
+    // repository: start.sh exports it. Verify the downloaded `.gpg` key.
+    let expected = std::env::var(catalog::REPO_KEY_FPR_ENV)
+        .ok()
+        .map(|v| v.trim().replace(':', "").to_ascii_uppercase())
+        .filter(|v| v.len() == 40 && v.chars().all(|c| c.is_ascii_hexdigit()));
+
+    let Some(expected) = expected else {
+        sh.line(format!(
+            "! {} is not set to a 40-character GPG fingerprint",
+            catalog::REPO_KEY_FPR_ENV
+        ))
+        .await;
+        sh.line("! refusing to add the repository").await;
+        return;
+    };
+
     sh.run(&["sudo", "apt-get", "-y", "install", "gnupg"]).await;
 
     let host = catalog::REPO_HOST;
+    let staged = "/tmp/getit-repo-2026.gpg";
+
+    sh.sh_quiet(
+        &format!("wget -q -O {staged} https://{host}/{}", catalog::REPO_KEY),
+        &format!("download {host}/{}", catalog::REPO_KEY),
+    )
+    .await;
+
+    // `--show-keys` prints the fingerprint of the first key in the file.
     let got = sh
         .capture(&format!(
-            "openssl s_client -connect {host}:443 -servername {host} </dev/null 2>/dev/null | openssl x509 -outform der | sha256sum | cut -d' ' -f1"
+            "gpg --show-keys --with-colons {staged} 2>/dev/null | awk -F: '/^fpr/ {{ print $10; exit }}'"
         ))
-        .await;
+        .await
+        .map(|v| v.trim().to_ascii_uppercase());
 
     match got {
-        Some(fp) if fp.eq_ignore_ascii_case(catalog::REPO_FINGERPRINT) => {
-            sh.line(format!("TLS pin OK for {host}")).await;
+        Some(ref fpr) if *fpr == expected => {
+            sh.line(format!("Signing key OK ({}…)", &expected[..16]))
+                .await;
         }
-        Some(fp) => {
-            sh.line(format!("! TLS pin mismatch for {host}: got {fp}"))
+        Some(fpr) => {
+            sh.line(format!("! signing key fingerprint mismatch: got {fpr}"))
                 .await;
             sh.line("! refusing to add the repository").await;
+            sh.sh_quiet(&format!("rm -f {staged}"), &format!("rm -f {staged}"))
+                .await;
             return;
         }
         None => {
-            sh.line(format!("! cannot read {host} certificate")).await;
+            sh.line(format!("! cannot read the key fingerprint from {staged}"))
+                .await;
+            sh.sh_quiet(&format!("rm -f {staged}"), &format!("rm -f {staged}"))
+                .await;
             return;
         }
     }
@@ -154,21 +187,22 @@ async fn sst_repo(sh: &mut Shell, _ctx: &Ctx) {
         .await
         .unwrap_or_else(|| "bullseye".to_string());
 
+    sh.mkdir_root("/etc/apt/keyrings").await;
+    // Dearmor the file that was just verified; never re-fetch after the check.
+    let dearmor = format!(
+        "sudo gpg --yes --dearmor -o {keyring} < {staged}",
+        keyring = catalog::REPO_KEYRING
+    );
+    sh.sh_quiet(&dearmor, "install repository keyring").await;
+    sh.sh_quiet(&format!("rm -f {staged}"), &format!("rm -f {staged}"))
+        .await;
+
     let list = format!(
         "deb [signed-by={}] https://{host}/ {codename} main\n",
         catalog::REPO_KEYRING
     );
     sh.write_root("/etc/apt/sources.list.d/bos.list", &list)
         .await;
-
-    sh.mkdir_root("/etc/apt/keyrings").await;
-    // `--yes` keeps the pipeline non-interactive when the keyring exists.
-    let fetch = format!(
-        "wget -O - https://{host}/getit-repo-2026.gpg | sudo gpg --yes --dearmor -o {}",
-        catalog::REPO_KEYRING
-    );
-    let label = format!("fetch {host} signing key");
-    sh.sh_quiet(&fetch, &label).await;
 }
 
 async fn sst_setup(sh: &mut Shell, ans: &Answers) {

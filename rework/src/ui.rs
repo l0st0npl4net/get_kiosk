@@ -380,7 +380,7 @@ fn style_log_line(line: &str) -> Line<'static> {
         Line::from(text).dim()
     } else if text.starts_with("==") {
         Line::from(text).bold().cyan()
-    } else if text.contains("complete!") || text.starts_with("TLS pin OK") {
+    } else if text.contains("complete!") || text.starts_with("Signing key OK") {
         Line::from(text).green()
     } else {
         Line::from(text)

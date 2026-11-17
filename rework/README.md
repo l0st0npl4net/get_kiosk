@@ -9,6 +9,7 @@ preserved; only the front end and orchestration changed.
 ```
 rework/
 ├── start.sh              # release entry point (kept out of git)
+├── RELEASE.md            # notes for the current release (0.1.0)
 ├── build-release.sh      # builds the distributable archive into release/
 ├── Dockerfile.release    # Debian 13 / musl build container
 ├── Cargo.toml
@@ -29,6 +30,11 @@ rework/
 Nothing is compiled into the binary. A release archive carries the executable, `assets/` and
 the `app/` payload (`printer`, `terminals`, `fiscal`, `sst`), so driver packages, PPDs and
 vendor binaries stay in the checkout and are copied by the installer at run time.
+
+## Releases
+
+Current release: **0.1.0** — see [RELEASE.md](RELEASE.md) for artifacts, install
+instructions, archive layout, component list and known limitations.
 
 ## Running
 
@@ -53,6 +59,7 @@ Environment overrides:
 | `KIOSK_VERSION` | `latest` | `latest` or a release tag such as `v0.1.0` |
 | `KIOSK_LOG` | `/tmp/kiosk_install.log` | install log destination |
 | `KIOSK_WORK` | `/tmp/get_kiosk` | unpack directory for the release |
+| `KIOSK_REPO_KEY_FPR` | set inside `start.sh` | OpenPGP fingerprint of the `getit-repo-2026.gpg` key |
 
 `KIOSK_ROOT` and `KIOSK_ASSETS` are set by `start.sh`; set them manually only when running
 the binary directly out of an unpacked archive.
@@ -134,7 +141,7 @@ run, matching the original scripts, which never used `set -e`.
 | `app/proxyuser.sh` | `install::proxy_user` |
 | `app/vpn.sh` | `install::vpn` |
 | `app/hostname.sh` | `install::hostname` |
-| `app/sst/repo.sh` | `install::sst_repo` (TLS pin enforced before writing the source) |
+| `app/sst/repo.sh` | `install::sst_repo` (key digest enforced before writing the source) |
 | `app/sst/setup.sh` | `install::sst_setup` |
 | `app/sleep_off.sh` | `install::sleep_off` |
 | `app/terminals/setup.sh` | `install::terminal` + `sber` / `inpas` / `arcus` |
@@ -153,6 +160,11 @@ run, matching the original scripts, which never used `set -e`.
   `[A-Za-z0-9._-]`, and the printer port must be numeric.
 - Files written with `sudo tee` are applied atomically, and the log records a one-line
   summary instead of the whole payload.
+- The repository signing key is verified before use: `getit-repo-2026.gpg` is downloaded, its
+  OpenPGP fingerprint is read with `gpg --show-keys` and compared with `KIOSK_REPO_KEY_FPR`
+  (a key fingerprint, not the TLS certificate) before `gpg --dearmor` writes the keyring.
+  `start.sh` holds the expected fingerprint and exports it; that script stays out of the
+  repository. Without a well-formed fingerprint the repo step refuses to run.
 - Empty optional values (VPN URL, ATOL version, SSH key) produce a warning line and skip that
   action instead of failing.
 
