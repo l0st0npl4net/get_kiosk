@@ -1,5 +1,6 @@
 #! /bin/sh
 
+HOST=repo.getit.rest
 DEBIAN=$(cat /etc/debian_version | tee)
 SOURCE=$(printf "%.0f" "$DEBIAN")
 DEBIAN_CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
@@ -19,17 +20,6 @@ mkdir /home/proxyuser/.ssh
 sudo mv authorized_keys /home/proxyuser/.ssh/authorized_keys
 
 
-#Добавляем наш репозиторий
-sudo apt-get -y install gnupg
-
-sudo cat << EOF > /etc/apt/sources.list.d/bos.list
-deb http://repo.open-s.info/ $DEBIAN_CODENAME main
-EOF
-
-
-wget -qO - http://repo.open-s.info/aptly.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/aptly.gpg
-
-
 Устанавливаем необмходимые библиотеки - пока что это костыль и он есть
 sudo apt-get -y install libtiff-dev
 
@@ -43,18 +33,6 @@ sudo dpkg -i /tmp/libicu67.deb
 sudo dpkg -i /tmp/libssl1.1.deb
 sudo dpkg -i /tmp/libtiff5-main.deb
 
-
-#sudo truncate -s 0 /etc/apt/sources.list
-#sudo cat << EOL > /etc/apt/sources.list
-#deb http://archive.debian.org/debian bullseye main contrib non-free
-#deb http://archive.debian.org/debian bullseye-updates main contrib non-free
-#deb http://security.debian.org/debian-security bullseye-security main contrib non-free
-#EOL
-#
-#sudo apt-get update
-#sudo apt-get -y install libicu67
-#sudo apt-get -y install libtiff5
-#sudo apt-get -y install libssl1.1
 
 
 #Установка пакетов SST-IIKO

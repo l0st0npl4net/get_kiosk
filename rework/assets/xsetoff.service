@@ -1,0 +1,13 @@
+[Unit]
+Description=Disable DPMS and screensaver
+After=graphical.target gdm.service
+Wants=gdm.service
+[Service]
+Type=simple
+User=proxyuser
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/proxyuser/.Xauthority
+ExecStartPre=/bin/sleep 20
+ExecStart=/opt/noblank.sh
+[Install]
+WantedBy=graphical.target

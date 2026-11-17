@@ -1,0 +1,5 @@
+#!/bin/sh
+sudo chmod -R 666 /dev/ttyACM0
+sudo chmod -R 666 /dev/ttyACM1
+sudo chmod -R 666 /dev/printer
+exit 0

@@ -25,15 +25,16 @@ OPTIONS=(
       0 "Set proxyuser" off
       1 "Setup VPN" off
       2 "Change Hostname" off
-      3 "Get-Kiosk setup" off
-      4 "Sleep off" off
-      5 "Terminal setup" off
-	  6 "Fiscal setup" off
-	  7 "Printer setup" off
-      8 "VNC: install" off
-      9 "VNC: enable" off
-      10 "VNC: disable" off
-      11 "Zabbix" off)
+      3 "Add GetIt-repo" off
+      5 "Get-Kiosk setup" off
+      6 "Sleep off" off
+      7 "Terminal setup" off
+	  8 "Fiscal setup" off
+	  9 "Printer setup" off
+      10 "VNC: install" off
+      11 "VNC: enable" off
+      12 "VNC: disable" off
+      13 "Zabbix" off)
 
 choices=$(dialog --separate-output \
                 --backtitle "$BACKTITLE" \

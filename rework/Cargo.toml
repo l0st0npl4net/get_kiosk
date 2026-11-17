@@ -1,0 +1,26 @@
+[package]
+name = "kiosk-installer"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "GET-KIOSK interactive installer (Ratatui rewrite)"
+publish = false
+
+[dependencies]
+color-eyre = "0.6"
+crossterm = "0.29"
+ratatui = "0.30"
+tokio = { version = "1", features = [
+    "rt-multi-thread",
+    "macros",
+    "process",
+    "sync",
+    "io-util",
+    "time",
+    "fs",
+] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
