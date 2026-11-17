@@ -16,10 +16,11 @@ use tokio::sync::mpsc::Sender;
 
 use crate::task::TaskEvent;
 
-/// Installer-wide context: repository root and log destination.
+/// Installer-wide context: checkout root, asset directory and log destination.
 #[derive(Clone, Debug)]
 pub struct Ctx {
     pub repo_root: PathBuf,
+    pub assets_dir: PathBuf,
     pub log_path: PathBuf,
 }
 
@@ -31,6 +32,11 @@ impl Ctx {
     /// Scratch directory for downloads.
     pub fn work(&self) -> PathBuf {
         self.repo_root.join("work")
+    }
+
+    /// Read a shipped asset; the UI reports the error instead of panicking.
+    pub fn asset(&self, name: &str) -> Result<String> {
+        crate::assets::load(&self.assets_dir, name)
     }
 }
 

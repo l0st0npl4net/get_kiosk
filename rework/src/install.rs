@@ -33,6 +33,17 @@ pub async fn run(ctx: &Ctx, sh: &mut Shell, step: StepKind, ans: &Answers) {
     }
 }
 
+/// Read a shipped asset, logging the failure when it is missing.
+async fn load(sh: &mut Shell, ctx: &Ctx, name: &str) -> Option<String> {
+    match ctx.asset(name) {
+        Ok(text) => Some(text),
+        Err(e) => {
+            sh.line(format!("! {e}")).await;
+            None
+        }
+    }
+}
+
 /// Append a line to a root-owned file without shell interpolation surprises.
 pub async fn append_root(sh: &mut Shell, path: &str, text: &str) -> bool {
     let script = format!(
@@ -287,18 +298,20 @@ async fn sleep_off(sh: &mut Shell, ctx: &Ctx) {
     sh.run(&["sudo", "apt-get", "install", "-y", "x11-xserver-utils"])
         .await;
 
-    let unit = assets::XSETOFF_SERVICE;
-    sh.write_root("/lib/systemd/system/xsetoff.service", unit)
-        .await;
+    let (Some(unit), Some(noblank), Some(display)) = (
+        load(sh, ctx, assets::XSETOFF_SERVICE).await,
+        load(sh, ctx, assets::NOBLANK_SH).await,
+        load(sh, ctx, assets::DISPLAY_CONF).await,
+    ) else {
+        return;
+    };
 
-    let _ = ctx;
-    sh.write_root("/opt/noblank.sh", assets::NOBLANK_SH).await;
+    sh.write_root("/lib/systemd/system/xsetoff.service", &unit)
+        .await;
+    sh.write_root("/opt/noblank.sh", &noblank).await;
     sh.sh("sudo chmod +x /opt/noblank.sh").await;
-    sh.write_root(
-        "/usr/share/X11/xorg.conf.d/99-display.conf",
-        assets::DISPLAY_CONF,
-    )
-    .await;
+    sh.write_root("/usr/share/X11/xorg.conf.d/99-display.conf", &display)
+        .await;
 
     sh.sh("sudo chmod 777 -R /opt/").await;
     sh.run(&["sudo", "systemctl", "enable", "xsetoff"]).await;
@@ -505,14 +518,14 @@ async fn arcus(sh: &mut Shell, ctx: &Ctx) {
     sh.line("ARCUS TERMINAL setup complete!").await;
 }
 
-async fn fiscal(sh: &mut Shell, _ctx: &Ctx, ans: &Answers) {
+async fn fiscal(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
     match ans.choice(0) {
-        0 => atol(sh, ans.text(1)).await,
+        0 => atol(sh, ctx, ans.text(1)).await,
         _ => shtrih(sh).await,
     }
 }
 
-async fn atol(sh: &mut Shell, version: &str) {
+async fn atol(sh: &mut Shell, ctx: &Ctx, version: &str) {
     let version = version.trim();
     if version.is_empty() {
         sh.line("! ATOL version is empty, skipping package install")
@@ -528,7 +541,7 @@ async fn atol(sh: &mut Shell, version: &str) {
     sh.run(&["sudo", "crudini", "--set", SETTINGS, "FP", "type", "Atol"])
         .await;
     normalize_ini(sh).await;
-    write_atol_template(sh).await;
+    write_atol_template(sh, ctx).await;
     sh.line("ATOL driver setup complete!").await;
 }
 
@@ -570,7 +583,7 @@ async fn shtrih(sh: &mut Shell) {
     sh.line("SHTRIH-M setup complete!").await;
 }
 
-async fn write_atol_template(sh: &mut Shell) {
+async fn write_atol_template(sh: &mut Shell, ctx: &Ctx) {
     let path = format!("{TEMPLATES}/postfiscalAtol.rtdf");
     let exists = sh
         .capture(&format!("test -f {path} && echo yes"))
@@ -580,8 +593,11 @@ async fn write_atol_template(sh: &mut Shell) {
         sh.line(format!("{path} - Already exists!")).await;
         return;
     }
+    let Some(template) = load(sh, ctx, assets::POSTFISCAL_ATOL_RTDF).await else {
+        return;
+    };
     sh.mkdir_root(TEMPLATES).await;
-    sh.write_root(&path, assets::POSTFISCAL_ATOL_RTDF).await;
+    sh.write_root(&path, &template).await;
 }
 
 async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
@@ -596,8 +612,10 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
     ])
     .await;
 
-    sh.write_root("/etc/cups/cupsd.conf", assets::CUPSD_CONF)
-        .await;
+    let Some(cupsd) = load(sh, ctx, assets::CUPSD_CONF).await else {
+        return;
+    };
+    sh.write_root("/etc/cups/cupsd.conf", &cupsd).await;
 
     if sh
         .capture(&format!("test -f {PRINT_SETTINGS} && echo yes"))
@@ -605,9 +623,8 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
         .is_some()
     {
         sh.line(format!("{PRINT_SETTINGS} - Already exists!")).await;
-    } else {
-        sh.write_root(PRINT_SETTINGS, assets::PRINT_SETTINGS_INI)
-            .await;
+    } else if let Some(settings) = load(sh, ctx, assets::PRINT_SETTINGS_INI).await {
+        sh.write_root(PRINT_SETTINGS, &settings).await;
     }
 
     if sh
@@ -618,8 +635,10 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
         sh.line(format!("{TEMPLATES} - Already exists!")).await;
     } else {
         sh.mkdir_root(TEMPLATES).await;
-        sh.write_root(&format!("{TEMPLATES}/receipt.rtdf"), assets::RECEIPT_RTDF)
-            .await;
+        if let Some(receipt) = load(sh, ctx, assets::RECEIPT_RTDF).await {
+            sh.write_root(&format!("{TEMPLATES}/receipt.rtdf"), &receipt)
+                .await;
+        }
     }
 
     if sh
@@ -631,12 +650,9 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
     {
         sh.line(format!("{TEMPLATES}/postfiscalAtol.rtdf - Already exists!"))
             .await;
-    } else {
-        sh.write_root(
-            &format!("{TEMPLATES}/postfiscalAtol.rtdf"),
-            assets::POSTFISCAL_ATOL_RTDF,
-        )
-        .await;
+    } else if let Some(template) = load(sh, ctx, assets::POSTFISCAL_ATOL_RTDF).await {
+        sh.write_root(&format!("{TEMPLATES}/postfiscalAtol.rtdf"), &template)
+            .await;
     }
 
     let model_index = ans.choice(0);
@@ -674,13 +690,14 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
                 ))
                 .await;
             }
-            sh.write_root("/etc/rc.local", assets::RC_LOCAL).await;
-            sh.sh("sudo chmod +x /etc/rc.local").await;
-            sh.write_root(
-                "/etc/systemd/system/rc-local.service",
-                assets::RC_LOCAL_SERVICE,
-            )
-            .await;
+            if let Some(rc_local) = load(sh, ctx, assets::RC_LOCAL).await {
+                sh.write_root("/etc/rc.local", &rc_local).await;
+                sh.sh("sudo chmod +x /etc/rc.local").await;
+            }
+            if let Some(service) = load(sh, ctx, assets::RC_LOCAL_SERVICE).await {
+                sh.write_root("/etc/systemd/system/rc-local.service", &service)
+                    .await;
+            }
             sh.run(&["sudo", "systemctl", "enable", "rc-local"]).await;
             sh.run(&["sudo", "systemctl", "restart", "rc-local"]).await;
             "serial:/dev/printer?baud=115200".to_string()
@@ -784,7 +801,7 @@ async fn printer(sh: &mut Shell, ctx: &Ctx, ans: &Answers) {
     sh.line("Printer almost setup complete!").await;
 }
 
-async fn vnc_install(sh: &mut Shell, _ctx: &Ctx) {
+async fn vnc_install(sh: &mut Shell, ctx: &Ctx) {
     sh.run(&["sudo", "apt-get", "-y", "install", "x11vnc"])
         .await;
     sh.run(&[
@@ -796,10 +813,14 @@ async fn vnc_install(sh: &mut Shell, _ctx: &Ctx) {
     ])
     .await;
 
-    sh.write_root("/lib/systemd/system/x11vnc.service", assets::X11VNC_SERVICE)
-        .await;
-    sh.write_root("/lib/systemd/system/xorg.service", assets::XORG_SERVICE)
-        .await;
+    if let Some(unit) = load(sh, ctx, assets::X11VNC_SERVICE).await {
+        sh.write_root("/lib/systemd/system/x11vnc.service", &unit)
+            .await;
+    }
+    if let Some(unit) = load(sh, ctx, assets::XORG_SERVICE).await {
+        sh.write_root("/lib/systemd/system/xorg.service", &unit)
+            .await;
+    }
     sh.line("X11VNC setup complete!").await;
 }
 
@@ -826,7 +847,7 @@ async fn vnc_disable(sh: &mut Shell) {
     sh.line("Direct display mode restored").await;
 }
 
-async fn zabbix(sh: &mut Shell, _ctx: &Ctx, name: &str) {
+async fn zabbix(sh: &mut Shell, ctx: &Ctx, name: &str) {
     sh.run(&["sudo", "apt-get", "update"]).await;
     sh.run(&["sudo", "apt-get", "-y", "install", "zabbix-agent", "curl"])
         .await;
@@ -838,7 +859,10 @@ async fn zabbix(sh: &mut Shell, _ctx: &Ctx, name: &str) {
     } else {
         name.trim().to_string()
     };
-    let conf = assets::ZABBIX_AGENTD_CONF.replace(assets::ZABBIX_HOSTNAME_SLOT, &name);
+    let Some(template) = load(sh, ctx, assets::ZABBIX_AGENTD_CONF).await else {
+        return;
+    };
+    let conf = template.replace(assets::ZABBIX_HOSTNAME_SLOT, &name);
     sh.write_root("/etc/zabbix/zabbix_agentd.conf", &conf).await;
 
     sh.mkdir_root("/etc/zabbix/scripts").await;

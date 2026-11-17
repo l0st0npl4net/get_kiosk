@@ -1,7 +1,8 @@
 //! GET-KIOSK installer, Ratatui rewrite.
 //!
-//! The entry point is the shell script `start.sh`, which installs the build
-//! dependencies, compiles this crate and executes the binary as root.
+//! Releases ship as a zip containing the binary, the `assets/` text payloads
+//! and the `app/` driver tree. `start.sh` unpacks that archive and executes the
+//! binary as root.
 
 mod app;
 mod assets;
@@ -12,7 +13,7 @@ mod steps;
 mod task;
 mod ui;
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use color_eyre::eyre::{Result, eyre};
 
@@ -34,33 +35,53 @@ fn main() -> Result<()> {
     })
 }
 
-/// Resolve the repository root and log path from the environment or the
-/// binary location.
+/// Resolve the checkout root, asset directory and log path.
 fn build_ctx() -> Result<Ctx> {
-    let root = match std::env::var("KIOSK_ROOT") {
-        Ok(value) if !value.trim().is_empty() => PathBuf::from(value),
-        _ => resolve_root()?,
+    let exe_dir = std::env::current_exe()?
+        .parent()
+        .map(Path::to_path_buf)
+        .unwrap_or_else(|| PathBuf::from("/"));
+
+    let repo_root = match env_path("KIOSK_ROOT") {
+        Some(path) => path,
+        None => resolve_root(&exe_dir)?,
     };
-    let log_path = match std::env::var("KIOSK_LOG") {
-        Ok(value) if !value.trim().is_empty() => PathBuf::from(value),
-        _ => PathBuf::from("/tmp/kiosk_install.log"),
+
+    let assets_dir = match env_path("KIOSK_ASSETS") {
+        Some(path) => path,
+        None => assets::locate_assets(&exe_dir, &repo_root)?,
     };
+
+    let log_path = env_path("KIOSK_LOG").unwrap_or_else(|| PathBuf::from("/tmp/kiosk_install.log"));
+
     Ok(Ctx {
-        repo_root: root,
+        repo_root,
+        assets_dir,
         log_path,
     })
 }
 
-fn resolve_root() -> Result<PathBuf> {
-    let exe = std::env::current_exe()?;
-    // rework/target/release/kiosk-installer -> repository root
-    let mut candidate = exe.as_path();
+fn env_path(name: &str) -> Option<PathBuf> {
+    match std::env::var(name) {
+        Ok(value) if !value.trim().is_empty() => Some(PathBuf::from(value)),
+        _ => None,
+    }
+}
+
+/// The archive root is both the checkout and the binary directory, so check the
+/// executable directory first, then walk up a few levels for a source checkout.
+fn resolve_root(exe_dir: &Path) -> Result<PathBuf> {
+    if exe_dir.join("app").is_dir() {
+        return Ok(exe_dir.to_path_buf());
+    }
+    let mut candidate = exe_dir;
     for _ in 0..4 {
-        if let Some(parent) = candidate.parent() {
-            candidate = parent;
-            if candidate.join("app").is_dir() {
-                return Ok(candidate.to_path_buf());
-            }
+        match candidate.parent() {
+            Some(parent) => candidate = parent,
+            None => break,
+        }
+        if candidate.join("app").is_dir() {
+            return Ok(candidate.to_path_buf());
         }
     }
     let cwd = std::env::current_dir()?;
@@ -68,6 +89,6 @@ fn resolve_root() -> Result<PathBuf> {
         return Ok(cwd);
     }
     Err(eyre!(
-        "cannot locate repository root, set KIOSK_ROOT to the get_kiosk checkout"
+        "cannot locate app/, set KIOSK_ROOT to the unpacked release directory"
     ))
 }

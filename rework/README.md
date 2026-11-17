@@ -8,11 +8,14 @@ preserved; only the front end and orchestration changed.
 
 ```
 rework/
-├── start.sh              # entry point (kept out of git, like the original start.sh)
+├── start.sh              # release entry point (kept out of git)
+├── build-release.sh      # builds the distributable archive into release/
+├── Dockerfile.release    # Debian 13 / musl build container
 ├── Cargo.toml
-├── assets/               # text payloads embedded into the binary
+├── assets/               # text payloads, shipped next to the binary
+├── release/              # build output (git ignored)
 └── src/
-    ├── main.rs           # ratatui::run + tokio runtime + KIOSK_ROOT resolution
+    ├── main.rs           # ratatui::run + KIOSK_ROOT / KIOSK_ASSETS resolution
     ├── app.rs            # Elm Architecture: Model / Message / update / view
     ├── ui.rs             # header, menu, form, review, run log, result popup
     ├── steps.rs          # step catalogue and per-step input fields
@@ -20,12 +23,12 @@ rework/
     ├── install.rs        # native implementation of all 13 installer steps
     ├── exec.rs           # subprocess runner with streamed output and logging
     ├── task.rs           # plan execution on a background task
-    └── assets.rs         # include_str! of assets/
+    └── assets.rs         # locates assets/ and reads payloads at run time
 ```
 
-Vendor payloads stay where they are: `app/printer/driver/*`, `app/terminals/*/`,
-`app/fiscal/*`, `app/sst/*`. The Rust binary copies them from the checkout at run time, so
-drivers do not have to be rebuilt into the executable.
+Nothing is compiled into the binary. A release archive carries the executable, `assets/` and
+the `app/` payload (`printer`, `terminals`, `fiscal`, `sst`), so driver packages, PPDs and
+vendor binaries stay in the checkout and are copied by the installer at run time.
 
 ## Running
 
@@ -34,23 +37,82 @@ sudo ./rework/start.sh
 ```
 
 `start.sh` is a shell script by design (the original entry point was excluded from the
-repository). It:
+repository). It compiles nothing:
 
 1. re-executes itself through `sudo` when not root;
 2. installs the runtime dependencies the steps call (`wget`, `unzip`, `crudini`, ...);
-3. downloads `https://github.com/<repo>/archive/refs/heads/<branch>.zip` and unpacks it when
-   no `app/` directory sits next to the script, so a standalone copy still works;
-4. installs `build-essential`, `pkg-config` and the Rust toolchain when missing;
-5. builds `target/release/kiosk-installer` and executes it.
+3. downloads `kiosk-installer-linux-x86_64.zip` from the GitHub releases page;
+4. unpacks it to `/tmp/get_kiosk` and locates the binary, `assets/` and `app/`;
+5. executes the binary with `KIOSK_ROOT`, `KIOSK_ASSETS` and `KIOSK_LOG` exported.
 
 Environment overrides:
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `KIOSK_ROOT` | detected checkout root | where `app/` lives |
+| `KIOSK_REPO` | `l0st0npl4net/get_kiosk` | repository the release is downloaded from |
+| `KIOSK_VERSION` | `latest` | `latest` or a release tag such as `v0.1.0` |
 | `KIOSK_LOG` | `/tmp/kiosk_install.log` | install log destination |
-| `KIOSK_BRANCH` | `main` | branch used for the zip bootstrap |
-| `KIOSK_REPO` | `l0st0npl4net/get_kiosk` | repository used for the zip bootstrap |
+| `KIOSK_WORK` | `/tmp/get_kiosk` | unpack directory for the release |
+
+`KIOSK_ROOT` and `KIOSK_ASSETS` are set by `start.sh`; set them manually only when running
+the binary directly out of an unpacked archive.
+
+## Building a release
+
+From Windows, no Linux machine, WSL, Docker or zig needed:
+
+```powershell
+.\rework\build-release.ps1
+```
+
+From Linux or the container:
+
+```bash
+./rework/build-release.sh
+```
+
+`build-release.ps1` cross-compiles on Windows because the crate tree has no C dependencies:
+`ratatui`, `crossterm`, `tokio`, `color-eyre` and `textwrap` are pure Rust, so the musl target
+needs only a linker. Rust's bundled `rust-lld` does that job (`RUSTFLAGS=-C linker=rust-lld`),
+and the script refuses to package a file that is not a Linux ELF. First run needs:
+
+```powershell
+rustup target add x86_64-unknown-linux-musl
+```
+
+Neither script requires `cargo-zigbuild` or zig. Switch to zig only if a C dependency is ever
+added later; until then `rust-lld` is the shorter path.
+
+Both scripts write two archives into `rework/release/`:
+
+- `kiosk-installer-<version>-linux-x86_64.zip` — versioned, for the release page record
+- `kiosk-installer-linux-x86_64.zip` — stable name that `start.sh` always downloads
+
+Both contain:
+
+```
+kiosk-installer      statically linked binary (x86_64-unknown-linux-musl)
+assets/              text payloads read at run time
+app/printer          CUPS drivers and filters
+app/terminals        Sberbank, Inpas, Arcus payloads
+app/fiscal           fiscal device payloads
+app/sst              SST-IIKO payloads
+VERSION              version, target and build timestamp
+```
+
+The musl target links statically, so one archive runs on Debian 11, 12 and 13 without
+matching the host glibc. Build on a Debian 13 host, or in the supplied container:
+
+```bash
+docker build -f rework/Dockerfile.release -t kiosk-release .
+docker run --rm -v "$PWD/rework/release:/src/rework/release" kiosk-release
+```
+
+Upload the resulting zip to the GitHub release page and `start.sh` picks it up:
+
+```bash
+KIOSK_VERSION=v0.1.0 sudo ./rework/start.sh
+```
 
 ## Screens
 

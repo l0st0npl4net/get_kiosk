@@ -1,0 +1,15 @@
+FROM rust:1.98-bookworm AS build
+
+RUN rustup target add x86_64-unknown-linux-musl \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends musl-tools zip \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src/rework
+COPY rework/Cargo.toml rework/Cargo.lock ./
+COPY rework/src ./src
+COPY rework/assets ./assets
+COPY app /src/app
+
+ENV TARGET=x86_64-unknown-linux-musl
+CMD ["./build-release.sh"]
